@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import { DataSet, Network } from 'vis-network/standalone/esm/vis-network'
-
+import { MdFileDownload } from 'react-icons/md'
 function App() {
   // A reference to the div rendered by this component
   const domNode = useRef(null)
@@ -70,9 +70,10 @@ function App() {
   return (
     <>
       <div className="flex flex-col items-center justify-center h-screen">
-        <div className="w-11/12 h-full" ref={domNode}></div>
-        <button onClick={download} className="bg-black px-5 py-1.5 mb-10 text-white">
-          Export
+        <div className="w-11/12 h-5/6 border-2 rounded-lg" ref={domNode}></div>
+        <button onClick={download} className="flex items-center gap-2 bg-black px-5 py-1.5 my-4 text-white">
+          Export diagram
+          <MdFileDownload color="white" size={20} />
         </button>
       </div>
     </>
