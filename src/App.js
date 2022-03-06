@@ -43,7 +43,7 @@ function App() {
   const options = {
     physics: {
       forceAtlas2Based: {
-        gravitationalConstant: -10,
+        gravitationalConstant: -26,
         centralGravity: 0.005,
         springLength: 230,
         springConstant: 0.035,
@@ -58,7 +58,11 @@ function App() {
         updateInterval: 500,
         fit: true,
       },
+
     },
+    nodes:{
+      widthConstraint:{maximum:200}
+  },
     autoResize: true,
     height: '100%',
     width: '100%',
