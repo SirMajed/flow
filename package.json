@@ -9,6 +9,7 @@
     "concurrently": "^7.0.0",
     "cross-env": "^7.0.3",
     "csvtojson": "^2.0.10",
+    "electron-is-dev": "^2.0.0",
     "is-electron": "^2.2.1",
     "papaparse": "^5.3.1",
     "react": "^17.0.2",

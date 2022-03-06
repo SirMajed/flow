@@ -1,7 +1,7 @@
 // Modules to control application life and create native browser window
 const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('path')
-const { exec } = require('child_process')
+const isDev = require('electron-is-dev')
 
 function createWindow() {
   // Create the browser window.
@@ -19,10 +19,16 @@ function createWindow() {
     frame: false,
     maximizable: true,
   })
-  // and load the index.html of the app.
-  // mainWindow.loadURL('http://localhost:3000')
 
-  mainWindow.loadURL(`file://${path.join(__dirname, '../build/index.html')}`)
+  const devBasePath = 'http://localhost:3000/'
+  const prodBasePath = `file://${path.join(__dirname, '../build/index.html')}`
+  const basePath = isDev ? devBasePath : prodBasePath
+
+  // and load the index.html of the app.
+  mainWindow.loadURL(basePath)
+
+  // mainWindow.loadURL(`file://${path.join(__dirname, '../build/index.html')}`)
+
   ipcMain.on('app/minimize', () => {
     mainWindow.minimize()
   })

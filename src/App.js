@@ -134,7 +134,7 @@ function App() {
             type="file"
             className="block w-full text-sm text-tlight dark:text-tdark
                           file:py-2 file:px-4
-                          file:rounded-md file:border-0
+                           file:border-0
                           file:text-sm file:font-semibold
                           file:bg-black file:dark:bg-darkField file:text-white dark:text-opacity-50
                           hover:file:bg-opacity-80
