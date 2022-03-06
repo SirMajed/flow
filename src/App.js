@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { DataSet, Network } from 'vis-network/standalone/esm/vis-network'
 import { MdFileDownload } from 'react-icons/md'
-import Papa from "papaparse";
-
+import Papa from 'papaparse'
+import TitleBar from '../src/components/TitleBar'
 function App() {
   // A reference to the div rendered by this component
   const domNode = useRef(null)
@@ -10,7 +10,7 @@ function App() {
   const [edges, setEdges] = useState([])
 
   const [UniqueNodes, setUniqueNodes] = useState([])
-  
+
   // A reference to the vis network instance
   const network = useRef(null)
   var ss = 'box'
@@ -58,11 +58,10 @@ function App() {
         updateInterval: 500,
         fit: true,
       },
-
     },
-    nodes:{
-      widthConstraint:{maximum:200}
-  },
+    nodes: {
+      widthConstraint: { maximum: 200 },
+    },
     autoResize: true,
     height: '100%',
     width: '100%',
@@ -71,71 +70,78 @@ function App() {
 
   useEffect(() => {
     network.current = new Network(domNode.current, data, options)
-    network.current.on("stabilizationIterationsDone",  function () {
-      this.setOptions({ physics: false } )
-  });
-
+    network.current.on('stabilizationIterationsDone', function () {
+      this.setOptions({ physics: false })
+    })
   }, [domNode, network, data, options])
 
   const download = () => {}
 
-  const handleFileUpload = async (e) => {  
-    const files = e.target.files;
+  const handleFileUpload = async (e) => {
+    const files = e.target.files
     var nodeSet = new Set()
     var n = []
-    var n1 = [];
-    var e = [];
+    var n1 = []
+    var e = []
     if (files) {
-      Papa.parse(files[0], { header: true, skipEmptyLines: true,
-        complete: function(results) {
-          console.log(results.data);
+      Papa.parse(files[0], {
+        header: true,
+        skipEmptyLines: true,
+        complete: function (results) {
+          console.log(results.data)
           results.data.forEach((row) => {
             nodeSet.add(row.FROM)
             nodeSet.add(row.TO)
 
-            var edgeObj = new Object();
-            edgeObj.from = row.FROM;
-            edgeObj.to = row.TO;
-            edgeObj.arrows = "to"
+            var edgeObj = new Object()
+            edgeObj.from = row.FROM
+            edgeObj.to = row.TO
+            edgeObj.arrows = 'to'
             edgeObj.label = row.REL
             e.push(edgeObj)
+          })
+          n = Array.from(nodeSet)
+          n.forEach((node) => {
+            var obj = new Object()
+            obj.id = node
+            obj.label = node
+            obj.shape = 'box'
+            n1.push(obj)
+          })
 
-
-            
-        });
-        n = Array.from(nodeSet)
-        n.forEach((node) => {
-        var obj = new Object();
-        obj.id = node;
-        obj.label  = node;
-        obj.shape = "box";
-        n1.push(obj)
-      })        
-      
-      setNodes(n1)
-      setEdges(e)
-
-      }
+          setNodes(n1)
+          setEdges(e)
+        },
+      })
     }
-        
-      )
-  
-    }}
-
+  }
 
   return (
     <>
+      <TitleBar />
       <div className="flex flex-col items-center justify-center h-screen">
-        <div className="w-11/12 h-5/6 border-2 rounded-lg" ref={domNode}></div>
-        <input
-          type="file"
-          accept=".csv,.xlsx,.xls"
-          onChange={handleFileUpload}
-      />
+        <div className="w-11/12 h-5/6 my-4 border-2 rounded-lg" ref={domNode}></div>
+        {/* <input type="file" accept=".csv,.xlsx,.xls" onChange={handleFileUpload} />
         <button onClick={download} className="flex items-center gap-2 bg-black px-5 py-1.5 my-4 text-white">
-          Export diagram
+          Upload .csv file
           <MdFileDownload color="white" size={20} />
-        </button>
+        </button> */}
+
+        <label className="block">
+          <input
+            accept=".csv,.xlsx,.xls"
+            onChange={handleFileUpload}
+            type="file"
+            className="block w-full text-sm text-tlight dark:text-tdark
+                          file:py-2 file:px-4
+                          file:rounded-md file:border-0
+                          file:text-sm file:font-semibold
+                          file:bg-black file:dark:bg-darkField file:text-white dark:text-opacity-50
+                          hover:file:bg-opacity-80
+                          focus:outline-none
+                        "
+          />
+        </label>
       </div>
     </>
   )
