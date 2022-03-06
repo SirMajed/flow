@@ -20,7 +20,18 @@
     "wait-on": "^6.0.1",
     "web-vitals": "^2.1.4"
   },
-  "main": "public/main.js",
+  "homepage": "./",
+  "main": "public/electron.js",
+  "build": {
+    "appId": "com.example.electron-cra",
+    "files": [
+      "build/**/*",
+      "node_modules/**/*"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    }
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -28,7 +39,7 @@
     "eject": "react-scripts eject",
     "electron": "electron-builder",
     "electron-dev": "concurrently \"cross-env BROWSER=none npm start\" \"wait-on http://localhost:3000 && electron .\"",
-    "electron-pack": "npm run build && npm run electron -l",
+    "electron-pack": "npm run build && npm run electron -w",
     "preelectron-pack": "npm run build"
   },
   "eslintConfig": {

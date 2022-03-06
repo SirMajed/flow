@@ -20,9 +20,9 @@ function createWindow() {
     maximizable: true,
   })
   // and load the index.html of the app.
-  mainWindow.loadURL('http://localhost:3000')
+  // mainWindow.loadURL('http://localhost:3000')
 
-  // mainWindow.loadURL(`file://${path.join(__dirname, '../build/index.html')}`)
+  mainWindow.loadURL(`file://${path.join(__dirname, '../build/index.html')}`)
   ipcMain.on('app/minimize', () => {
     mainWindow.minimize()
   })
