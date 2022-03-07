@@ -1,9 +1,8 @@
 // import { app } from 'electron/main';
 import React from 'react'
 import isElectron from 'is-electron'
-import { AiOutlineClose } from 'react-icons/ai'
-import { VscChromeMinimize } from 'react-icons/vsc'
-import { BiSquare } from 'react-icons/bi'
+import { VscChromeMinimize, VscChromeClose, VscChromeMaximize } from 'react-icons/vsc'
+import { AiOutlineNodeIndex } from 'react-icons/ai'
 const title_bar = {
   backgroundColor: '#000000',
   height: '30px',
@@ -40,18 +39,19 @@ const TitleBar = () => {
   }
   return (
     <nav style={title_bar}>
-      <div>
-        <span className="px-2">Stakeholders Diagram</span>
+      <div className="flex items-center px-2">
+        <AiOutlineNodeIndex className="text-primary" size={25} />
+        <span className="px-2 text-sm text-white text-opacity-90">Stakeholders Diagram</span>
       </div>
-      <div className="flex items-center justfy-center gap-4 px-3">
+      <div className="flex items-center justfy-center gap-3 px-3">
         <span style={nav_link} onClick={handleMinimize}>
-          <VscChromeMinimize size={18} />
+          <VscChromeMinimize className="text-gray-400 hover:text-white tranistion" size={18} />
         </span>
         <span style={nav_link} onClick={handleMaximize}>
-          <BiSquare size={18} />
+          <VscChromeMaximize className="text-gray-400 hover:text-white tranistion" size={20} />
         </span>
         <span style={nav_link} onClick={handleClose}>
-          <AiOutlineClose size={18} />
+          <VscChromeClose className="text-gray-400 hover:text-white tranistion" size={20} />
         </span>
       </div>
     </nav>
