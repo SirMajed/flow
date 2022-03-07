@@ -1,3 +1,4 @@
+process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true'
 // Modules to control application life and create native browser window
 const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('path')

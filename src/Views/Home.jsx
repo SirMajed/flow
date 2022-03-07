@@ -1,18 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { DataSet, Network } from 'vis-network/standalone/esm/vis-network'
+import { Network } from 'vis-network/standalone/esm/vis-network'
 import { MdFileDownload, MdClear, MdArrowForward } from 'react-icons/md'
 import Papa from 'papaparse'
 import TitleBar from '../components/TitleBar'
 import isElectron from 'is-electron'
-import Wallpaper from '../assets/images/lines.png'
 import whiteLogo from '../assets/images/whiteLogo.png'
+import { BsDiagram2 } from 'react-icons/bs'
 const Home = () => {
   // A reference to the div rendered by this component
   const domNode = useRef(null)
+  const fileUpload = useRef()
   const [nodes, setNodes] = useState([])
   const [edges, setEdges] = useState([])
   const [UniqueNodes, setUniqueNodes] = useState([])
-  const [file, setFile] = useState()
 
   // A reference to the vis network instance
   const network = useRef(null)
@@ -59,16 +59,14 @@ const Home = () => {
     })
   }, [domNode, network, data, options])
 
-  console.log(domNode)
-
   const handleFileUpload = async (e) => {
-    setFile(e.target.files[0])
+    const files = e.target.files
     var nodeSet = new Set()
     var n = []
     var n1 = []
     var e = []
-    if (file) {
-      Papa.parse(file, {
+    if (files) {
+      Papa.parse(files[0], {
         header: true,
         skipEmptyLines: true,
         complete: function (results) {
@@ -103,11 +101,9 @@ const Home = () => {
   }
 
   const handleClear = () => {
-    // domNode.current.childNodes[0].remove()
-    domNode.current.removeChild(domNode.current.children[0])
-    console.log(domNode)
-    // setEdges([])
-    // setEdges([])
+    fileUpload.current.value = ''
+    setEdges([])
+    setNodes([])
   }
 
   function scrollTo() {
@@ -164,6 +160,7 @@ const Home = () => {
 
           <label className="block">
             <input
+              ref={fileUpload}
               accept=".csv,.xlsx,.xls"
               onChange={handleFileUpload}
               type="file"
@@ -178,7 +175,7 @@ const Home = () => {
             />
           </label>
 
-          {domNode.current && domNode.current.lastChild && (
+          {nodes && nodes.length >= 1 && edges && edges.length >= 1 && (
             <button onClick={handleClear} className="flex items-center gap-2 bg-black px-5 py-1.5 my-4 text-white">
               Reset
               <MdClear color="white" size={20} />
@@ -186,8 +183,7 @@ const Home = () => {
           )}
         </div>
 
-        <div id="test" className="w-3/6 h-4/5 my-4 border-2 rounded-lg" ref={domNode}></div>
-        {/* {!domNode.current && <p>Please upload (.csv,.xlsx,.xls) file to view the diagram</p>} */}
+        <div id="test" className="w-3/6 h-4/5 my-4 border-2 border-dashed" ref={domNode}></div>
       </div>
     </>
   )

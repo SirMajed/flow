@@ -38,20 +38,20 @@ const TitleBar = () => {
     }
   }
   return (
-    <nav style={title_bar}>
+    <nav className="bg-black h-7 w-full flex fixed justify-between text-white items-center drag">
       <div className="flex items-center px-2">
         <AiOutlineNodeIndex className="text-primary" size={25} />
         <span className="px-2 text-sm text-white text-opacity-90">Stakeholders Diagram</span>
       </div>
       <div className="flex items-center justfy-center gap-3 px-3">
-        <span style={nav_link} onClick={handleMinimize}>
-          <VscChromeMinimize className="text-gray-400 hover:text-white tranistion" size={18} />
+        <span onClick={handleMinimize} className="no-drag">
+          <VscChromeMinimize className="text-gray-400 hover:text-white tranistion cursor-pointer" size={18} />
         </span>
-        <span style={nav_link} onClick={handleMaximize}>
-          <VscChromeMaximize className="text-gray-400 hover:text-white tranistion" size={20} />
+        <span onClick={handleMaximize} className="no-drag">
+          <VscChromeMaximize className="text-gray-400 hover:text-white tranistion cursor-pointer" size={20} />
         </span>
-        <span style={nav_link} onClick={handleClose}>
-          <VscChromeClose className="text-gray-400 hover:text-white tranistion" size={20} />
+        <span onClick={handleClose} className="no-drag">
+          <VscChromeClose className="text-gray-400 hover:text-white tranistion cursor-pointer" size={20} />
         </span>
       </div>
     </nav>
