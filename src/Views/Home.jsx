@@ -6,10 +6,13 @@ import TitleBar from '../components/TitleBar'
 import isElectron from 'is-electron'
 import whiteLogo from '../assets/images/whiteLogo.png'
 import { BsDiagram2 } from 'react-icons/bs'
+import Button from '../components/Button'
+import InputFile from '../components/InputFile'
 const Home = () => {
   // A reference to the div rendered by this component
   const domNode = useRef(null)
-  const fileUpload = useRef()
+  const inputRefOne = useRef()
+  const inputRefTwo = useRef()
 
   const [file1, setFile1] = useState(null)
 
@@ -49,15 +52,15 @@ const Home = () => {
     nodes: {
       widthConstraint: { maximum: 200 },
     },
-    
-    edges: {
-      selectionWidth: function (width) {return width*2;},
-        font: {
-        align: "top",
-        background: "white"
-   
-      },
 
+    edges: {
+      selectionWidth: function (width) {
+        return width * 2
+      },
+      font: {
+        align: 'top',
+        background: 'white',
+      },
     },
     autoResize: true,
     height: '100%',
@@ -67,8 +70,12 @@ const Home = () => {
 
   useEffect(() => {
     network.current = new Network(domNode.current, data, options)
-    network.current.on('stabilizationIterationsDone', function () {
+    network.current.on('stabilizationIterationsDone, afterDrawing', function () {
       this.setOptions({ physics: false })
+    })
+    network.current.on('afterDrawing', function (ctx) {
+      var dataURL = ctx.canvas.toDataURL()
+      document.getElementById('canvasImg').href = dataURL
     })
   }, [domNode, network, data, options])
 
@@ -103,18 +110,18 @@ const Home = () => {
               arrows: 'to',
               label: row.REL,
               width: row.Weight,
-              color: row.RELCOLOR
-            };
+              color: row.RELCOLOR,
+            }
             e.push(edgeObj)
           })
           n = Array.from(nodeSet)
           n.forEach((node) => {
-            var obj ={
+            var obj = {
               id: node,
-              label:  node,
-              shape:  'box',
-              color: '#29B0B0'
-            };
+              label: node,
+              shape: 'box',
+              color: '#29B0B0',
+            }
             n1.push(obj)
           })
 
@@ -126,7 +133,8 @@ const Home = () => {
   }
 
   const handleClear = () => {
-    fileUpload.current.value = ''
+    inputRefOne.current.value = ''
+    inputRefTwo.current.value = ''
     setEdges([])
     setNodes([])
   }
@@ -135,6 +143,11 @@ const Home = () => {
     const divElement = document.getElementById('test')
     divElement.scrollIntoView({ behavior: 'smooth' })
   }
+
+  const downloadNetworkAsImage = () => {
+    document.getElementById('canvasImg').click()
+  }
+
   return (
     <>
       {isElectron() && <TitleBar />}
@@ -174,66 +187,35 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="flex gap-12 md:gap-32 md lg:gap-52 items-center justify-around h-screen">
+      <div className="flex flex-col items-center justify-around h-screen">
         <div className="flex-col">
-          <div className="my-7">
+          <div className="mt-4 mb-2">
             <h1 className="text-xl md:text-2xl lg:text-4xl xl:text-4xl lg:w-full text-primary font-black leading-6 lg:leading-10 md:text-left text-center">
               Upload your files
             </h1>
             <p className="text-lg md:text-base xl:text-xl font-light text-gray-800 xl:leading-normal pt-1">You can only upload (.csv,.xlsx,.xls) files</p>
           </div>
 
-          <div>
-            <p className="text-sm">1. Upload stakeholders file</p>
-            <label className="block mt-1">
-              <input
-                ref={fileUpload}
-                accept=".csv,.xlsx,.xls"
-                onChange={handleFileOne}
-                type="file"
-                className="block w-full text-xs text-tlight dark:text-tdark
-                          file:py-2 file:px-4
-                           file:border-0
-                          file:text-sm file:font-semibold
-                          file:bg-primary file:dark:bg-darkField file:text-white dark:text-opacity-50
-                          hover:file:bg-opacity-80
-                          focus:outline-none
-                        "
-              />
-            </label>
+          <div className="flex">
+            <div>
+              <InputFile label="1. Upload stakeholders file" re={inputRefOne} onChange={handleFileOne} />
+            </div>
+
+            <div>
+              <InputFile label="2. Upload edge matrix file" re={inputRefTwo} onChange={handleFileUpload} />
+            </div>
           </div>
 
-          <div>
-            <p className="text-sm mt-3">2. Upload edge matrix file</p>
-
-            <label className="block mt-1">
-              <input
-                ref={fileUpload}
-                accept=".csv,.xlsx,.xls"
-                onChange={handleFileTwo}
-                type="file"
-                className="block w-full text-xs text-tlight dark:text-tdark
-                          file:py-2 file:px-4
-                           file:border-0
-                          file:text-sm file:font-semibold
-                          file:bg-primary file:dark:bg-darkField file:text-white dark:text-opacity-50
-                          hover:file:bg-opacity-80
-                          focus:outline-none
-                        "
-              />
-            </label>
-          </div>
-
-          {nodes && nodes.length >= 1 && edges && edges.length >= 1 &&  (
-            <button onClick={handleClear} className="flex items-center gap-2 bg-black px-5 py-1.5 my-4 text-white">
-              Reset
-              <MdClear color="white" size={20} />
-            </button>
-          )}
+          {nodes && nodes.length >= 1 && edges && edges.length >= 1 && <Button icon={<MdClear color="white" size={20} />} text="Reset" onClick={handleClear} />}
         </div>
 
-        <div id="test" className="w-4/6 h-4/5 my-4 border-2 border-dashed" ref={domNode}></div>
+        <div className="flex flex-col items-center h-full w-full">
+          <div id="test" className="w-11/12 h-4/5 my-t-4 mb-1 border-2 border-dashed" ref={domNode} />
+          <Button icon={<MdFileDownload color="white" size={20} />} text="Export" onClick={downloadNetworkAsImage} />
+        </div>
       </div>
+
+      <a id="canvasImg" download="filename"></a>
     </>
   )
 }
