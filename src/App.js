@@ -13,8 +13,8 @@ function App() {
 
   // A reference to the vis network instance
   const network = useRef(null)
-  var ss = 'box'
-  var ww = { id: 1, label: 'Node 1', shape: ss }
+  // var ss = 'circle'
+  // var ww = { id: 1, label: 'Node 1', shape: ss }
 
   // An array of nodes
   // const nodes = new DataSet([
@@ -43,11 +43,11 @@ function App() {
   const options = {
     physics: {
       forceAtlas2Based: {
-        gravitationalConstant: -26,
+        gravitationalConstant: -40,
         centralGravity: 0.005,
         springLength: 230,
         springConstant: 0.035,
-        avoidOverlap: 0.2,
+        avoidOverlap: 1,
       },
       maxVelocity: 146,
       solver: 'forceAtlas2Based',
@@ -61,6 +61,16 @@ function App() {
     },
     nodes: {
       widthConstraint: { maximum: 200 },
+    },
+    
+    edges: {
+      selectionWidth: function (width) {return width*2;},
+        font: {
+        align: "top",
+        background: "white"
+   
+      },
+
     },
     autoResize: true,
     height: '100%',
@@ -82,7 +92,7 @@ function App() {
     var nodeSet = new Set()
     var n = []
     var n1 = []
-    var e = []
+    var ed = []
     if (files) {
       Papa.parse(files[0], {
         header: true,
@@ -93,24 +103,38 @@ function App() {
             nodeSet.add(row.FROM)
             nodeSet.add(row.TO)
 
-            var edgeObj = new Object()
-            edgeObj.from = row.FROM
-            edgeObj.to = row.TO
-            edgeObj.arrows = 'to'
-            edgeObj.label = row.REL
-            e.push(edgeObj)
+            // var edgeObj = new Object()
+
+            var edgeObj = {
+              from: row.FROM,
+              to: row.TO,
+              arrows: 'to',
+              label: row.REL,
+              width: row.Weight,
+              color: row.RELCOLOR
+            };
+            // edgeObj.from = row.FROM
+            // edgeObj.to = row.TO
+            // edgeObj.arrows = 'to'
+            // edgeObj.label = row.REL
+            // edgeObj.width = row.Weight
+            // edgeObj.color = row.RELCOLOR
+            ed.push(edgeObj)
           })
           n = Array.from(nodeSet)
           n.forEach((node) => {
-            var obj = new Object()
-            obj.id = node
-            obj.label = node
-            obj.shape = 'box'
+            var obj ={
+              id: node,
+              label:  node,
+              shape:  'box',
+              // color: 'none'
+            };
+            
             n1.push(obj)
           })
 
           setNodes(n1)
-          setEdges(e)
+          setEdges(ed)
         },
       })
     }
