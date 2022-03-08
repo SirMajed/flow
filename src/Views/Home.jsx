@@ -27,11 +27,11 @@ const Home = () => {
   const options = {
     physics: {
       forceAtlas2Based: {
-        gravitationalConstant: -26,
+        gravitationalConstant: -40,
         centralGravity: 0.005,
         springLength: 230,
         springConstant: 0.035,
-        avoidOverlap: 0.2,
+        avoidOverlap: 1,
       },
       maxVelocity: 146,
       solver: 'forceAtlas2Based',
@@ -45,6 +45,16 @@ const Home = () => {
     },
     nodes: {
       widthConstraint: { maximum: 200 },
+    },
+    
+    edges: {
+      selectionWidth: function (width) {return width*2;},
+        font: {
+        align: "top",
+        background: "white"
+   
+      },
+
     },
     autoResize: true,
     height: '100%',
@@ -75,21 +85,24 @@ const Home = () => {
             nodeSet.add(row.FROM)
             nodeSet.add(row.TO)
 
-            var edgeObj = new Object()
-            edgeObj.from = row.FROM
-            edgeObj.to = row.TO
-            edgeObj.arrows = 'to'
-            edgeObj.label = row.REL
+            var edgeObj = {
+              from: row.FROM,
+              to: row.TO,
+              arrows: 'to',
+              label: row.REL,
+              width: row.Weight,
+              color: row.RELCOLOR
+            };
             e.push(edgeObj)
           })
           n = Array.from(nodeSet)
           n.forEach((node) => {
-            var obj = new Object()
-            obj.id = node
-            obj.label = node
-            obj.shape = 'box'
-            obj.color = '#29B0B0'
-
+            var obj ={
+              id: node,
+              label:  node,
+              shape:  'box',
+              color: '#29B0B0'
+            };
             n1.push(obj)
           })
 
