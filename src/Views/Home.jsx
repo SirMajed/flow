@@ -10,6 +10,9 @@ const Home = () => {
   // A reference to the div rendered by this component
   const domNode = useRef(null)
   const fileUpload = useRef()
+
+  const [file1, setFile1] = useState(null)
+
   const [nodes, setNodes] = useState([])
   const [edges, setEdges] = useState([])
   const [UniqueNodes, setUniqueNodes] = useState([])
@@ -58,6 +61,15 @@ const Home = () => {
       this.setOptions({ physics: false })
     })
   }, [domNode, network, data, options])
+
+  const handleFileOne = (e) => {
+    setFile1(e.target.files[0])
+  }
+  const handleFileTwo = (e) => {
+    console.log(file1)
+    console.log(e.target.files[0])
+    // Implementation here
+  }
 
   const handleFileUpload = async (e) => {
     const files = e.target.files
@@ -153,18 +165,20 @@ const Home = () => {
         <div className="flex-col">
           <div className="my-7">
             <h1 className="text-xl md:text-2xl lg:text-4xl xl:text-4xl lg:w-full text-primary font-black leading-6 lg:leading-10 md:text-left text-center">
-              Upload your file
+              Upload your files
             </h1>
-            <p className="text-lg md:text-base xl:text-xl font-light text-gray-800 xl:leading-normal pt-2">You can only upload (.csv,.xlsx,.xls) files</p>
+            <p className="text-lg md:text-base xl:text-xl font-light text-gray-800 xl:leading-normal pt-1">You can only upload (.csv,.xlsx,.xls) files</p>
           </div>
 
-          <label className="block">
-            <input
-              ref={fileUpload}
-              accept=".csv,.xlsx,.xls"
-              onChange={handleFileUpload}
-              type="file"
-              className="block w-full text-xs text-tlight dark:text-tdark
+          <div>
+            <p className="text-sm">1. Upload stakeholders file</p>
+            <label className="block mt-1">
+              <input
+                ref={fileUpload}
+                accept=".csv,.xlsx,.xls"
+                onChange={handleFileOne}
+                type="file"
+                className="block w-full text-xs text-tlight dark:text-tdark
                           file:py-2 file:px-4
                            file:border-0
                           file:text-sm file:font-semibold
@@ -172,10 +186,32 @@ const Home = () => {
                           hover:file:bg-opacity-80
                           focus:outline-none
                         "
-            />
-          </label>
+              />
+            </label>
+          </div>
 
-          {nodes && nodes.length >= 1 && edges && edges.length >= 1 && (
+          <div>
+            <p className="text-sm mt-3">2. Upload edge matrix file</p>
+
+            <label className="block mt-1">
+              <input
+                ref={fileUpload}
+                accept=".csv,.xlsx,.xls"
+                onChange={handleFileTwo}
+                type="file"
+                className="block w-full text-xs text-tlight dark:text-tdark
+                          file:py-2 file:px-4
+                           file:border-0
+                          file:text-sm file:font-semibold
+                          file:bg-primary file:dark:bg-darkField file:text-white dark:text-opacity-50
+                          hover:file:bg-opacity-80
+                          focus:outline-none
+                        "
+              />
+            </label>
+          </div>
+
+          {nodes && nodes.length >= 1 && edges && edges.length >= 1 &&  (
             <button onClick={handleClear} className="flex items-center gap-2 bg-black px-5 py-1.5 my-4 text-white">
               Reset
               <MdClear color="white" size={20} />
@@ -183,7 +219,7 @@ const Home = () => {
           )}
         </div>
 
-        <div id="test" className="w-3/6 h-4/5 my-4 border-2 border-dashed" ref={domNode}></div>
+        <div id="test" className="w-4/6 h-4/5 my-4 border-2 border-dashed" ref={domNode}></div>
       </div>
     </>
   )
