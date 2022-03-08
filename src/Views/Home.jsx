@@ -196,7 +196,7 @@ const Home = () => {
             <p className="text-lg md:text-base xl:text-xl font-light text-gray-800 xl:leading-normal pt-1">You can only upload (.csv,.xlsx,.xls) files</p>
           </div>
 
-          <div className="flex">
+          <div className="flex items-center gap-2">
             <div>
               <InputFile label="1. Upload stakeholders file" re={inputRefOne} onChange={handleFileOne} />
             </div>
@@ -209,8 +209,8 @@ const Home = () => {
           {nodes && nodes.length >= 1 && edges && edges.length >= 1 && <Button icon={<MdClear color="white" size={20} />} text="Reset" onClick={handleClear} />}
         </div>
 
-        <div className="flex flex-col items-center h-full w-full">
-          <div id="test" className="w-11/12 h-4/5 my-t-4 mb-1 border-2 border-dashed" ref={domNode} />
+        <div className="flex flex-col items-center h-full w-full mt-4">
+          <div id="test" className="w-11/12 h-5/6 my-t-4 mb-1 border-2 border-dashed" ref={domNode} />
           <Button icon={<MdFileDownload color="white" size={20} />} text="Export" onClick={downloadNetworkAsImage} />
         </div>
       </div>
