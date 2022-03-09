@@ -18,6 +18,7 @@ const Home = () => {
 
   const [nodes, setNodes] = useState([])
   const [edges, setEdges] = useState([])
+
   const [UniqueNodes, setUniqueNodes] = useState([])
 
   // A reference to the vis network instance
@@ -33,9 +34,9 @@ const Home = () => {
   const options = {
     physics: {
       forceAtlas2Based: {
-        gravitationalConstant: -40,
-        centralGravity: 0.005,
-        springLength: 230,
+        gravitationalConstant: -26,
+        centralGravity: 0.0015,
+        springLength: 200,
         springConstant: 0.035,
         avoidOverlap: 1,
       },
@@ -52,17 +53,29 @@ const Home = () => {
     nodes: {
       widthConstraint: { maximum: 200 },
     },
-
+    
     edges: {
+      physics: false,
       selectionWidth: function (width) {
         return width * 2
       },
-      font: {
-        align: 'top',
-        background: 'white',
+      hoverWidth: function(width){
+        return width*2
       },
-    },
-    autoResize: true,
+      smooth: false,
+      // smooth: {
+        //   type: 'continuous',
+        
+        //   forceDirection: 'none'
+        
+        // },
+        font: {
+          align: 'top',
+          background: 'white',
+        },
+      },
+      // autoResize: true,
+    interaction:{hover:true},
     height: '100%',
     width: '100%',
     clickToUse: false,
@@ -70,14 +83,51 @@ const Home = () => {
 
   useEffect(() => {
     network.current = new Network(domNode.current, data, options)
-    network.current.on('stabilizationIterationsDone, afterDrawing', function () {
+    network.current.on('stabilizationIterationsDone', function () {
       this.setOptions({ physics: false })
     })
+
+  //   network.current.on("click", function (n) {
+  //     console.log(n);
+  //     var nnn = network.current.getConnectedNodes(n.nodes[0])
+  //     nnn.push(n.nodes[0])
+  //     var tempNodes = []
+  //     nodes.forEach((nodee) => {
+  //       if(!nnn.includes(nodee.id) ){
+  //         nodee.hidden = true
+  //       }
+  //       tempNodes.push(nodee)
+  //     })
+  // setNodes([])  
+  // setNodes(tempNodes)
+
+    
+  //   })
+  network.current.on("hoverNode", function(p){
+    console.log(p);
+    var nnn = network.current.getConnectedNodes(p.node)
+    nnn.push(p.node)
+    var tempNodes = []
+        nodes.forEach((nodee) => {
+          if(!nnn.includes(nodee.id) ){
+            nodee.color = "red"
+          }
+          tempNodes.push(nodee)
+        })
+
+        // nodes.update({id:3})
+
+        console.log(nodes);
+    // setNodes([])  
+    setNodes([...tempNodes,])  
+  });
+
     network.current.on('afterDrawing', function (ctx) {
+      // this.setOptions({ physics: false })
       var dataURL = ctx.canvas.toDataURL()
       document.getElementById('canvasImg').href = dataURL
     })
-  }, [domNode, network, data, options])
+  }, [domNode, network, nodes, data, options])
 
   const handleFileOne = (e) => {
     setFile1(e.target.files[0])
