@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Network } from 'vis-network/standalone/esm/vis-network'
+import { DataSet } from 'vis-data'
 import { MdFileDownload, MdClear, MdArrowForward } from 'react-icons/md'
 import Papa from 'papaparse'
 import TitleBar from '../components/TitleBar'
@@ -19,7 +20,6 @@ const Home = () => {
   const [nodes, setNodes] = useState([])
   const [edges, setEdges] = useState([])
 
-  const [UniqueNodes, setUniqueNodes] = useState([])
 
   // A reference to the vis network instance
   const network = useRef(null)
@@ -53,90 +53,170 @@ const Home = () => {
     nodes: {
       widthConstraint: { maximum: 200 },
     },
-    
+
     edges: {
       physics: false,
       selectionWidth: function (width) {
         return width * 2
       },
-      hoverWidth: function(width){
-        return width*2
+      hoverWidth: function (width) {
+        return width * 2
       },
       smooth: false,
       // smooth: {
-        //   type: 'continuous',
-        
-        //   forceDirection: 'none'
-        
-        // },
-        font: {
-          align: 'top',
-          background: 'white',
-        },
+      //   type: 'continuous',
+
+      //   forceDirection: 'none'
+
+      // },
+      font: {
+        align: 'top',
+        background: 'white',
       },
-      // autoResize: true,
-    interaction:{hover:true},
+    },
+    // autoResize: true,
+    scale : 2.5,
+    // interaction: { hover: true, hideEdgesOnDrag:true },
     height: '100%',
     width: '100%',
     clickToUse: false,
+    
   }
 
   useEffect(() => {
-    network.current = new Network(domNode.current, data, options)
+    // var nod = [
+    //   { id: 1, label: 'Node 1', x: null, y: null },
+    //   { id: 2, label: 'Node 2', x: null, y: null },
+    //   { id: 3, label: 'Node 3', x: null, y: null },
+    //   { id: 4, label: 'Node 4', x: null, y: null },
+    //   { id: 5, label: 'Node 5', x: null, y: null }
+    // ];
+    // var edg = [
+    //   { from: 1, to: 3 },
+    //   { from: 1, to: 2 },
+    //   { from: 2, to: 4 },
+    //   { from: 2, to: 5 }
+    // ];
+    if(network.current){
+      network.current.setOptions({physics:false})
+    }
+    network.current = network.currnet || new Network(domNode.current, data, options)
     network.current.on('stabilizationIterationsDone', function () {
       this.setOptions({ physics: false })
     })
+    // console.log(network.current)
 
-  //   network.current.on("click", function (n) {
-  //     console.log(n);
-  //     var nnn = network.current.getConnectedNodes(n.nodes[0])
-  //     nnn.push(n.nodes[0])
-  //     var tempNodes = []
-  //     nodes.forEach((nodee) => {
-  //       if(!nnn.includes(nodee.id) ){
-  //         nodee.hidden = true
-  //       }
-  //       tempNodes.push(nodee)
-  //     })
-  // setNodes([])  
-  // setNodes(tempNodes)
+    network.current.on("click", function (n) {
+      console.log(n);
+      console.log(n.nodes.length);
 
-    
-  //   })
-  network.current.on("hoverNode", function(p){
-    console.log(p);
-    var nnn = network.current.getConnectedNodes(p.node)
-    nnn.push(p.node)
-    var tempNodes = []
-        nodes.forEach((nodee) => {
-          if(!nnn.includes(nodee.id) ){
-            nodee.color = "red"
+
+      if (network.current && n.nodes.length > 0) {
+        var nnn = network.current.getConnectedNodes(n.nodes[0])
+
+        nnn.push(n.nodes[0])
+        
+        const tempNodes = []
+        nodes.forEach(e => {
+          if(!nnn.includes(e.id)){
+
+            const position = network.current.getPositions([e.id])
+            const posX = position[`${e.id}`].x
+            const posY = position[`${e.id}`].y
+            e.x = posX
+            e.y = posY
+            e.hidden = true
           }
-          tempNodes.push(nodee)
+          tempNodes.push(e)
         })
+        // nod = tempNodes
+        setNodes(tempNodes)
+      }
 
-        // nodes.update({id:3})
 
-        console.log(nodes);
-    // setNodes([])  
-    setNodes([...tempNodes,])  
-  });
+      if(n.nodes.length === 0){
+        const tempNodes = []
+        nodes.forEach(e => {
+        
+
+            const position = network.current.getPositions([e.id])
+            const posX = position[`${e.id}`].x
+            const posY = position[`${e.id}`].y
+            e.x = posX
+            e.y = posY
+            e.hidden = false
+          
+          tempNodes.push(e)
+        })
+        // nod = tempNodes
+        setNodes(tempNodes)
+      }
+
+      
+      // console.log(nod)
+    })
+
 
     network.current.on('afterDrawing', function (ctx) {
       // this.setOptions({ physics: false })
       var dataURL = ctx.canvas.toDataURL()
       document.getElementById('canvasImg').href = dataURL
     })
-  }, [domNode, network, nodes, data, options])
+
+  }, [domNode, network, nodes, options])
 
   const handleFileOne = (e) => {
-    setFile1(e.target.files[0])
+    const file = e.target.files[0]
+    setFile1(file)
+    if (file) {
+      Papa.parse(file, {
+        header: true,
+        skipEmptyLines: true,
+        complete: function (results) {
+          var n = []
+          results.data.forEach((row) => {
+            var obj = {
+              id: row.NAME,
+              label: row.NAME,
+              shape: 'box',
+              color: '#29B0B0',
+            }
+            n.push(obj)
+        })
+        console.log(n);
+        setNodes(n)
+      }
+
+    })
   }
+}
   const handleFileTwo = (e) => {
-    console.log(file1)
-    console.log(e.target.files[0])
-    // Implementation here
-  }
+    const file = e.target.files[0]
+    if (file) {
+      var e = []
+      Papa.parse(file, {
+        header: true,
+        skipEmptyLines: true,
+        complete: function (results) {
+          results.data.forEach((row) => { 
+
+            var edgeObj = {
+              from: row.FROM,
+              to: row.TO,
+              arrows: 'to',
+              label: row.REL,
+              width: row.Weight,
+              color: row.RELCOLOR,
+            }
+            e.push(edgeObj)
+          })
+         
+          setEdges(e)
+        },
+      })
+
+    }
+}
 
   const handleFileUpload = async (e) => {
     const files = e.target.files
@@ -144,6 +224,7 @@ const Home = () => {
     var n = []
     var n1 = []
     var e = []
+    var x = 0;
     if (files) {
       Papa.parse(files[0], {
         header: true,
@@ -155,6 +236,7 @@ const Home = () => {
             nodeSet.add(row.TO)
 
             var edgeObj = {
+              id: x,
               from: row.FROM,
               to: row.TO,
               arrows: 'to',
@@ -163,6 +245,7 @@ const Home = () => {
               color: row.RELCOLOR,
             }
             e.push(edgeObj)
+            x++;
           })
           n = Array.from(nodeSet)
           n.forEach((node) => {
@@ -252,16 +335,22 @@ const Home = () => {
             </div>
 
             <div>
-              <InputFile label="2. Upload edge matrix file" re={inputRefTwo} onChange={handleFileUpload} />
+              <InputFile label="2. Upload edge matrix file" re={inputRefTwo} onChange={handleFileTwo} />
             </div>
+
+          
           </div>
 
-          {nodes && nodes.length >= 1 && edges && edges.length >= 1 && <Button icon={<MdClear color="white" size={20} />} text="Reset" onClick={handleClear} />}
         </div>
 
         <div className="flex flex-col items-center h-full w-full mt-4">
           <div id="test" className="w-11/12 h-5/6 my-t-4 mb-1 border-2 border-dashed" ref={domNode} />
+
+          <div id="fff" className="flex items-center gap-2">
+          {nodes && nodes.length >= 1 && edges && edges.length >= 1 && <Button icon={<MdClear color="white" size={20} />} text="Reset" onClick={handleClear} />}
+
           <Button icon={<MdFileDownload color="white" size={20} />} text="Export" onClick={downloadNetworkAsImage} />
+          </div>
         </div>
       </div>
 
