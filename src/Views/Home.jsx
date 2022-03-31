@@ -337,15 +337,9 @@ const Home = () => {
                       >
                         Get started
                       </button>
-                      {/* <div className="flex">
-                        <h1 onClick={scrollToCont} className="flex items-center gap-2 cursor-pointer text-white mt-2 px-1">
-                          Contributors
-                          <RiTeamLine className="text-white" size={22} />
-                        </h1>
-                      </div> */}
                       <button
                         onClick={scrollToCont}
-                        className="mt-5 lg:mt-8 py-3 lg:py-4 px-4 lg:px-8 border-2 border-white font-bold text-white hover:text-black hover:bg-white  text-sm lg:text-lg xl:text-xl hover:bg-opacity-90 ml-5  focus:ring-0 focus:outline-none"
+                        className="mt-5 lg:mt-8 lg:py-3.5 px-4 lg:px-8 border-2 border-white font-bold text-white hover:text-black hover:bg-white  text-sm lg:text-lg xl:text-xl hover:bg-opacity-90 ml-5  focus:ring-0 focus:outline-none"
                       >
                         Contributors
                       </button>
