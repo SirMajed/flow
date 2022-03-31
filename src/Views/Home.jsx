@@ -326,7 +326,7 @@ const Home = () => {
 
   }
   function scrollToCont() {
-    const divElement = document.getElementById('test')
+    const divElement = document.getElementById('cont')
     divElement.scrollIntoView({ behavior: 'smooth' })
   }
 
@@ -355,11 +355,16 @@ const Home = () => {
                         </p>
                       </div>
                       <button
-                      id="ddd"
                         onClick={scrollTo}
                         className="mt-5 lg:mt-8 py-3 lg:py-4 px-4 lg:px-8 bg-white font-bold text-black text-sm lg:text-lg xl:text-xl hover:bg-opacity-90  focus:ring-2 focus:ring-offset-2 focus:ring-white focus:outline-none"
                       >
                         Get started
+                      </button>
+                      <button
+                        onClick={scrollToCont}
+                        className="mt-5 lg:mt-8 py-3 lg:py-4 px-4 lg:px-8 bg-white font-bold text-black text-sm lg:text-lg xl:text-xl hover:bg-opacity-90 ml-5  focus:ring-2 focus:ring-offset-2 focus:ring-white focus:outline-none"
+                      >
+                        Contributors
                       </button>
                     </div>
                     <div className="md:w-1/3 w-2/3">
@@ -427,7 +432,9 @@ const Home = () => {
       </div>
 
       <a id="canvasImg" download="filename"></a>
-      
+      <div id="cont" className="flex flex-col justify-top h-screen bg-gray-100">
+       <h1 className="text-xl md:text-2xl lg:text-4xl xl:text-4xl lg:w-full text-dark font-black leading-6 lg:leading-10 md:text-center text-center"> Contributors</h1>
+      </div>
     </>
   )
 }
