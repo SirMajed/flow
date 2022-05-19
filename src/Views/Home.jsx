@@ -403,7 +403,7 @@ const Home = () => {
           </div>
 
           <div id="fff" className="flex items-center gap-2">
-            {nodes && nodes.length >= 1 && edges && edges.length >= 1 && <Button icon={<MdClear color="white" size={20} />} text="Reset" onClick={handleClear} />}
+          {((nodes && nodes.length >= 1) || (edges && edges.length >= 1)) && <Button icon={<MdClear color="white" size={20} />} text="Reset" onClick={handleClear} />}
 
             <Button icon={<MdFileDownload color="white" size={20} />} text="Export" onClick={downloadNetworkAsImage} />
           </div>
