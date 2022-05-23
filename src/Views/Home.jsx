@@ -1,16 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Network } from 'vis-network/standalone/esm/vis-network'
-import { DataSet } from 'vis-data'
-import { MdFileDownload, MdClear, MdArrowForward } from 'react-icons/md'
-import { RiTeamLine } from 'react-icons/ri'
 import Papa from 'papaparse'
 import TitleBar from '../components/TitleBar'
 import isElectron from 'is-electron'
 import whiteLogo from '../assets/images/whiteLogo.png'
-import { BsDiagram2 } from 'react-icons/bs'
-import Button from '../components/Button'
-import InputFile from '../components/InputFile'
 import Team from '../components/Team'
+import UploadFileView from '../components/UploadFileView'
+import DataForm from '../components/DataForm'
+import { Link } from 'react-router-dom'
 const Home = () => {
   // A reference to the div rendered by this component
   const domNode = useRef(null)
@@ -87,91 +84,91 @@ const Home = () => {
     clickToUse: false,
   }
 
-  useEffect(() => {
-    // var nod = [
-    //   { id: 1, label: 'Node 1', x: null, y: null },
-    //   { id: 2, label: 'Node 2', x: null, y: null },
-    //   { id: 3, label: 'Node 3', x: null, y: null },
-    //   { id: 4, label: 'Node 4', x: null, y: null },
-    //   { id: 5, label: 'Node 5', x: null, y: null }
-    // ];
-    // var edg = [
-    //   { from: 1, to: 3 },
-    //   { from: 1, to: 2 },
-    //   { from: 2, to: 4 },
-    //   { from: 2, to: 5 }
-    // ];
-    if (network.current) {
-      network.current.setOptions({ physics: false })
-    }
-    network.current = network.currnet || new Network(domNode.current, data, options)
-    network.current.on('stabilizationIterationsDone', function () {
-      this.setOptions({ physics: false })
-    })
-    // console.log(network.current)
+  // useEffect(() => {
+  //   // var nod = [
+  //   //   { id: 1, label: 'Node 1', x: null, y: null },
+  //   //   { id: 2, label: 'Node 2', x: null, y: null },
+  //   //   { id: 3, label: 'Node 3', x: null, y: null },
+  //   //   { id: 4, label: 'Node 4', x: null, y: null },
+  //   //   { id: 5, label: 'Node 5', x: null, y: null }
+  //   // ];
+  //   // var edg = [
+  //   //   { from: 1, to: 3 },
+  //   //   { from: 1, to: 2 },
+  //   //   { from: 2, to: 4 },
+  //   //   { from: 2, to: 5 }
+  //   // ];
+  //   if (network.current) {
+  //     network.current.setOptions({ physics: false })
+  //   }
+  //   network.current = network.currnet || new Network(domNode.current, data, options)
+  //   network.current.on('stabilizationIterationsDone', function () {
+  //     this.setOptions({ physics: false })
+  //   })
+  //   // console.log(network.current)
 
-    network.current.on('click', function (n) {
-      console.log(n)
-      // console.log(n);
-      // console.log(n.nodes.length);
+  //   network.current.on('click', function (n) {
+  //     console.log(n)
+  //     // console.log(n);
+  //     // console.log(n.nodes.length);
 
-      var tempNodes = []
-      nodes.forEach((e) => {
-        const position = network.current.getPositions([e.id])
-        const posX = position[`${e.id}`].x
-        const posY = position[`${e.id}`].y
-        e.x = posX
-        e.y = posY
-        // e.hidden = false
+  //     var tempNodes = []
+  //     nodes.forEach((e) => {
+  //       const position = network.current.getPositions([e.id])
+  //       const posX = position[`${e.id}`].x
+  //       const posY = position[`${e.id}`].y
+  //       e.x = posX
+  //       e.y = posY
+  //       // e.hidden = false
 
-        tempNodes.push(e)
-      })
-      if (network.current && n.nodes.length > 0) {
-        var nnn = network.current.getConnectedNodes(n.nodes[0])
+  //       tempNodes.push(e)
+  //     })
+  //     if (network.current && n.nodes.length > 0) {
+  //       var nnn = network.current.getConnectedNodes(n.nodes[0])
 
-        nnn.push(n.nodes[0])
+  //       nnn.push(n.nodes[0])
 
-        tempNodes = []
-        nodes.forEach((e) => {
-          if (!nnn.includes(e.id)) {
-            const position = network.current.getPositions([e.id])
-            const posX = position[`${e.id}`].x
-            const posY = position[`${e.id}`].y
-            e.x = posX
-            e.y = posY
-            e.hidden = true
-          }
-          tempNodes.push(e)
-        })
-        // nod = tempNodes
-        // setNodes(tempNodes)
-      }
+  //       tempNodes = []
+  //       nodes.forEach((e) => {
+  //         if (!nnn.includes(e.id)) {
+  //           const position = network.current.getPositions([e.id])
+  //           const posX = position[`${e.id}`].x
+  //           const posY = position[`${e.id}`].y
+  //           e.x = posX
+  //           e.y = posY
+  //           e.hidden = true
+  //         }
+  //         tempNodes.push(e)
+  //       })
+  //       // nod = tempNodes
+  //       // setNodes(tempNodes)
+  //     }
 
-      if (n.items.length === 0 && n.nodes.length === 0 && n.edges.length === 0) {
-        tempNodes = []
-        nodes.forEach((e) => {
-          const position = network.current.getPositions([e.id])
-          const posX = position[`${e.id}`].x
-          const posY = position[`${e.id}`].y
-          e.x = posX
-          e.y = posY
-          e.hidden = false
+  //     if (n.items.length === 0 && n.nodes.length === 0 && n.edges.length === 0) {
+  //       tempNodes = []
+  //       nodes.forEach((e) => {
+  //         const position = network.current.getPositions([e.id])
+  //         const posX = position[`${e.id}`].x
+  //         const posY = position[`${e.id}`].y
+  //         e.x = posX
+  //         e.y = posY
+  //         e.hidden = false
 
-          tempNodes.push(e)
-        })
-        // nod = tempNodes
-      }
-      setNodes(tempNodes)
+  //         tempNodes.push(e)
+  //       })
+  //       // nod = tempNodes
+  //     }
+  //     setNodes(tempNodes)
 
-      // console.log(nod)
-    })
+  //     // console.log(nod)
+  //   })
 
-    network.current.on('afterDrawing', function (ctx) {
-      // this.setOptions({ physics: false })
-      var dataURL = ctx.canvas.toDataURL()
-      document.getElementById('canvasImg').href = dataURL
-    })
-  }, [domNode, network, nodes, options])
+  //   network.current.on('afterDrawing', function (ctx) {
+  //     // this.setOptions({ physics: false })
+  //     var dataURL = ctx.canvas.toDataURL()
+  //     document.getElementById('canvasImg').href = dataURL
+  //   })
+  // }, [domNode, network, nodes, options])
 
   const handleFileOne = (e) => {
     const colorList = ['#fc8d8d', '#f8ffc7', '#ededed', '#34eb9b'] // [red, yellow, grey, green]
@@ -315,37 +312,36 @@ const Home = () => {
     <>
       {isElectron() && <TitleBar />}
 
-      <div className="flex flex-col justify-center h-screen bg-gray-100">
+      <div className="flex flex-col justify-center h-screen bg-white">
         <div className="overflow-y-hidden ">
           <div className="mx-auto container py-12 px-4 ">
             <div className="w-full flex justify-center">
               <div className="w-full md:w-11/12 xl:w-10/12 bg-primary md:py-8 md:px-8 px-5 py-4 xl:px-12 xl:py-16 shadow-md">
                 <div>
-                  <div className="flex flex-wrap items-center md:flex-row flex-col-reverse">
+                  <div dir="rtl" className="flex flex-wrap items-center md:flex-row flex-col-reverse">
                     <div className="md:w-2/3 w-full pb-6 md:pb-0 md:pr-6 flex-col md:block flex items-center justify-center md:pt-0 pt-4">
                       <div>
-                        <h1 className="text-xl md:text-2xl lg:text-4xl xl:text-4xl lg:w-10/12 text-white font-black leading-6 lg:leading-10 md:text-left text-center">
-                          Stakeholder Diagram
+                        <h1 className="text-xl md:text-2xl lg:text-3xl xl:text-3xl lg:w-10/12 text-white font-black leading-6 lg:leading-10 md:text-right text-center">
+                          شبكة اصحاب المصلحة
                         </h1>
-                        <p className="text-lg md:text-base xl:text-xl font-light text-gray-200 xl:leading-normal pt-2">
-                          You can upload your files (.csv,.xlsx,.xls) to generate the diagram
+                        <p className="text-lg md:text-base xl:text-lg font-t text-gray-200 xl:leading-normal pt-2">
+                          يمكنك رفع ملفات بصيغة (.csv, .xlsx, .xls) لإنشاء رسم بياني
                         </p>
                       </div>
-                      <button
-                        onClick={scrollTo}
-                        className="mt-5 lg:mt-8 py-3 lg:py-4 px-4 lg:px-8 bg-white font-bold text-black text-sm lg:text-lg xl:text-xl hover:bg-opacity-90  focus:ring-2 focus:ring-offset-2 focus:ring-white focus:outline-none"
-                      >
-                        Get started
-                      </button>
+                      <Link to={'/stakeholders'}>
+                        <button className="rounded-tr-md rounded-br-md mt-5 lg:mt-8 py-3 lg:py-4 px-4 lg:px-8 bg-white font-bold text-black text-sm lg:text-lg xl:text-xl hover:bg-opacity-90  focus:ring-2 focus:ring-offset-2 focus:ring-white focus:outline-none">
+                          ابدأ الآن
+                        </button>
+                      </Link>
                       <button
                         onClick={scrollToCont}
-                        className="mt-5 lg:mt-8 lg:py-3.5 px-4 lg:px-8 border-2 border-white font-bold text-white hover:text-black hover:bg-white  text-sm lg:text-lg xl:text-xl hover:bg-opacity-90 ml-5  focus:ring-0 focus:outline-none"
+                        className="rounded-tl-md rounded-bl-md mt-5 lg:mt-8 lg:py-3.5 px-4 lg:px-8 border-2 border-white font-bold text-white hover:text-black hover:bg-white  text-sm lg:text-lg xl:text-xl hover:bg-opacity-90 ml-5  focus:ring-0 focus:outline-none"
                       >
-                        Contributors
+                        المساهمين
                       </button>
                     </div>
                     <div className="md:w-1/3 w-2/3">
-                      <img className="" src={whiteLogo} alt="image" />
+                      <img draggable={false} className="" src={whiteLogo} alt="image" />
                       {/* <img className="rounded-lg opacity-40" src={Wallpaper} alt="image" /> */}
                     </div>
                   </div>
@@ -356,64 +352,27 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="flex flex-col items-center justify-around h-screen" id="main">
-        <div className="flex-col">
-          <div className="mt-4 mb-2">
-            <h1 className="text-xl md:text-2xl lg:text-4xl xl:text-4xl lg:w-full text-primary font-black leading-6 lg:leading-10 md:text-left text-center">
-              Upload your files
-            </h1>
-            <p className="text-lg md:text-base xl:text-xl font-light text-gray-800 xl:leading-normal pt-1">You can only upload (.csv,.xlsx,.xls) files</p>
-          </div>
+      {/* <DataForm />
+      <UploadFileView
+        domNode={domNode}
+        downloadNetworkAsImage={downloadNetworkAsImage}
+        edges={edges}
+        edgesType={edgesType}
+        handleClear={handleClear}
+        handleEdgeFilter={handleEdgeFilter}
+        handleFileOne={handleFileOne}
+        handleFileTwo={handleFileTwo}
+        handleNodeFilter={handleNodeFilter}
+        inputRefOne={inputRefOne}
+        inputRefTwo={inputRefTwo}
+        nodeType={nodeType}
+        nodes={nodes}
+      /> */}
 
-          <div className="flex items-center gap-2">
-            <div>
-              <InputFile label="1. Upload stakeholders file" re={inputRefOne} onChange={handleFileOne} />
-            </div>
-
-            <div>
-              <InputFile label="2. Upload edge matrix file" re={inputRefTwo} onChange={handleFileTwo} />
-            </div>
-          </div>
-        </div>
-
-        <div className="flex flex-col items-center h-full w-full mt-4">
-          <div className="w-11/12 h-5/6 my-t-4 mb-1 relative border-2 border-dashed">
-            {/* <div className='absolute top-0 right-0 z-10 '> */}
-
-            <select id="nodeType" className="absolute top-0 right-0 z-10 bg-primary gap-2 px-2 py-1.5 my-1 mx-2 text-white" onChange={handleNodeFilter}>
-              <option selected value="none">
-                Stakeholders filter
-              </option>
-              {nodeType.map((t) => (
-                <option value={t}>{t}</option>
-              ))}
-            </select>
-
-            {/* </div> */}
-
-            <select id="relationType" className="absolute top-0 right-20 z-10 bg-primary gap-2 px-5 py-1.5 my-1 mr-28 text-white" onChange={handleEdgeFilter}>
-              <option selected value="none">
-                Relation filter
-              </option>
-              {edgesType.map((t) => (
-                <option value={t}>{t}</option>
-              ))}
-            </select>
-            <div id="test" className="w-full h-full my-t-4 mb-1" ref={domNode} />
-          </div>
-
-          <div id="fff" className="flex items-center gap-2">
-          {((nodes && nodes.length >= 1) || (edges && edges.length >= 1)) && <Button icon={<MdClear color="white" size={20} />} text="Reset" onClick={handleClear} />}
-
-            <Button icon={<MdFileDownload color="white" size={20} />} text="Export" onClick={downloadNetworkAsImage} />
-          </div>
-        </div>
-      </div>
-
-      <a id="canvasImg" download="filename"></a>
+      {/* <a id="canvasImg" download="filename"></a> */}
       <div id="cont" className="flex flex-col justify-top h-screen bg-gray-100">
         <h1 className="mt-4 text-xl md:text-2xl lg:text-4xl xl:text-4xl lg:w-full text-gray-800 font-black leading-6 lg:leading-10 md:text-center text-center">
-          Contributors
+          المساهمين
         </h1>
         <Team />
       </div>

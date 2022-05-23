@@ -1,12 +1,46 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+* {
+  font-family: 'Cairo';
+}
+
 ::-webkit-scrollbar {
-  width: 0px;
+  width: 4px;
+  cursor: pointer;
+  /*background-color: rgba(229, 231, 235, var(--bg-opacity));*/
 }
-.drag {
-  -webkit-app-region: drag;
+::-webkit-scrollbar-track {
+  background-color: rgba(229, 231, 235, var(--bg-opacity));
+  cursor: pointer;
+  /*background: red;*/
 }
-.no-drag {
-  -webkit-app-region: no-drag;
+::-webkit-scrollbar-thumb {
+  cursor: pointer;
+  background-color: #a0aec0;
+  border-radius: 10px;
+  margin-top: 50px;
+  /*outline: 1px solid slategrey;*/
+}
+ /* Typography */
+ @font-face {
+  font-family: Cairo;
+  src: url(@fonts/Cairo-Regular.ttf) format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: Cairo;
+  src: url(@fonts/Cairo-Bold.ttf) format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: Cairo;
+  src: url(@fonts/Cairo-Black.ttf) format('truetype');
+  font-weight: bolder;
+  font-style: italic;
 }
