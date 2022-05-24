@@ -19,13 +19,23 @@ export const stakeholderSlice = createSlice({
     deleteStakeholder: (state, action) => {
       state.stakeholders = state.stakeholders.filter((item) => item.name !== action.payload)
     },
+    deleteRelation: (state, action) => {
+      state.relations = state.relations.filter((item) => item.name !== action.payload)
+    },
     clearStakeholders: (state) => {
       state.stakeholders = []
+    },
+    addRelation: (state, action) => {
+      state.relations.push(action.payload)
+    },
+    addRelationArray: (state, action) => {
+      console.log(action.payload)
+      state.relations = action.payload
     },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { addStakeholder, deleteStakeholder, addStakeholderArray, clearStakeholders } = stakeholderSlice.actions
+export const { addStakeholder, deleteStakeholder, addStakeholderArray, clearStakeholders, addRelation, addRelationArray } = stakeholderSlice.actions
 
 export default stakeholderSlice.reducer

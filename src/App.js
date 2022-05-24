@@ -7,6 +7,7 @@ import Stakeholders from './Views/Stakeholders/index'
 import CreateStakeholders from './Views/Stakeholders/CreateStakeholders'
 import ImportStakeholders from './Views/Stakeholders/ImportStakeholders'
 import Relations from './Views/Relations'
+import CreateRelations from './Views/Relations/CreateRelations'
 function App() {
   return (
     <Router>
@@ -17,6 +18,8 @@ function App() {
         <Route path="/stakeholders/create" element={<CreateStakeholders />} />
         <Route path="/stakeholders/import" element={<ImportStakeholders />} />
         <Route path="/relations" element={<Relations />} />
+        <Route path="/relations/create" element={<CreateRelations />} />
+        <Route path="/relations/import" element={<ImportStakeholders />} />
         <Route path="*" element={<h1>ERROR 404</h1>} />
       </Routes>
     </Router>

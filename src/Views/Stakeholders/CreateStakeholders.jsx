@@ -16,7 +16,6 @@ const CreateStakeholders = () => {
   const { stakeholders } = useSelector((s) => s.stakeholders)
   const [stakeholderName, setStakeholderName] = useState('')
   const [stakeholderType, setStakeholderType] = useState('')
-  const [fileName, setFileName] = useState(null)
   const dispatch = useDispatch()
   const stakeholdersData = stakeholders
   const createStakeholder = () => {
@@ -25,17 +24,6 @@ const CreateStakeholders = () => {
     // setStakeholders([...stakeholders, obj])
     setStakeholderName('')
     setStakeholderType('')
-  }
-
-  const handleForce = (data, fileInfo) => {
-    dispatch(addStakeholderArray(data))
-    setFileName(fileInfo.name)
-  }
-  const papaparseOptions = {
-    header: true,
-    dynamicTyping: true,
-    skipEmptyLines: true,
-    transformHeader: (header) => header.toLowerCase().replace(/\W/g, '_'),
   }
 
   const removeStakeholder = (name) => {
@@ -50,23 +38,23 @@ const CreateStakeholders = () => {
               إنشاء اصحاب المصلحة
             </h1>
           </div>
-          <div dir="rtl" className="flex items-center justify-start gap-2 mt-6 bg-gray-50 px-5 py-4 rounded-md my-2 shadow-md">
+          <div dir="rtl" className="flex items-center justify-start gap-2 mt-6 bg-white px-5 py-4 rounded-md my-2 shadow-md">
             <Input placeholder="الأسم" value={stakeholderName} onChange={(e) => setStakeholderName(e.target.value)} />
 
             <Input placeholder="النوع" value={stakeholderType} onChange={(e) => setStakeholderType(e.target.value)} />
             <GrAdd data-tip="إنشاء مساهم" className="cursor-pointer" onClick={createStakeholder} size={30} />
           </div>
-          <Table data={stakeholders} handleDelete={removeStakeholder} tableHeaders={['اسم المساهم', 'نوع المساهم', 'خيارات']} />
+          <Table type="stakeholders" data={stakeholders} handleDelete={removeStakeholder} tableHeaders={['اسم المساهم', 'نوع المساهم', 'خيارات']} />
 
           <div className="flex flex-row-reverse items-center justify-between mt-4">
             {/* <CSVLink filename="stakeholders" className="py-1.5 text-white px-2 rounded-md bg-button_primary" data={stakeholdersData}>
               .csv تصدير الجدول بصيغة
             </CSVLink> */}
             <Link to={'/stakeholders'}>
-              <Button classes={'rounded-md'} text="الخلف" onClick={() => {}} />
+              <Button text="الخلف" onClick={() => {}} />
             </Link>
             <Link to={'/relations'}>
-              <Button classes={'rounded-md'} text="الخطوة التالية" onClick={() => {}} />
+              <Button text="الخطوة التالية" onClick={() => {}} />
             </Link>
           </div>
         </div>

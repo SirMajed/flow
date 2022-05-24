@@ -1,6 +1,6 @@
-const Button = ({ onClick, icon, text, color = 'primary', classes, children }) => {
+const Button = ({ onClick, icon, text, classes }) => {
   return (
-    <button onClick={onClick} className={`flex items-center gap-2 ${color === 'primary' && 'bg-primary'} bg-button_primary px-3 py-1.5 text-white ${classes}`}>
+    <button onClick={onClick} className={`flex items-center gap-2 rounded-md bg-primary hover:bg-primaryHover transition px-3 py-1.5 text-white ${classes}`}>
       {text}
       {icon}
     </button>
