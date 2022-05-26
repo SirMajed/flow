@@ -16,7 +16,23 @@ const Index = () => {
   const navigate = useNavigate()
   const handleForce = (data, fileInfo) => {
     console.log(data)
-    dispatch(addRelationArray(data))
+    let arr = []
+    let c = 1
+    data.forEach((row) => {
+      var obj = {
+        id: c,
+        from: row.from,
+        to: row.to,
+        arrows: 'to',
+        label: row.rel,
+        width: (row.weight * 10) / 1.2,
+        color: row.relcolor,
+        type: row.reltype,
+      }
+      arr.push(obj)
+      c++
+    })
+    dispatch(addRelationArray(arr))
     setFileName(fileInfo.name)
     // navigate('/relations/create')
     setCreateRelationsClicked(true)
@@ -37,7 +53,7 @@ const Index = () => {
         ) : (
           <div className="flex flex-col justify-center">
             <div className="my-6">
-              <p className="  text-base font-medium text-gray-800">اختر الطريقة المناسبة</p>
+              <p className="text-xl font-medium text-gray-800">اختر الطريقة المناسبة</p>
               <p className="font-normal text-gray-600">يمكنك إنشاء العلاقات بنفسك وتعبئة البيانات او يمكنك رفع ملف بصيغة إكسل لقراءة البيانات والتعديل عليها</p>
             </div>
             <div className="flex flex-row items-center justify-center gap-10">
