@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import { addStakeholderArray } from 'redux/slices/stakeholderSlice'
 import Steps from 'components/Steps'
 import FormLayout from 'components/FormLayout'
+import CreateStakeholders from './CreateStakeholders'
 const Index = () => {
   const [fileName, setFileName] = useState(null)
   const dispatch = useDispatch()
@@ -16,7 +17,8 @@ const Index = () => {
     console.log(data)
     dispatch(addStakeholderArray(data))
     setFileName(fileInfo.name)
-    navigate('/stakeholders/create')
+    // navigate('/stakeholders/create')
+    setCreateStakeholdersClicked(true)
   }
   const papaparseOptions = {
     header: true,
@@ -24,13 +26,19 @@ const Index = () => {
     skipEmptyLines: true,
     transformHeader: (header) => header.toLowerCase().replace(/\W/g, '_'),
   }
+
+  const [createStakeholdersClicked, setCreateStakeholdersClicked] = useState(false)
   return (
-    <div>
-      {/* <FormLayout></FormLayout> */}
-      <div className="flex flex-col items-center gap-20 justify-center h-screen bg-zinc-50">
-        <div className="flex flex-col justify-center">
-          <Steps selected="stakeholders" />
-          <div className="flex flex-col justify-center mt-20">
+    <>
+      <FormLayout state="stakeholders">
+        {createStakeholdersClicked ? (
+          <CreateStakeholders />
+        ) : (
+          <div className="flex flex-col justify-center">
+            <div className="my-6">
+              <p className="  text-base font-medium text-gray-800">اختر الطريقة المناسبة</p>
+              <p className="font-normal text-gray-600">يمكنك إنشاء اصحاب المصلحة بنفسك وتعبئة البيانات او يمكنك رفع ملف بصيغة إكسل لقراءة البيانات والتعديل عليها</p>
+            </div>
             <div className="flex flex-row items-center justify-center gap-10">
               <label
                 className="rounded-md bg-primaryHover hover:bg-gray-900 transition text-white font-bold  border shadow-lg p-5 cursor-pointer"
@@ -45,7 +53,8 @@ const Index = () => {
               <p>او</p>
               <div
                 onClick={() => {
-                  navigate('/stakeholders/create')
+                  // navigate('/stakeholders/create')
+                  setCreateStakeholdersClicked(true)
                 }}
                 className="flex items-center gap-2 rounded-md bg-primaryHover hover:bg-gray-900 transition text-white font-bold  border shadow-lg p-5 cursor-pointer"
               >
@@ -54,9 +63,9 @@ const Index = () => {
               </div>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
+        )}
+      </FormLayout>
+    </>
   )
 }
 
