@@ -2,7 +2,7 @@ import { useState } from 'react'
 import Input from './Input'
 import Button from './Button'
 import Select from './Select'
-import { CSVLink, CSVDownload } from 'react-csv'
+import { CSVLink } from 'react-csv'
 
 const DataForm = () => {
   const colors = ['red', 'black', 'green', 'blue', 'yellow']
@@ -91,11 +91,6 @@ const DataForm = () => {
               </table>
             )}
           </div>
-
-          {/* <Button text="Download Stakeholders .csv" onClick={downloadCsv} classes="rounded-md py-2 focus:bg-opacity-80 transition" /> */}
-          {/* <CSVLink filename="stakeholders" className="py-2 text-white px-2 rounded-md bg-black mt-3" data={csvData}>
-            Download .csv
-          </CSVLink> */}
 
           <h1 className="text-xl md:text-2xl mt-7 lg:text-4xl xl:text-4xl lg:w-full text-primary font-black leading-6 lg:leading-10 md:text-center text-center">
             Data Entry - Relations

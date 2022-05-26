@@ -1,34 +1,42 @@
 import React from 'react'
 import { useState } from 'react'
-import Input from '@components/Input'
-import Button from '@components/Button'
-import { CSVLink, CSVDownload } from 'react-csv'
+import Input from 'components/Input'
+import Button from 'components/Button'
 import { GrAdd } from 'react-icons/gr'
-import { MdDeleteOutline, MdOutlineModeEditOutline } from 'react-icons/md'
 import { useDispatch, useSelector } from 'react-redux'
-import { addStakeholder, addStakeholderArray, deleteStakeholder } from '../../redux/slices/stakeholderSlice'
+import { addStakeholder, clearStakeholders, deleteStakeholder } from 'redux/slices/stakeholderSlice'
 import ReactTooltip from 'react-tooltip'
-import { Link } from 'react-router-dom'
-import Table from '../../components/Table'
-import CSVReader from 'react-csv-reader'
+import { Link, useNavigate } from 'react-router-dom'
+import Table from 'components/Table'
+import { toast } from 'react-toastify'
+import Form from 'components/Form'
 
 const CreateStakeholders = () => {
   const { stakeholders } = useSelector((s) => s.stakeholders)
   const [stakeholderName, setStakeholderName] = useState('')
   const [stakeholderType, setStakeholderType] = useState('')
   const dispatch = useDispatch()
-  const stakeholdersData = stakeholders
+  const navigate = useNavigate()
+
   const createStakeholder = () => {
-    const obj = { name: stakeholderName, type: stakeholderType }
-    dispatch(addStakeholder(obj))
-    // setStakeholders([...stakeholders, obj])
-    setStakeholderName('')
-    setStakeholderType('')
+    if (!stakeholderName || !stakeholderType) {
+      toast.error('قم بتعبئة حقول الإدخال')
+    } else {
+      const obj = { name: stakeholderName, type: stakeholderType }
+      dispatch(addStakeholder(obj))
+      setStakeholderName('')
+      setStakeholderType('')
+    }
   }
 
   const removeStakeholder = (name) => {
     dispatch(deleteStakeholder(name))
   }
+
+  const deleteTableData = () => {
+    dispatch(clearStakeholders())
+  }
+  const handleDownloadTable = () => {}
   return (
     <>
       <div className="flex items-center gap-10 justify-center h-screen bg-zinc-50" id="main">
@@ -38,25 +46,39 @@ const CreateStakeholders = () => {
               إنشاء اصحاب المصلحة
             </h1>
           </div>
-          <div dir="rtl" className="flex items-center justify-start gap-2 mt-6 bg-white px-5 py-4 rounded-md my-2 shadow-md">
-            <Input placeholder="الأسم" value={stakeholderName} onChange={(e) => setStakeholderName(e.target.value)} />
-
-            <Input placeholder="النوع" value={stakeholderType} onChange={(e) => setStakeholderType(e.target.value)} />
-            <GrAdd data-tip="إنشاء مساهم" className="cursor-pointer" onClick={createStakeholder} size={30} />
-          </div>
-          <Table type="stakeholders" data={stakeholders} handleDelete={removeStakeholder} tableHeaders={['اسم المساهم', 'نوع المساهم', 'خيارات']} />
-
-          <div className="flex flex-row-reverse items-center justify-between mt-4">
-            {/* <CSVLink filename="stakeholders" className="py-1.5 text-white px-2 rounded-md bg-button_primary" data={stakeholdersData}>
-              .csv تصدير الجدول بصيغة
-            </CSVLink> */}
-            <Link to={'/stakeholders'}>
-              <Button text="الخلف" onClick={() => {}} />
-            </Link>
-            <Link to={'/relations'}>
-              <Button text="الخطوة التالية" onClick={() => {}} />
-            </Link>
-          </div>
+          <Form>
+            <div dir="rtl" className="flex items-center justify-start gap-2 mt-6 bg-white px-5 py-4 rounded-md my-2 shadow-md">
+              <Input required={true} placeholder="الأسم" value={stakeholderName} onChange={(e) => setStakeholderName(e.target.value)} />
+              <Input required={true} placeholder="النوع" value={stakeholderType} onChange={(e) => setStakeholderType(e.target.value)} />
+              <Button text="اضافة" onClick={createStakeholder} />
+              {/* <button type="submit">
+                <GrAdd data-tip="إنشاء صاحب المصلحة" className="cursor-pointer focus:outline-none" onClick={createStakeholder} size={20} />
+              </button> */}
+            </div>
+          </Form>
+          {stakeholders && stakeholders.length >= 1 && (
+            <div>
+              <Table
+                type="stakeholders"
+                data={stakeholders}
+                deleteTableData={deleteTableData}
+                handleDownloadTable={handleDownloadTable}
+                handleDelete={removeStakeholder}
+                tableHeaders={['اسم المساهم', 'نوع المساهم', 'خيارات']}
+              />
+              <div className="flex flex-row-reverse items-center justify-between mt-4">
+                <Link to={'/stakeholders'}>
+                  <Button text="الخلف" onClick={() => {}} />
+                </Link>
+                <Button
+                  text="الخطوة التالية"
+                  onClick={() => {
+                    stakeholders.length <= 0 ? toast.error('الرجاء اضافة اصحاب المصلحة') : navigate('/relations')
+                  }}
+                />
+              </div>
+            </div>
+          )}
         </div>
         {/*  */}
       </div>

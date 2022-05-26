@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Network } from 'vis-network/standalone/esm/vis-network'
 import Papa from 'papaparse'
-import TitleBar from '../components/TitleBar'
+import TitleBar from 'components/TitleBar'
 import isElectron from 'is-electron'
 import whiteLogo from '../assets/images/whiteLogo.png'
-import Team from '../components/Team'
-import UploadFileView from '../components/UploadFileView'
-import DataForm from '../components/DataForm'
+import Team from 'components/Team'
+import UploadFileView from 'components/UploadFileView'
+import DataForm from 'components/DataForm'
 import { Link } from 'react-router-dom'
 const Home = () => {
   // A reference to the div rendered by this component
@@ -352,8 +352,8 @@ const Home = () => {
         </div>
       </div>
 
-      {/* <DataForm />
-      <UploadFileView
+      {/* <DataForm /> */}
+      {/* <UploadFileView
         domNode={domNode}
         downloadNetworkAsImage={downloadNetworkAsImage}
         edges={edges}

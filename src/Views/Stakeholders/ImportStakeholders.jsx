@@ -1,13 +1,12 @@
 import { useState } from 'react'
 import CSVReader from 'react-csv-reader'
 import { Link } from 'react-router-dom'
-import Table from '../../components/Table'
-import Button from '@components/Button'
+import Table from 'components/Table'
+import Button from 'components/Button'
 import { useDispatch, useSelector } from 'react-redux'
-import { addStakeholderArray, deleteStakeholder } from '../../redux/slices/stakeholderSlice'
+import { addStakeholderArray, deleteStakeholder } from 'redux/slices/stakeholderSlice'
 const ImportStakeholder = () => {
   const [fileName, setFileName] = useState(null)
-  const [importedStakeholders, setImportedStakeholders] = useState([])
   const dispatch = useDispatch()
   const { stakeholders } = useSelector((s) => s.stakeholders)
   const handleForce = (data, fileInfo) => {

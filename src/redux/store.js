@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
-import stakeholderSlice from '@slices/stakeholderSlice'
+import stakeholderSlice from 'redux/slices/stakeholderSlice'
 export const store = configureStore({
   reducer: {
     stakeholders: stakeholderSlice,
