@@ -8,6 +8,7 @@ import Team from 'components/Team'
 import UploadFileView from 'components/UploadFileView'
 import DataForm from 'components/DataForm'
 import { Link } from 'react-router-dom'
+import bg from '../assets/images/ntisbg.jpg'
 const Home = () => {
   // A reference to the div rendered by this component
   const domNode = useRef(null)
@@ -312,11 +313,11 @@ const Home = () => {
     <>
       {isElectron() && <TitleBar />}
 
-      <div className="flex flex-col justify-center h-screen bg-white">
+      <div style={{ backgroundImage: `url(${bg})` }} className="flex flex-col justify-center h-screen ">
         <div className="overflow-y-hidden ">
           <div className="mx-auto container py-12 px-4 ">
             <div className="w-full flex justify-center">
-              <div className="w-full md:w-11/12 xl:w-10/12 bg-primary md:py-8 md:px-8 px-5 py-4 xl:px-12 xl:py-16 shadow-md">
+              <div className="w-full md:w-11/12 xl:w-10/12 rounded-md bg-primary md:py-8 md:px-8 px-5 py-4 xl:px-12 xl:py-16 shadow-md">
                 <div>
                   <div dir="rtl" className="flex flex-wrap items-center md:flex-row flex-col-reverse">
                     <div className="md:w-2/3 w-full pb-6 md:pb-0 md:pr-6 flex-col md:block flex items-center justify-center md:pt-0 pt-4">

@@ -3,7 +3,8 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
   stakeholders: [],
   relations: [],
-  selectedStakeholder: {},
+  stakeholdersTypes: [],
+  relationsTypes: [],
 }
 
 export const stakeholderSlice = createSlice({
@@ -16,8 +17,11 @@ export const stakeholderSlice = createSlice({
     addStakeholderArray: (state, action) => {
       state.stakeholders = action.payload
     },
+    addStakeholdersTypes: (state, action) => {
+      state.stakeholdersTypes = action.payload
+    },
     deleteStakeholder: (state, action) => {
-      state.stakeholders = state.stakeholders.filter((item) => item.name !== action.payload)
+      state.stakeholders = state.stakeholders.filter((item) => item.label !== action.payload)
     },
     deleteRelation: (state, action) => {
       state.relations.splice(
@@ -37,11 +41,24 @@ export const stakeholderSlice = createSlice({
     addRelationArray: (state, action) => {
       state.relations = action.payload
     },
+    addRelationsTypes: (state, action) => {
+      state.relationsTypes = action.payload
+    },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { addStakeholder, deleteStakeholder, addStakeholderArray, clearStakeholders, addRelation, clearRelations, addRelationArray, deleteRelation } =
-  stakeholderSlice.actions
+export const {
+  addStakeholdersTypes,
+  addRelationsTypes,
+  addStakeholder,
+  deleteStakeholder,
+  addStakeholderArray,
+  clearStakeholders,
+  addRelation,
+  clearRelations,
+  addRelationArray,
+  deleteRelation,
+} = stakeholderSlice.actions
 
 export default stakeholderSlice.reducer
