@@ -12,7 +12,11 @@ const Select = ({ onChange, required, items, value, itemsWithNoObjects = false }
         إختر
       </option>
       {items.map((item, i) => {
-        return <option key={i}>{itemsWithNoObjects ? item : item.name}</option>
+        return (
+          <option value={item.value} key={i}>
+            {itemsWithNoObjects ? item : item.name || item.label}
+          </option>
+        )
       })}
     </select>
   )

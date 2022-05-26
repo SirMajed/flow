@@ -38,7 +38,7 @@ const Table = ({ type, data, handleEdit, handleDelete, tableHeaders, deleteTable
                         <td className="px-6 py-4">{item.label || 'الإسم'}</td>
                         <td>{item?.type || 'النوع'}</td>
                         <td className="px-6 py-4 flex items-center justify-center gap-4">
-                          <MdDeleteOutline onClick={() => handleDelete(item.name)} className="cursor-pointer" size={20} />
+                          <MdDeleteOutline onClick={() => handleDelete(item.label)} className="cursor-pointer" size={20} />
                           <MdOutlineModeEditOutline onClick={() => handleEdit(item)} className="cursor-pointer" size={20} />
                         </td>
                       </tr>

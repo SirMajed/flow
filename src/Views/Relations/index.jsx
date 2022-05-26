@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import Steps from 'components/Steps'
 
-import { addRelationArray } from 'redux/slices/stakeholderSlice'
+import { addRelationArray, addRelationsTypes } from 'redux/slices/stakeholderSlice'
 import CreateRelations from './CreateRelations'
 import FormLayout from 'components/FormLayout'
 const Index = () => {
@@ -17,6 +17,7 @@ const Index = () => {
   const handleForce = (data, fileInfo) => {
     console.log(data)
     let arr = []
+    let relTypes = []
     let c = 1
     data.forEach((row) => {
       var obj = {
@@ -30,9 +31,11 @@ const Index = () => {
         type: row.reltype,
       }
       arr.push(obj)
+      relTypes.push(obj.type)
       c++
     })
     dispatch(addRelationArray(arr))
+    dispatch(addRelationsTypes(relTypes))
     setFileName(fileInfo.name)
     // navigate('/relations/create')
     setCreateRelationsClicked(true)

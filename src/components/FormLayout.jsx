@@ -2,6 +2,8 @@ import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import Footer from './Footer'
+import test from '../assets/images/ntisbg.jpg'
 
 const FormLayout = ({ children, state }) => {
   useEffect(() => {})
@@ -18,8 +20,9 @@ const FormLayout = ({ children, state }) => {
   const navigate = useNavigate()
   return (
     <>
-      <div className="flex flex-col items-center gap-20 justify-center h-screen bg-gray-50">
-        <div dir="rtl" className="w-[1000px] overflow-auto bg-white pb-10 shadow-md rounded-md">
+      <div style={{ backgroundImage: `url(${test})` }} className="flex flex-col items-center gap-20 justify-between h-screen bg-gray-900 bg-opacity-5">
+        <div className="w-full mx-auto bg-white shadow xl:block hidden" />
+        <div dir="rtl" className="w-[1100px] border border-primary overflow-auto bg-white pb-10 shadow-lg rounded-md">
           <div className="lg:block md:hidden hidden">
             <div className="flex justify-evenly pt-[48px] h-[90px] pb- border-b border-gray-300 ">
               <div>
@@ -134,6 +137,7 @@ const FormLayout = ({ children, state }) => {
           {/* main content */}
           <div className="lg:px-[100px] md:px-6 px-3  pt-10">{children}</div>
         </div>
+        <Footer />
       </div>
     </>
   )

@@ -5,7 +5,7 @@ import { BsUpload } from 'react-icons/bs'
 import { IoCreateOutline } from 'react-icons/io5'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { addStakeholderArray } from 'redux/slices/stakeholderSlice'
+import { addStakeholderArray, addStakeholdersTypes } from 'redux/slices/stakeholderSlice'
 import Steps from 'components/Steps'
 import FormLayout from 'components/FormLayout'
 import CreateStakeholders from './CreateStakeholders'
@@ -16,17 +16,20 @@ const Index = () => {
   const handleForce = (data, fileInfo) => {
     console.log(data)
     let arr = []
+    let skTypes = []
     data.forEach((row) => {
       var obj = {
         id: row.name,
         label: row.name,
         shape: 'box',
         type: row.type,
-        color:'red'
+        color: '#fc8d8d',
       }
       arr.push(obj)
+      skTypes.push(obj.type)
     })
     dispatch(addStakeholderArray(arr))
+    dispatch(addStakeholdersTypes(skTypes))
     setFileName(fileInfo.name)
     // navigate('/stakeholders/create')
     setCreateStakeholdersClicked(true)

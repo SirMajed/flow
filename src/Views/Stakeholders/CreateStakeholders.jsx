@@ -8,6 +8,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import Table from 'components/Table'
 import { toast } from 'react-toastify'
 import Form from 'components/Form'
+import { GrNext } from 'react-icons/gr'
 
 const CreateStakeholders = ({ onPrevious }) => {
   const { stakeholders } = useSelector((s) => s.stakeholders)
@@ -37,7 +38,7 @@ const CreateStakeholders = ({ onPrevious }) => {
   const handleDownloadTable = () => {}
   return (
     <>
-      <div className="mb-2">
+      <div className="mb-2 flex items-center">
         <h1 className="text-xl md:text-2xl lg:text-4xl xl:text-4xl lg:w-full text-primary font-black leading-6 lg:leading-10 md:text-center text-center">
           إضافة اصحاب المصلحة
         </h1>
@@ -46,7 +47,10 @@ const CreateStakeholders = ({ onPrevious }) => {
         <div dir="rtl" className="flex items-center justify-start gap-2 mt-6 bg-gray-50 px-5 py-4 rounded-md my-2 shadow-md">
           <Input required={true} placeholder="الأسم" value={stakeholderName} onChange={(e) => setStakeholderName(e.target.value)} />
           <Input required={true} placeholder="النوع" value={stakeholderType} onChange={(e) => setStakeholderType(e.target.value)} />
-          <Button text="اضافة" onClick={createStakeholder} />
+          <div className="flex items-center gap-3">
+            <Button text="اضافة" onClick={createStakeholder} />
+            <Button onClick={onPrevious} type="button" text="رجوع" classes="bg-transparent text-primary border border-primary hover:text-white" />
+          </div>
         </div>
       </Form>
       {stakeholders && stakeholders.length >= 1 && (

@@ -20,6 +20,7 @@ const CreateRelations = ({ onPrevious }) => {
   const { stakeholders } = useSelector((s) => s.stakeholders)
   const { relations } = useSelector((s) => s.stakeholders)
   const [open, setOpen] = useState(false)
+  const [counter, setCounter] = useState(1)
   const toggleModal = () => {
     setOpen(!open)
   }
@@ -48,15 +49,18 @@ const CreateRelations = ({ onPrevious }) => {
       toast.error('قم بتعبئة الحقول')
     } else {
       const data = {
+        id: counter,
         from: selectedStakeholder1,
         to: selectedStakeholder2,
-        rel: relation,
-        weight: weight,
-        reltype: relationType,
-        relcolor: selectedColor,
+        arrows: 'to',
+        label: relation,
+        width: weight,
+        type: relationType,
+        color: selectedColor,
       }
       console.log(data)
       dispatch(addRelation(data))
+      setCounter((counter) => counter + 1)
       toast.success('تم إنشاء العلاقة بنجاح')
       clearInputs()
     }
@@ -105,14 +109,15 @@ const CreateRelations = ({ onPrevious }) => {
           </div>
           <div>
             <h1>نوع العلاقة:</h1>
-            <Input required value={relationType} onChange={(e) => setRelationType(e.target.value)} type={'number'} placeholder="Relation type" />
+            <Input required value={relationType} onChange={(e) => setRelationType(e.target.value)} placeholder="Relation type" />
           </div>
           <div>
             <h1>اللون:</h1>
             <Select isColors items={colors} onChange={(e) => setSelectedColor(e.target.value)} value={selectedColor} />
           </div>
-          <div>
+          <div className="flex items-center gap-3">
             <Button type="submit" text="إنشاء علاقة" />
+            <Button onClick={onPrevious} type="button" text="رجوع" classes="bg-transparent text-primary border border-primary hover:text-white" />
           </div>
         </div>
       </Form>
