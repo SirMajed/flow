@@ -10,7 +10,7 @@ import Form from 'components/Form'
 import { toast } from 'react-toastify'
 import { Modal } from 'components/Modal'
 import NoStakeholdersAlert from './NoStakeholdersAlert'
-const CreateRelations = () => {
+const CreateRelations = ({ onPrevious }) => {
   const [selectedStakeholder1, setSelectedStakeholder1] = useState('')
   const [selectedStakeholder2, setSelectedStakeholder2] = useState('')
   const [selectedColor, setSelectedColor] = useState('')
@@ -52,12 +52,23 @@ const CreateRelations = () => {
         to: selectedStakeholder2,
         rel: relation,
         weight: weight,
-        relType: relationType,
+        reltype: relationType,
         relcolor: selectedColor,
       }
       console.log(data)
       dispatch(addRelation(data))
+      toast.success('تم إنشاء العلاقة بنجاح')
+      clearInputs()
     }
+  }
+
+  const clearInputs = () => {
+    setRelation('')
+    setRelationType(0)
+    setWeight(0)
+    setSelectedColor('')
+    setSelectedStakeholder2('')
+    setSelectedStakeholder1('')
   }
 
   const removeRelation = (index) => {
@@ -68,69 +79,63 @@ const CreateRelations = () => {
   }
   return (
     <>
-      <div className="flex items-center gap-10 justify-center h-screen bg-zinc-50" id="main">
-        <div className="flex-col w-11/12 md:w-2/3 lg:w-2/5">
-          <div className="mt-4 mb-2 text-center">
-            <h1 className="text-xl md:text-2xl lg:text-4xl xl:text-4xl lg:w-full text-primary font-black leading-6 lg:leading-10 md:text-center text-center">
-              إنشاء العلاقات بين اصحاب المصلحة
-            </h1>
+      <div className="mb-2 text-center">
+        <h1 className="text-xl md:text-2xl lg:text-4xl xl:text-4xl lg:w-full text-primary font-black leading-6 lg:leading-10 md:text-center text-center">
+          إنشاء العلاقات بين اصحاب المصلحة
+        </h1>
+      </div>
+
+      <Form onSubmit={createRelation}>
+        <div dir="rtl" className="grid grid-cols-3 gap-y-4 mt-6 bg-gray-50 px-5 py-4 rounded-md my-2 shadow-md mb-7">
+          <div>
+            <h1>من:</h1>
+            <Select required items={stakeholders} onChange={(e) => setSelectedStakeholder1(e.target.value)} value={selectedStakeholder1} />
           </div>
-
-          <Form onSubmit={createRelation}>
-            <div dir="rtl" className="grid grid-cols-3 gap-y-4 mt-6 bg-white px-5 py-4 rounded-md my-2 shadow-md">
-              <div>
-                <h1>من:</h1>
-                <Select required items={stakeholders} onChange={(e) => setSelectedStakeholder1(e.target.value)} value={selectedStakeholder1} />
-              </div>
-              <div>
-                <h1>إلى:</h1>
-                <Select required items={stakeholders} onChange={(e) => setSelectedStakeholder2(e.target.value)} value={selectedStakeholder2} />
-              </div>
-              <div>
-                <h1>العلاقة:</h1>
-                <Input required value={relation} onChange={(e) => setRelation(e.target.value)} placeholder="Relation" />
-              </div>
-              <div>
-                <h1>وزن الخط:</h1>
-                <Input required value={weight} onChange={(e) => setWeight(e.target.value)} type={'number'} placeholder="Weight" />
-              </div>
-              <div>
-                <h1>نوع العلاقة:</h1>
-                <Input required value={relationType} onChange={(e) => setRelationType(e.target.value)} type={'number'} placeholder="Relation type" />
-              </div>
-              <div>
-                <h1>اللون:</h1>
-                <Select isColors items={colors} onChange={(e) => setSelectedColor(e.target.value)} value={selectedColor} />
-              </div>
-              <div>
-                <Button type="submit" text="إنشاء علاقة" />
-              </div>
-            </div>
-          </Form>
-
-          {relations && relations.length >= 1 && (
-            <Table
-              type="relations"
-              deleteTableData={clearTable}
-              data={relations}
-              handleDelete={removeRelation}
-              tableHeaders={['من', 'الى', 'العلاقة', 'وزن الخط', 'نوع العلاقة', 'اللون', 'خيارات']}
-            />
-          )}
-
-          <div className="flex flex-row-reverse items-center justify-between mt-4">
-            {/* <CSVLink filename="stakeholders" className="py-1.5 text-white px-2 rounded-md bg-button_primary" data={stakeholdersData}>
-              .csv تصدير الجدول بصيغة
-            </CSVLink> */}
-            <Link to={'/relations'}>
-              <Button classes={'rounded-md'} text="الخلف" onClick={() => {}} />
-            </Link>
-            <Link to={'/results'}>
-              <Button classes={'rounded-md'} text="النتائج" onClick={() => {}} />
-            </Link>
+          <div>
+            <h1>إلى:</h1>
+            <Select required items={stakeholders} onChange={(e) => setSelectedStakeholder2(e.target.value)} value={selectedStakeholder2} />
+          </div>
+          <div>
+            <h1>العلاقة:</h1>
+            <Input required value={relation} onChange={(e) => setRelation(e.target.value)} placeholder="Relation" />
+          </div>
+          <div>
+            <h1>وزن الخط:</h1>
+            <Input required value={weight} onChange={(e) => setWeight(e.target.value)} type={'number'} placeholder="Weight" />
+          </div>
+          <div>
+            <h1>نوع العلاقة:</h1>
+            <Input required value={relationType} onChange={(e) => setRelationType(e.target.value)} type={'number'} placeholder="Relation type" />
+          </div>
+          <div>
+            <h1>اللون:</h1>
+            <Select isColors items={colors} onChange={(e) => setSelectedColor(e.target.value)} value={selectedColor} />
+          </div>
+          <div>
+            <Button type="submit" text="إنشاء علاقة" />
           </div>
         </div>
-      </div>
+      </Form>
+
+      {relations && relations.length >= 1 && (
+        <Table
+          type="relations"
+          deleteTableData={clearTable}
+          data={relations}
+          handleDelete={removeRelation}
+          tableHeaders={['من', 'الى', 'العلاقة', 'وزن الخط', 'نوع العلاقة', 'اللون', 'خيارات']}
+        />
+      )}
+
+      {relations && relations.length >= 1 && (
+        <div className="flex flex-row items-center justify-between mt-4">
+          <Button classes={'rounded-md'} text="الخلف" onClick={onPrevious} />
+
+          <Link to={'/results'}>
+            <Button classes={'rounded-md'} text="النتائج" onClick={() => {}} />
+          </Link>
+        </div>
+      )}
 
       {toggleModal && (
         <Modal dir="rtl" isOpen={stakeholders && stakeholders.length >= 1 ? open : true} title="تنبيه" closeModal={closeModal}>
