@@ -32,7 +32,7 @@ const Index = () => {
     <>
       <FormLayout state="stakeholders">
         {createStakeholdersClicked ? (
-          <CreateStakeholders />
+          <CreateStakeholders onPrevious={() => setCreateStakeholdersClicked(false)} />
         ) : (
           <div className="flex flex-col justify-center">
             <div className="my-6">
