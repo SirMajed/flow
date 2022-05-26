@@ -8,10 +8,10 @@ const Table = ({ type, data, handleEdit, handleDelete, tableHeaders, deleteTable
           حذف الجدول
         </h1>
         <CSVLink filename={type === 'stakeholders' ? 'stakeholders' : 'relations'} className="text-sm text-primary2" data={data}>
-          (.csv) تحميل البيانات بصيغة
+          تحميل البيانات بصيغة (csv.)
         </CSVLink>
       </div>
-      <div className="relative h-[30rem] overflow-y-auto overflow-x-auto shadow-md sm:rounded-lg mt-2">
+      <div className="relative h-[20rem] overflow-y-auto overflow-x-auto shadow-md sm:rounded-lg mt-2">
         {data.length >= 1 ? (
           <table dir="rtl" className="w-full  text-sm text-center text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-zinc-100 dark:bg-gray-700 dark:text-gray-400 sticky top-0 shadow-md">
@@ -53,7 +53,7 @@ const Table = ({ type, data, handleEdit, handleDelete, tableHeaders, deleteTable
                         <td className="px-6 py-4">{item.to}</td>
                         <td className="px-6 py-4">{item.rel}</td>
                         <td className="px-6 py-4">{item.weight}</td>
-                        <td className="px-6 py-4">{item.relType}</td>
+                        <td className="px-6 py-4">{item.reltype}</td>
                         <td className="px-6 py-4">{item.relcolor}</td>
                         <td className="px-6 py-4 flex items-center justify-center gap-4">
                           <MdDeleteOutline onClick={() => handleDelete(i)} className="cursor-pointer" size={20} />
