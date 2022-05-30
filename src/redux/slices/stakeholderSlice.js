@@ -73,6 +73,15 @@ export const stakeholderSlice = createSlice({
       updatedArray[selectedItem].hidden = hidden
       state.stakeholders = updatedArray
     },
+    hideEdge: (state, action) => {
+      const updatedArray = state.relations // copy of original
+      const { hidden, id } = action.payload
+      let selectedItem = updatedArray.findIndex((element) => {
+        return element.id === id
+      })
+      updatedArray[selectedItem].hidden = hidden
+      state.relations = updatedArray
+    },
   },
 })
 
@@ -91,6 +100,7 @@ export const {
   addPosX,
   addPosY,
   hideNode,
+  hideEdge,
 } = stakeholderSlice.actions
 
 export default stakeholderSlice.reducer
