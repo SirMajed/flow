@@ -3,13 +3,13 @@ import { MdDeleteOutline, MdOutlineModeEditOutline } from 'react-icons/md'
 const Table = ({ type, data, handleEdit, handleDelete, tableHeaders, deleteTableData }) => {
   return (
     <>
-      <div className="flex justify-between items-center mt-4 mx-2">
-        <h1 onClick={deleteTableData} className="text-primary2 text-sm cursor-pointer">
-          حذف الجدول
-        </h1>
+      <div className="flex flex-row-reverse gap-3 items-center mx-2">
         <CSVLink filename={type === 'stakeholders' ? 'stakeholders' : 'relations'} className="text-sm text-primary2" data={data}>
           تحميل البيانات بصيغة (csv.)
         </CSVLink>
+        <h1 onClick={deleteTableData} className="text-primary2 text-sm cursor-pointer">
+          حذف الجدول
+        </h1>
       </div>
       <div className="relative h-[20rem] overflow-y-auto overflow-x-auto shadow-md sm:rounded-lg mt-2">
         {data.length >= 1 ? (
@@ -52,7 +52,7 @@ const Table = ({ type, data, handleEdit, handleDelete, tableHeaders, deleteTable
                         <td className="px-6 py-4">{item.from}</td>
                         <td className="px-6 py-4">{item.to}</td>
                         <td className="px-6 py-4">{item.label || item.rel}</td>
-                        <td className="px-6 py-4">{item.width || item.weight}</td>
+                        <td className="px-6 py-4">{item.width.toFixed(2) || item.weight.toFixed(2)}</td>
                         <td className="px-6 py-4">{item.type || item.reltype}</td>
                         <td className="px-6 py-4">{item.color || item.relcolor}</td>
                         <td className="px-6 py-4 flex items-center justify-center gap-4">

@@ -8,12 +8,14 @@ import { Link, useNavigate } from 'react-router-dom'
 import Table from 'components/Table'
 import { toast } from 'react-toastify'
 import Form from 'components/Form'
-import { GrNext } from 'react-icons/gr'
+import { MdAdd } from 'react-icons/md'
+import { Modal } from 'components/Modal'
 
 const CreateStakeholders = ({ onPrevious }) => {
   const { stakeholders } = useSelector((s) => s.stakeholders)
   const [stakeholderName, setStakeholderName] = useState('')
   const [stakeholderType, setStakeholderType] = useState('')
+  const [open, setOpen] = useState(false)
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -25,6 +27,7 @@ const CreateStakeholders = ({ onPrevious }) => {
       dispatch(addStakeholder(obj))
       setStakeholderName('')
       setStakeholderType('')
+      setOpen(false)
     }
   }
 
@@ -35,46 +38,63 @@ const CreateStakeholders = ({ onPrevious }) => {
   const deleteTableData = () => {
     dispatch(clearStakeholders())
   }
-  const handleDownloadTable = () => {}
+
+  const toggleModal = () => {
+    setOpen(!open)
+  }
+  const closeModal = () => {
+    setOpen(false)
+  }
+
   return (
     <>
-      <div className="mb-2 flex items-center">
+      <div className="mb-2 flex flex-col justify-center gap-5 items-center">
         <h1 className="text-xl md:text-2xl lg:text-4xl xl:text-4xl lg:w-full text-primary font-black leading-6 lg:leading-10 md:text-center text-center">
-          إضافة اصحاب المصلحة
+          اصحاب المصلحة
         </h1>
-      </div>
-      <Form>
-        <div dir="rtl" className="flex items-center justify-start gap-2 mt-6 bg-gray-50 px-5 py-4 rounded-md my-2 shadow-md">
-          <Input required={true} placeholder="الأسم" value={stakeholderName} onChange={(e) => setStakeholderName(e.target.value)} />
-          <Input required={true} placeholder="النوع" value={stakeholderType} onChange={(e) => setStakeholderType(e.target.value)} />
-          <div className="flex items-center gap-3">
-            <Button text="اضافة" onClick={createStakeholder} />
+        {stakeholders && stakeholders.length <= 0 && (
+          <div className="flex items-center gap-4">
+            <Button onClick={toggleModal} icon={<MdAdd size={22} color="white" />} text="إضافة صاحب مصلحة" />
             <Button onClick={onPrevious} type="button" text="رجوع" classes="bg-transparent text-primary border border-primary hover:text-white" />
           </div>
-        </div>
-      </Form>
-      {stakeholders && stakeholders.length >= 1 && (
-        <div className="mt-7">
-          <Table
-            type="stakeholders"
-            data={stakeholders}
-            deleteTableData={deleteTableData}
-            handleDownloadTable={handleDownloadTable}
-            handleDelete={removeStakeholder}
-            tableHeaders={['اسم المساهم', 'نوع المساهم', 'خيارات']}
-          />
-          <div className="flex flex-row items-center justify-between mt-4">
-            <Link to={'/stakeholders'}>
-              <Button text="الخلف" onClick={onPrevious} />
-            </Link>
-            <Button
-              text="الخطوة التالية"
-              onClick={() => {
-                stakeholders.length <= 0 ? toast.error('الرجاء اضافة اصحاب المصلحة') : navigate('/relations')
-              }}
+        )}
+      </div>
+
+      <div className="mt-12">
+        {stakeholders && stakeholders.length >= 1 && (
+          <div className="">
+            <Button onClick={toggleModal} icon={<MdAdd size={22} color="white" />} text="إضافة صاحب مصلحة" />
+            <Table
+              type="stakeholders"
+              data={stakeholders}
+              deleteTableData={deleteTableData}
+              handleDelete={removeStakeholder}
+              tableHeaders={['اسم المساهم', 'نوع المساهم', 'خيارات']}
             />
+            <div className="flex flex-row items-center justify-between mt-4">
+                <Button text="الخلف" onClick={onPrevious} />
+              <Button
+                text="الخطوة التالية"
+                onClick={() => {
+                  stakeholders.length <= 0 ? toast.error('الرجاء اضافة اصحاب المصلحة') : navigate('/relations')
+                }}
+              />
+            </div>
           </div>
-        </div>
+        )}
+      </div>
+
+      {toggleModal && (
+        <Modal dir={'rtl'} closeModal={closeModal} isOpen={open} title={'إنشاء صاحب مصلحة جديد'}>
+          <Form className="flex flex-col gap-4">
+            <Input required={true} placeholder="الأسم" value={stakeholderName} onChange={(e) => setStakeholderName(e.target.value)} />
+            <Input required={true} placeholder="النوع" value={stakeholderType} onChange={(e) => setStakeholderType(e.target.value)} />
+            <div className="flex items-center gap-3">
+              <Button text="اضافة" onClick={createStakeholder} />
+              <Button onClick={onPrevious} type="button" text="رجوع" classes="bg-transparent text-primary border border-primary hover:text-white" />
+            </div>
+          </Form>
+        </Modal>
       )}
     </>
   )

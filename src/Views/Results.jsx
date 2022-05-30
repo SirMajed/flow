@@ -199,7 +199,7 @@ const Results = () => {
 
           <div className="w-full border my-6">
             <div className="w-11/12 h-5/6 my-t-4 mb-1 relative">
-              <select id="nodeType" className="absolute top-0 right-0 z-10 bg-primary gap-2 px-2 py-1.5 my-1 mx-2 text-white" onChange={handleNodeFilter}>
+              <select id="nodeType" className="absolute top-0 right-0 z-10 bg-primary rounded-md gap-2 px-2 py-1.5 my-1 mx-2 text-white" onChange={handleNodeFilter}>
                 <option value="none">Stakeholders filter</option>
                 {stakeholdersTypes.map((t, i) => (
                   <option key={i} value={t}>
@@ -208,7 +208,11 @@ const Results = () => {
                 ))}
               </select>
 
-              <select id="relationType" className="absolute top-0 right-20 z-10 bg-primary gap-2 px-5 py-1.5 my-1 mr-28 text-white" onChange={handleEdgeFilter}>
+              <select
+                id="relationType"
+                className="absolute top-0 right-20 z-10 bg-primary rounded-md gap-2 px-5 py-1.5 my-1 mr-28 text-white"
+                onChange={handleEdgeFilter}
+              >
                 <option value="none">Relation filter</option>
                 {relationsTypes.map((t, i) => (
                   <option key={i} value={t}>

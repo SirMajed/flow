@@ -2,7 +2,7 @@ import { IoClose } from 'react-icons/io5'
 import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 
-export const Modal = ({ children, title, isOpen, closeModal, hasList, dir }) => {
+export const Modal = ({ children, title, isOpen, closeModal, hasList, dir, hideIcon }) => {
   return (
     <>
       <div>
@@ -43,7 +43,7 @@ export const Modal = ({ children, title, isOpen, closeModal, hasList, dir }) => 
                   <div className=" bg-white dark:bg-dark_primary px-3 py-3">
                     <div className="flex justify-between ">
                       <Dialog.Title className="text-xl text-gray-900 dark:text-gray-300 ">{title}</Dialog.Title>
-                      {isOpen === true ? null : <IoClose className="cursor-pointer text-gray-900 dark:text-gray-300" onClick={closeModal} size="26" />}
+                      {hideIcon === true ? null : <IoClose className="cursor-pointer text-gray-900 dark:text-gray-300" onClick={closeModal} size="26" />}
                     </div>
                   </div>
                   <hr className="dark:border-gray-700" />

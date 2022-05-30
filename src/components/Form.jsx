@@ -1,8 +1,8 @@
 import React from 'react'
 
-const Form = ({ onSubmit, children, action, autoComplete, dir }) => {
+const Form = ({ onSubmit, children, action, autoComplete, dir, className }) => {
   return (
-    <form onSubmit={onSubmit} dir={dir} autoComplete={autoComplete} action={action}>
+    <form className={className} onSubmit={onSubmit} dir={dir} autoComplete={autoComplete} action={action}>
       {children}
     </form>
   )

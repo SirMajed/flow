@@ -4,12 +4,13 @@ import Input from 'components/Input'
 import Select from 'components/Select'
 import Button from 'components/Button'
 import { addRelation, clearRelations, deleteRelation } from 'redux/slices/stakeholderSlice'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Table from 'components/Table'
 import Form from 'components/Form'
 import { toast } from 'react-toastify'
 import { Modal } from 'components/Modal'
 import NoStakeholdersAlert from './NoStakeholdersAlert'
+import { MdAdd } from 'react-icons/md'
 const CreateRelations = ({ onPrevious }) => {
   const [selectedStakeholder1, setSelectedStakeholder1] = useState('')
   const [selectedStakeholder2, setSelectedStakeholder2] = useState('')
@@ -19,13 +20,21 @@ const CreateRelations = ({ onPrevious }) => {
   const [relationType, setRelationType] = useState(0)
   const { stakeholders } = useSelector((s) => s.stakeholders)
   const { relations } = useSelector((s) => s.stakeholders)
+  const [openWarnModal, setOpenWarnModal] = useState(false)
   const [open, setOpen] = useState(false)
   const [counter, setCounter] = useState(1)
+  const navigate = useNavigate()
+  const toggleWarnModal = () => {
+    setOpenWarnModal(!openWarnModal)
+  }
   const toggleModal = () => {
     setOpen(!open)
   }
   const closeModal = () => {
     setOpen(false)
+  }
+  const closeWarnModal = () => {
+    setOpenWarnModal(false)
   }
   const colors = [
     { name: 'اسود', value: 'black' },
@@ -40,7 +49,7 @@ const CreateRelations = ({ onPrevious }) => {
 
   useEffect(() => {
     if (stakeholders && stakeholders.length <= 0) {
-      setOpen(true)
+      setOpenWarnModal(true)
     }
   }, [])
 
@@ -63,6 +72,7 @@ const CreateRelations = ({ onPrevious }) => {
       setCounter((counter) => counter + 1)
       toast.success('تم إنشاء العلاقة بنجاح')
       // clearInputs()
+      setOpen(false)
     }
   }
 
@@ -83,56 +93,41 @@ const CreateRelations = ({ onPrevious }) => {
   }
   return (
     <>
-      <div className="mb-2 text-center">
-        <h1 className="text-xl md:text-2xl lg:text-4xl xl:text-4xl lg:w-full text-primary font-black leading-6 lg:leading-10 md:text-center text-center">
-          إنشاء العلاقات بين اصحاب المصلحة
-        </h1>
-      </div>
-
-      <Form onSubmit={createRelation}>
-        <div dir="rtl" className="grid grid-cols-3 gap-y-4 mt-6 bg-gray-50 px-5 py-4 rounded-md my-2 shadow-md mb-7">
-          <div>
-            <h1>من:</h1>
-            <Select required items={stakeholders} onChange={(e) => setSelectedStakeholder1(e.target.value)} value={selectedStakeholder1} />
-          </div>
-          <div>
-            <h1>إلى:</h1>
-            <Select required items={stakeholders} onChange={(e) => setSelectedStakeholder2(e.target.value)} value={selectedStakeholder2} />
-          </div>
-          <div>
-            <h1>العلاقة:</h1>
-            <Input required value={relation} onChange={(e) => setRelation(e.target.value)} placeholder="العلاقة" />
-          </div>
-          <div>
-            <h1>وزن الخط:</h1>
-            <Input required value={weight} onChange={(e) => setWeight(e.target.value)} type={'number'} placeholder="Weight" />
-          </div>
-          <div>
-            <h1>نوع العلاقة:</h1>
-            <Input required value={relationType} onChange={(e) => setRelationType(e.target.value)} placeholder="Relation type" />
-          </div>
-          <div>
-            <h1>اللون:</h1>
-            <Select isColors items={colors} onChange={(e) => setSelectedColor(e.target.value)} value={selectedColor} />
-          </div>
-          <div className="flex items-center gap-3">
-            <Button type="submit" text="إنشاء علاقة" />
+      <div className="mb-2 flex flex-col justify-center gap-5 items-center">
+        <h1 className="text-xl md:text-2xl lg:text-4xl xl:text-4xl lg:w-full text-primary font-black leading-6 lg:leading-10 md:text-center text-center">العلاقات</h1>
+        {relations && relations.length <= 0 && (
+          <div className="flex items-center gap-4">
+            <Button onClick={toggleModal} icon={<MdAdd size={22} color="white" />} text="إنشاء علاقة جديدة" />
             <Button onClick={onPrevious} type="button" text="رجوع" classes="bg-transparent text-primary border border-primary hover:text-white" />
           </div>
-        </div>
-      </Form>
+        )}
+      </div>
 
-      {relations && relations.length >= 1 && (
-        <Table
-          type="relations"
-          deleteTableData={clearTable}
-          data={relations}
-          handleDelete={removeRelation}
-          tableHeaders={['من', 'الى', 'العلاقة', 'وزن الخط', 'نوع العلاقة', 'اللون', 'خيارات']}
-        />
-      )}
+      <div className="mt-12">
+        {relations && relations.length >= 1 && (
+          <div className="">
+            <Button onClick={toggleModal} icon={<MdAdd size={22} color="white" />} text="إنشاء علاقة" />
+            <Table
+              type="relations"
+              data={relations}
+              deleteTableData={clearTable}
+              handleDelete={removeRelation}
+              tableHeaders={['من', 'الى', 'العلاقة', 'وزن الخط', 'نوع العلاقة', 'اللون', 'خيارات']}
+            />
+            <div className="flex flex-row items-center justify-between mt-4">
+              <Button text="الخلف" onClick={onPrevious} />
+              <Button
+                text="الخطوة التالية"
+                onClick={() => {
+                  relations.length <= 0 ? toast.error('الرجاء اضافة اصحاب المصلحة') : navigate('/relations')
+                }}
+              />
+            </div>
+          </div>
+        )}
+      </div>
 
-      {relations && relations.length >= 1 && (
+      {/* {relations && relations.length >= 1 && (
         <div className="flex flex-row items-center justify-between mt-4">
           <Button classes={'rounded-md'} text="الخلف" onClick={onPrevious} />
 
@@ -140,11 +135,46 @@ const CreateRelations = ({ onPrevious }) => {
             <Button classes={'rounded-md'} text="النتائج" onClick={() => {}} />
           </Link>
         </div>
+      )} */}
+
+      {toggleWarnModal && (
+        <Modal hideIcon dir="rtl" isOpen={stakeholders && stakeholders.length >= 1 ? openWarnModal : true} title="تنبيه" closeModal={closeWarnModal}>
+          <NoStakeholdersAlert />
+        </Modal>
       )}
 
       {toggleModal && (
-        <Modal dir="rtl" isOpen={stakeholders && stakeholders.length >= 1 ? open : true} title="تنبيه" closeModal={closeModal}>
-          <NoStakeholdersAlert />
+        <Modal isOpen={open} closeModal={closeModal} title={'إنشاء علاقة'} dir={'rtl'}>
+          <Form className="flex flex-col gap-4" onSubmit={createRelation}>
+            <div>
+              <h1>من:</h1>
+              <Select required items={stakeholders} onChange={(e) => setSelectedStakeholder1(e.target.value)} value={selectedStakeholder1} />
+            </div>
+            <div>
+              <h1>إلى:</h1>
+              <Select required items={stakeholders} onChange={(e) => setSelectedStakeholder2(e.target.value)} value={selectedStakeholder2} />
+            </div>
+            <div>
+              <h1>العلاقة:</h1>
+              <Input required value={relation} onChange={(e) => setRelation(e.target.value)} placeholder="العلاقة" />
+            </div>
+            <div>
+              <h1>وزن الخط:</h1>
+              <Input required value={weight} onChange={(e) => setWeight(e.target.value)} type={'number'} placeholder="Weight" />
+            </div>
+            <div>
+              <h1>نوع العلاقة:</h1>
+              <Input required value={relationType} onChange={(e) => setRelationType(e.target.value)} placeholder="Relation type" />
+            </div>
+            <div>
+              <h1>اللون:</h1>
+              <Select isColors items={colors} onChange={(e) => setSelectedColor(e.target.value)} value={selectedColor} />
+            </div>
+            <div className="flex items-center gap-3">
+              <Button type="submit" text="إنشاء علاقة" />
+              <Button onClick={onPrevious} type="button" text="رجوع" classes="bg-transparent text-primary border border-primary hover:text-white" />
+            </div>
+          </Form>
         </Modal>
       )}
     </>

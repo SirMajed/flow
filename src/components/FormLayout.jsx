@@ -20,9 +20,9 @@ const FormLayout = ({ children, state }) => {
   const navigate = useNavigate()
   return (
     <>
-      <div style={{ backgroundImage: `url(${test})` }} className="flex flex-col items-center gap-20 justify-between h-screen bg-gray-900 bg-opacity-5">
+      <div style={{ backgroundImage: `url(${test})` }} className="flex-1 items-center gap-20 justify-between h-screen ">
         <div className="w-full mx-auto bg-white shadow xl:block hidden" />
-        <div dir="rtl" className="w-[1100px] border border-primary overflow-auto bg-white pb-10 shadow-lg rounded-md">
+        <div dir="rtl" className="w-full h-full overflow-auto bg-white">
           <div className="lg:block md:hidden hidden">
             <div className="flex justify-evenly pt-[48px] h-[90px] pb- border-b border-gray-300 ">
               <div>
@@ -135,9 +135,9 @@ const FormLayout = ({ children, state }) => {
             {/* end */}
           </div>
           {/* main content */}
-          <div className="lg:px-[100px] md:px-6 px-3  pt-10">{children}</div>
+          <div className="lg:px-[400px] md:px-6 px-3  pt-10">{children}</div>
         </div>
-        <Footer />
+        {/* <Footer /> */}
       </div>
     </>
   )
