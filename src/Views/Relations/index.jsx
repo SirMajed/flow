@@ -19,23 +19,26 @@ const Index = () => {
     let arr = []
     let relTypes = []
     let c = 1
+    var edgeSet = new Set()
+
     data.forEach((row) => {
+      edgeSet.add(row.type)
+
       var obj = {
         id: c,
         from: row.from,
         to: row.to,
         arrows: 'to',
-        label: row.rel,
-        width: (row.weight * 10) / 1.2,
-        color: row.relcolor,
-        type: row.reltype,
+        label: row.label,
+        width: (row.width * 10) / 1.2,
+        color: row.color,
+        type: row.type,
       }
       arr.push(obj)
-      relTypes.push(obj.type)
       c++
     })
     dispatch(addRelationArray(arr))
-    dispatch(addRelationsTypes(relTypes))
+    dispatch(addRelationsTypes(Array.from(edgeSet)))
     setFileName(fileInfo.name)
     // navigate('/relations/create')
     setCreateRelationsClicked(true)

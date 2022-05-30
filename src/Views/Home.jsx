@@ -85,91 +85,91 @@ const Home = () => {
     clickToUse: false,
   }
 
-  // useEffect(() => {
-  //   // var nod = [
-  //   //   { id: 1, label: 'Node 1', x: null, y: null },
-  //   //   { id: 2, label: 'Node 2', x: null, y: null },
-  //   //   { id: 3, label: 'Node 3', x: null, y: null },
-  //   //   { id: 4, label: 'Node 4', x: null, y: null },
-  //   //   { id: 5, label: 'Node 5', x: null, y: null }
-  //   // ];
-  //   // var edg = [
-  //   //   { from: 1, to: 3 },
-  //   //   { from: 1, to: 2 },
-  //   //   { from: 2, to: 4 },
-  //   //   { from: 2, to: 5 }
-  //   // ];
-  //   if (network.current) {
-  //     network.current.setOptions({ physics: false })
-  //   }
-  //   network.current = network.currnet || new Network(domNode.current, data, options)
-  //   network.current.on('stabilizationIterationsDone', function () {
-  //     this.setOptions({ physics: false })
-  //   })
-  //   // console.log(network.current)
+  useEffect(() => {
+    // var nod = [
+    //   { id: 1, label: 'Node 1', x: null, y: null },
+    //   { id: 2, label: 'Node 2', x: null, y: null },
+    //   { id: 3, label: 'Node 3', x: null, y: null },
+    //   { id: 4, label: 'Node 4', x: null, y: null },
+    //   { id: 5, label: 'Node 5', x: null, y: null }
+    // ];
+    // var edg = [
+    //   { from: 1, to: 3 },
+    //   { from: 1, to: 2 },
+    //   { from: 2, to: 4 },
+    //   { from: 2, to: 5 }
+    // ];
+    if (network.current) {
+      network.current.setOptions({ physics: false })
+    }
+    network.current = network.currnet || new Network(domNode.current, data, options)
+    network.current.on('stabilizationIterationsDone', function () {
+      this.setOptions({ physics: false })
+    })
+    // console.log(network.current)
 
-  //   network.current.on('click', function (n) {
-  //     console.log(n)
-  //     // console.log(n);
-  //     // console.log(n.nodes.length);
+    network.current.on('click', function (n) {
+      console.log(n)
+      // console.log(n);
+      // console.log(n.nodes.length);
 
-  //     var tempNodes = []
-  //     nodes.forEach((e) => {
-  //       const position = network.current.getPositions([e.id])
-  //       const posX = position[`${e.id}`].x
-  //       const posY = position[`${e.id}`].y
-  //       e.x = posX
-  //       e.y = posY
-  //       // e.hidden = false
+      var tempNodes = []
+      nodes.forEach((e) => {
+        const position = network.current.getPositions([e.id])
+        const posX = position[`${e.id}`].x
+        const posY = position[`${e.id}`].y
+        e.x = posX
+        e.y = posY
+        // e.hidden = false
 
-  //       tempNodes.push(e)
-  //     })
-  //     if (network.current && n.nodes.length > 0) {
-  //       var nnn = network.current.getConnectedNodes(n.nodes[0])
+        tempNodes.push(e)
+      })
+      if (network.current && n.nodes.length > 0) {
+        var nnn = network.current.getConnectedNodes(n.nodes[0])
 
-  //       nnn.push(n.nodes[0])
+        nnn.push(n.nodes[0])
 
-  //       tempNodes = []
-  //       nodes.forEach((e) => {
-  //         if (!nnn.includes(e.id)) {
-  //           const position = network.current.getPositions([e.id])
-  //           const posX = position[`${e.id}`].x
-  //           const posY = position[`${e.id}`].y
-  //           e.x = posX
-  //           e.y = posY
-  //           e.hidden = true
-  //         }
-  //         tempNodes.push(e)
-  //       })
-  //       // nod = tempNodes
-  //       // setNodes(tempNodes)
-  //     }
+        tempNodes = []
+        nodes.forEach((e) => {
+          if (!nnn.includes(e.id)) {
+            const position = network.current.getPositions([e.id])
+            const posX = position[`${e.id}`].x
+            const posY = position[`${e.id}`].y
+            e.x = posX
+            e.y = posY
+            e.hidden = true
+          }
+          tempNodes.push(e)
+        })
+        // nod = tempNodes
+        // setNodes(tempNodes)
+      }
 
-  //     if (n.items.length === 0 && n.nodes.length === 0 && n.edges.length === 0) {
-  //       tempNodes = []
-  //       nodes.forEach((e) => {
-  //         const position = network.current.getPositions([e.id])
-  //         const posX = position[`${e.id}`].x
-  //         const posY = position[`${e.id}`].y
-  //         e.x = posX
-  //         e.y = posY
-  //         e.hidden = false
+      if (n.items.length === 0 && n.nodes.length === 0 && n.edges.length === 0) {
+        tempNodes = []
+        nodes.forEach((e) => {
+          const position = network.current.getPositions([e.id])
+          const posX = position[`${e.id}`].x
+          const posY = position[`${e.id}`].y
+          e.x = posX
+          e.y = posY
+          e.hidden = false
 
-  //         tempNodes.push(e)
-  //       })
-  //       // nod = tempNodes
-  //     }
-  //     setNodes(tempNodes)
+          tempNodes.push(e)
+        })
+        // nod = tempNodes
+      }
+      setNodes(tempNodes)
 
-  //     // console.log(nod)
-  //   })
+      // console.log(nod)
+    })
 
-  //   network.current.on('afterDrawing', function (ctx) {
-  //     // this.setOptions({ physics: false })
-  //     var dataURL = ctx.canvas.toDataURL()
-  //     document.getElementById('canvasImg').href = dataURL
-  //   })
-  // }, [domNode, network, nodes, options])
+    network.current.on('afterDrawing', function (ctx) {
+      // this.setOptions({ physics: false })
+      var dataURL = ctx.canvas.toDataURL()
+      document.getElementById('canvasImg').href = dataURL
+    })
+  }, [domNode, network, nodes, options])
 
   const handleFileOne = (e) => {
     const colorList = ['#fc8d8d', '#f8ffc7', '#ededed', '#34eb9b'] // [red, yellow, grey, green]
@@ -185,6 +185,7 @@ const Home = () => {
         skipEmptyLines: true,
         complete: function (results) {
           var n = []
+
           results.data.forEach((row) => {
             typesSet.add(row.TYPE)
           })
@@ -209,6 +210,7 @@ const Home = () => {
           })
           console.log(n)
           setNodes(n)
+          console.log('nnnn', nodes)
         },
       })
     }
@@ -313,11 +315,14 @@ const Home = () => {
     <>
       {isElectron() && <TitleBar />}
 
-      <div style={{ backgroundImage: `url(${bg})` }} className="flex flex-col justify-center h-screen ">
+      <div
+        style={{ backgroundImage: `linear-gradient(rgba(24, 93, 131, 0.1), rgba(24, 93, 131, 0.1)), url(${bg})` }}
+        className="flex flex-col justify-center h-screen relative bg-fixed bg-center bg-cover bg-no-repeat"
+      >
         <div className="overflow-y-hidden ">
           <div className="mx-auto container py-12 px-4 ">
             <div className="w-full flex justify-center">
-              <div className="w-full md:w-11/12 xl:w-10/12 rounded-md bg-primary md:py-8 md:px-8 px-5 py-4 xl:px-12 xl:py-16 shadow-md">
+              <div className="w-full md:w-11/12 xl:w-10/12 bg-primary md:py-8 md:px-8 px-5 py-4 xl:px-12 xl:py-16 shadow-md rounded-md">
                 <div>
                   <div dir="rtl" className="flex flex-wrap items-center md:flex-row flex-col-reverse">
                     <div className="md:w-2/3 w-full pb-6 md:pb-0 md:pr-6 flex-col md:block flex items-center justify-center md:pt-0 pt-4">
@@ -354,7 +359,7 @@ const Home = () => {
       </div>
 
       {/* <DataForm /> */}
-      {/* <UploadFileView
+      <UploadFileView
         domNode={domNode}
         downloadNetworkAsImage={downloadNetworkAsImage}
         edges={edges}
@@ -368,9 +373,9 @@ const Home = () => {
         inputRefTwo={inputRefTwo}
         nodeType={nodeType}
         nodes={nodes}
-      /> */}
+      />
 
-      {/* <a id="canvasImg" download="filename"></a> */}
+      <a id="canvasImg" download="filename"></a>
       <div id="cont" className="flex flex-col justify-top h-screen bg-gray-100">
         <h1 className="mt-4 text-xl md:text-2xl lg:text-4xl xl:text-4xl lg:w-full text-gray-800 font-black leading-6 lg:leading-10 md:text-center text-center">
           المساهمين

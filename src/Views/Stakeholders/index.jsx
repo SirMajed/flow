@@ -6,7 +6,6 @@ import { IoCreateOutline } from 'react-icons/io5'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { addStakeholderArray, addStakeholdersTypes } from 'redux/slices/stakeholderSlice'
-import Steps from 'components/Steps'
 import FormLayout from 'components/FormLayout'
 import CreateStakeholders from './CreateStakeholders'
 const Index = () => {
@@ -14,24 +13,38 @@ const Index = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const handleForce = (data, fileInfo) => {
+    const colorList = ['#fc8d8d', '#f8ffc7', '#ededed', '#34eb9b']
     console.log(data)
     let arr = []
     let skTypes = []
+    var typesSet = new Set()
+    var types = []
+    var dict = {}
+
+    data.forEach((row) => {
+      typesSet.add(row.type)
+    })
+    types = Array.from(typesSet)
+    types.forEach((type, index) => {
+      dict[type] = colorList[index]
+    })
+    dispatch(addStakeholdersTypes(types))
+
     data.forEach((row) => {
       var obj = {
         id: row.name,
         label: row.name,
         shape: 'box',
         type: row.type,
-        color: '#fc8d8d',
+      }
+      if (Object.keys(dict).includes(row.type)) {
+        obj.color = dict[row.type]
       }
       arr.push(obj)
       skTypes.push(obj.type)
     })
     dispatch(addStakeholderArray(arr))
-    dispatch(addStakeholdersTypes(skTypes))
     setFileName(fileInfo.name)
-    // navigate('/stakeholders/create')
     setCreateStakeholdersClicked(true)
   }
   const papaparseOptions = {

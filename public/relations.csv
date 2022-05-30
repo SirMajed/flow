@@ -1,4 +1,4 @@
-from,to,rel,weight,reltype,relcolor
+FROM,TO,REL,Weight,relType,RELCOLOR
 test1,test4,test relation#1,0.1,1,red
 test1,test4,test relation#1,0.2,1,black
 test2,test5,test relation#2 long text,0.3,2,blue

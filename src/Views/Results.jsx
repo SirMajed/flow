@@ -6,16 +6,15 @@ import Button from 'components/Button'
 const Results = () => {
   const domNode = useRef(null)
   const { stakeholders, relations, stakeholdersTypes, relationsTypes } = useSelector((s) => s.stakeholders) //ndoes
-  console.log(relations)
-  console.log(stakeholders)
+  const [nodes, setNodes] = useState([])
+  const [edges, setEdges] = useState([])
   // A reference to the vis network instance
   const network = useRef(null)
   const data = {
-    nodes: stakeholders,
-    edges: relations,
+    nodes,
+    edges,
   }
 
-  console.log(data)
   const options = {
     physics: {
       forceAtlas2Based: {
@@ -50,6 +49,7 @@ const Results = () => {
       hoverWidth: function (width) {
         return width * 2
       },
+      // smooth: false,
       smooth: {
         type: 'continuous',
 
@@ -60,14 +60,21 @@ const Results = () => {
         background: 'white',
       },
     },
+    // autoResize: true,
+    // scale : 2.5,
+    // interaction: { hover: true, hideEdgesOnDrag:true },
     height: '100%',
     width: '100%',
     clickToUse: false,
   }
+  console.log(edges)
+  console.log(nodes)
 
   const dispatch = useDispatch()
 
   useEffect(() => {
+    setEdges(relations)
+    setNodes(stakeholders)
     if (network.current) {
       network.current.setOptions({ physics: false })
     }
@@ -78,21 +85,28 @@ const Results = () => {
     // console.log(network.current)
 
     network.current.on('click', function (n) {
+      // console.log(n);
+      // console.log(n.nodes.length);
+
       var tempNodes = []
-      stakeholders.forEach((e) => {
-        const position = network.current.getPositions([e.id])
-        const posX = position[`${e.id}`].x
-        const posY = position[`${e.id}`].y
-        e.x = posX
-        e.y = posY
-        tempNodes.push(e)
+      nodes.forEach((node) => {
+        const position = network.current.getPositions([node.id])
+        const posX = position[`${node.id}`].x
+        const posY = position[`${node.id}`].y
+        node.x = posX
+        node.y = posY
+        // e.hidden = false
+
+        tempNodes.push(node)
       })
 
       if (network.current && n.nodes.length > 0) {
         var nnn = network.current.getConnectedNodes(n.nodes[0])
+
         nnn.push(n.nodes[0])
+
         tempNodes = []
-        stakeholders.forEach((e) => {
+        nodes.forEach((e) => {
           if (!nnn.includes(e.id)) {
             const position = network.current.getPositions([e.id])
             const posX = position[`${e.id}`].x
@@ -103,31 +117,52 @@ const Results = () => {
           }
           tempNodes.push(e)
         })
+        // nod = tempNodes
+        // setNodes(tempNodes)
       }
 
       if (n.items.length === 0 && n.nodes.length === 0 && n.edges.length === 0) {
         tempNodes = []
-        stakeholders.forEach((e) => {
+        nodes.forEach((e) => {
           const position = network.current.getPositions([e.id])
           const posX = position[`${e.id}`].x
           const posY = position[`${e.id}`].y
           e.x = posX
           e.y = posY
           e.hidden = false
+
           tempNodes.push(e)
         })
+        // nod = tempNodes
       }
+      setNodes(tempNodes)
+
+      // console.log(nod)
     })
 
     network.current.on('afterDrawing', function (ctx) {
+      // this.setOptions({ physics: false })
       var dataURL = ctx.canvas.toDataURL()
       document.getElementById('canvasImg').href = dataURL
     })
-  }, [domNode, network, stakeholders, options])
+  }, [domNode, network, nodes, options])
 
   const handleNodeFilter = (e) => {}
 
-  const handleEdgeFilter = (e) => {}
+  const handleEdgeFilter = (e) => {
+    const tempEdges = []
+    relations.forEach((edge) => {
+      edge.hidden = false
+      if (e.target.value === 'none') {
+        edge.hidden = false
+      } else if (edge.type !== e.target.value) {
+        edge.hidden = true
+      }
+      tempEdges.push(edge)
+    })
+
+    // setEdges(tempEdges)
+  }
 
   const downloadNetworkAsImage = () => {
     document.getElementById('canvasImg').click()
@@ -141,26 +176,40 @@ const Results = () => {
 
           <div className="w-full border my-6">
             <div className="w-11/12 h-5/6 my-t-4 mb-1 relative">
-              <select id="nodeType" className="absolute top-0 right-0 z-10 bg-primary gap-2 px-2 py-1.5 my-1 mx-2 text-white" onChange={handleNodeFilter}>
-                <option selected value="none">
+              <select
+                defaultValue={'DEFAULT'}
+                id="nodeType"
+                className="absolute top-0 right-0 z-10 bg-primary gap-2 px-2 py-1.5 my-1 mx-2 text-white"
+                onChange={handleNodeFilter}
+              >
+                <option value="DEFAULT" disabled>
                   Stakeholders filter
                 </option>
-                {stakeholdersTypes.map((t) => (
-                  <option value={t}>{t}</option>
+                {stakeholdersTypes.map((t, i) => (
+                  <option key={i} value={t}>
+                    {t}
+                  </option>
                 ))}
               </select>
 
-              <select id="relationType" className="absolute top-0 right-20 z-10 bg-primary gap-2 px-5 py-1.5 my-1 mr-28 text-white" onChange={handleEdgeFilter}>
-                <option selected value="none">
+              <select
+                defaultValue={'DEFAULT'}
+                id="relationType"
+                className="absolute top-0 right-20 z-10 bg-primary gap-2 px-5 py-1.5 my-1 mr-28 text-white"
+                onChange={handleEdgeFilter}
+              >
+                <option value="DEFAULT" disabled>
                   Relation filter
                 </option>
-                {relationsTypes.map((t) => (
-                  <option value={t}>{t}</option>
+                {relationsTypes.map((t, i) => (
+                  <option key={i} value={t}>
+                    {t}
+                  </option>
                 ))}
               </select>
               <div className="w-full my-t-4 mb-1 h-[40rem]" ref={domNode} />
+              <a id="canvasImg" download="filename"></a>
             </div>
-            <a id="canvasImg" download="filename"></a>
           </div>
         </div>
         <Button icon={<MdFileDownload color="white" size={20} />} text="تحميل" onClick={downloadNetworkAsImage} />

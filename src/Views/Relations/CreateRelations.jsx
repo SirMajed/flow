@@ -28,6 +28,7 @@ const CreateRelations = ({ onPrevious }) => {
     setOpen(false)
   }
   const colors = [
+    { name: 'اسود', value: 'black' },
     { name: 'احمر', value: 'red' },
     { name: 'ازرق', value: 'blue' },
     { name: 'اصفر', value: 'yellow' },
@@ -58,11 +59,10 @@ const CreateRelations = ({ onPrevious }) => {
         type: relationType,
         color: selectedColor,
       }
-      console.log(data)
       dispatch(addRelation(data))
       setCounter((counter) => counter + 1)
       toast.success('تم إنشاء العلاقة بنجاح')
-      clearInputs()
+      // clearInputs()
     }
   }
 
@@ -101,7 +101,7 @@ const CreateRelations = ({ onPrevious }) => {
           </div>
           <div>
             <h1>العلاقة:</h1>
-            <Input required value={relation} onChange={(e) => setRelation(e.target.value)} placeholder="Relation" />
+            <Input required value={relation} onChange={(e) => setRelation(e.target.value)} placeholder="العلاقة" />
           </div>
           <div>
             <h1>وزن الخط:</h1>

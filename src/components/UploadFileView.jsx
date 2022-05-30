@@ -19,7 +19,7 @@ const UploadFileView = ({
 }) => {
   return (
     <div className="flex bg-gray-100 flex-col items-center justify-around h-screen" id="main">
-      {/* <div className="flex-col">
+      <div className="flex-col">
         <div className="flex items-center gap-2">
           <div>
             <InputFile label="1. Upload stakeholders file" re={inputRefOne} onChange={handleFileOne} />
@@ -29,7 +29,7 @@ const UploadFileView = ({
             <InputFile label="2. Upload edge matrix file" re={inputRefTwo} onChange={handleFileTwo} />
           </div>
         </div>
-      </div> */}
+      </div>
       {/*  */}
 
       <div className="flex flex-col items-center h-full w-full mt-4">
