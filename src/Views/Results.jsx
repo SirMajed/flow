@@ -1,15 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Network } from 'vis-network/standalone/esm/vis-network'
 import { useDispatch, useSelector } from 'react-redux'
-import { MdFileDownload } from 'react-icons/md'
-import Button from 'components/Button'
 import { useNavigate } from 'react-router-dom'
 import { addPosX, addPosY, hideEdge, hideNode } from 'redux/slices/stakeholderSlice'
 import ResultsNav from 'components/ResultsNav'
 const Results = () => {
   const domNode = useRef(null)
   const navigate = useNavigate()
-  const { stakeholders, relations, stakeholdersTypes, relationsTypes } = useSelector((s) => s.stakeholders) //ndoes
+  const { stakeholders, relations, stakeholdersTypes, relationsTypes } = useSelector((s) => s.stakeholders)
 
   const [nodes, setNodes] = useState([])
   const [edges, setEdges] = useState([])

@@ -43,9 +43,6 @@ const ImportStakeholder = () => {
           </div>
           {stakeholders.length >= 1 && <Table data={stakeholders} handleDelete={removeStakeholder} tableHeaders={['اسم المساهم', 'نوع المساهم', 'خيارات']} />}
           <div className="flex items-center justify-between mt-4">
-            {/* <CSVLink filename="stakeholders" className="py-1.5 text-white px-2 rounded-md bg-button_primary" data={stakeholdersData}>
-              .csv تصدير الجدول بصيغة
-            </CSVLink> */}
             <Link to={'/stakeholders'}>
               <Button classes={'rounded-md'} text="الخلف" onClick={() => {}} />
             </Link>

@@ -14,7 +14,7 @@ const ResultsNav = ({ confirmReset, downloadNetworkAsImage, stakeholdersTypes, h
 
       <div className="flex flex-row gap-4">
         <select className="border border-primary text-primary rounded-md focus:outline focus:ring-0 focus:border-primary" onChange={handleNodeFilter}>
-          <option value="none">فلترة اصحاب المصلحة</option>
+          <option value="none">تصفية اصحاب المصلحة</option>
           {stakeholdersTypes.map((t, i) => (
             <option key={i} value={t}>
               {t}
@@ -23,7 +23,7 @@ const ResultsNav = ({ confirmReset, downloadNetworkAsImage, stakeholdersTypes, h
         </select>
 
         <select className="border border-primary text-primary rounded-md focus:outline focus:ring-0 focus:border-primary" onChange={handleEdgeFilter}>
-          <option value="none">فلترة العلاقات</option>
+          <option value="none">تصفية العلاقات</option>
           {relationsTypes.map((t, i) => (
             <option key={i} value={t}>
               {t}

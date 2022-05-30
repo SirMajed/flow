@@ -4,7 +4,7 @@ import Input from 'components/Input'
 import Select from 'components/Select'
 import Button from 'components/Button'
 import { addRelation, clearRelations, deleteRelation } from 'redux/slices/stakeholderSlice'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import Table from 'components/Table'
 import Form from 'components/Form'
 import { toast } from 'react-toastify'
@@ -23,7 +23,6 @@ const CreateRelations = ({ onPrevious }) => {
   const [openWarnModal, setOpenWarnModal] = useState(false)
   const [open, setOpen] = useState(false)
   const [counter, setCounter] = useState(1)
-  const navigate = useNavigate()
   const toggleWarnModal = () => {
     setOpenWarnModal(!openWarnModal)
   }
@@ -116,26 +115,13 @@ const CreateRelations = ({ onPrevious }) => {
             />
             <div className="flex flex-row items-center justify-between mt-4">
               <Button text="الخلف" onClick={onPrevious} />
-              <Button
-                text="الخطوة التالية"
-                onClick={() => {
-                  relations.length <= 0 ? toast.error('الرجاء اضافة اصحاب المصلحة') : navigate('/relations')
-                }}
-              />
+              <Link to={'/results'}>
+                <Button classes={'rounded-md'} text="النتائج" onClick={() => {}} />
+              </Link>
             </div>
           </div>
         )}
       </div>
-
-      {/* {relations && relations.length >= 1 && (
-        <div className="flex flex-row items-center justify-between mt-4">
-          <Button classes={'rounded-md'} text="الخلف" onClick={onPrevious} />
-
-          <Link to={'/results'}>
-            <Button classes={'rounded-md'} text="النتائج" onClick={() => {}} />
-          </Link>
-        </div>
-      )} */}
 
       {toggleWarnModal && (
         <Modal hideIcon dir="rtl" isOpen={stakeholders && stakeholders.length >= 1 ? openWarnModal : true} title="تنبيه" closeModal={closeWarnModal}>

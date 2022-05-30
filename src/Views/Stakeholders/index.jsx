@@ -4,14 +4,12 @@ import CSVReader from 'react-csv-reader'
 import { BsUpload } from 'react-icons/bs'
 import { IoCreateOutline } from 'react-icons/io5'
 import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
 import { addStakeholderArray, addStakeholdersTypes } from 'redux/slices/stakeholderSlice'
 import FormLayout from 'components/FormLayout'
 import CreateStakeholders from './CreateStakeholders'
 const Index = () => {
   const [fileName, setFileName] = useState(null)
   const dispatch = useDispatch()
-  const navigate = useNavigate()
   const handleForce = (data, fileInfo) => {
     const colorList = ['#fc8d8d', '#f8ffc7', '#ededed', '#34eb9b']
     console.log(data)
@@ -80,7 +78,6 @@ const Index = () => {
               <p>او</p>
               <div
                 onClick={() => {
-                  // navigate('/stakeholders/create')
                   setCreateStakeholdersClicked(true)
                 }}
                 className="flex items-center gap-2 rounded-md bg-primaryHover hover:bg-gray-900 transition text-white font-bold  border shadow-lg p-5 cursor-pointer"

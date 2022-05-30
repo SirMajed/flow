@@ -5,7 +5,6 @@ import { BsUpload } from 'react-icons/bs'
 import { IoCreateOutline } from 'react-icons/io5'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import Steps from 'components/Steps'
 
 import { addRelationArray, addRelationsTypes } from 'redux/slices/stakeholderSlice'
 import CreateRelations from './CreateRelations'
@@ -17,7 +16,6 @@ const Index = () => {
   const handleForce = (data, fileInfo) => {
     console.log(data)
     let arr = []
-    let relTypes = []
     let c = 1
     var edgeSet = new Set()
 
@@ -77,7 +75,6 @@ const Index = () => {
               <p>او</p>
               <div
                 onClick={() => {
-                  // navigate('/stakeholders/create')
                   setCreateRelationsClicked(true)
                 }}
                 className="flex items-center gap-2 rounded-md bg-primaryHover hover:bg-gray-900 transition text-white font-bold  border shadow-lg p-5 cursor-pointer"
@@ -90,7 +87,6 @@ const Index = () => {
         )}
       </FormLayout>
     </>
-    // </>
   )
 }
 
