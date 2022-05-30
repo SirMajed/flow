@@ -5,6 +5,7 @@ import { MdFileDownload } from 'react-icons/md'
 import Button from 'components/Button'
 import { useNavigate } from 'react-router-dom'
 import { addPosX, addPosY, hideEdge, hideNode } from 'redux/slices/stakeholderSlice'
+import ResultsNav from 'components/ResultsNav'
 const Results = () => {
   const domNode = useRef(null)
   const navigate = useNavigate()
@@ -194,41 +195,18 @@ const Results = () => {
   return (
     <>
       <div className="flex flex-col items-center justify-center h-screen bg-gray-50">
-        <div className="flex-col justify-center items-center mx-auto w-11/12">
-          <h1 className="text-xl md:text-2xl lg:text-4xl xl:text-4xl lg:w-full text-primary font-black leading-6 lg:leading-10 md:text-center text-center">النتائج</h1>
+        <ResultsNav
+          confirmReset={confirmReset}
+          downloadNetworkAsImage={downloadNetworkAsImage}
+          handleEdgeFilter={handleEdgeFilter}
+          handleNodeFilter={handleNodeFilter}
+          relationsTypes={relationsTypes}
+          stakeholdersTypes={stakeholdersTypes}
+        />
 
-          <div className="w-full border my-6">
-            <div className="w-11/12 h-5/6 my-t-4 mb-1 relative">
-              <select id="nodeType" className="absolute top-0 right-0 z-10 bg-primary rounded-md gap-2 px-2 py-1.5 my-1 mx-2 text-white" onChange={handleNodeFilter}>
-                <option value="none">Stakeholders filter</option>
-                {stakeholdersTypes.map((t, i) => (
-                  <option key={i} value={t}>
-                    {t}
-                  </option>
-                ))}
-              </select>
-
-              <select
-                id="relationType"
-                className="absolute top-0 right-20 z-10 bg-primary rounded-md gap-2 px-5 py-1.5 my-1 mr-28 text-white"
-                onChange={handleEdgeFilter}
-              >
-                <option value="none">Relation filter</option>
-                {relationsTypes.map((t, i) => (
-                  <option key={i} value={t}>
-                    {t}
-                  </option>
-                ))}
-              </select>
-              <div className="w-full my-t-4 mb-1 h-[40rem]" ref={domNode} />
-              <a id="canvasImg" download="filename"></a>
-            </div>
-          </div>
-        </div>
-        <div className="flex items-center gap-3">
-          <Button text="البدء من جديد" onClick={confirmReset} />
-          <Button icon={<MdFileDownload color="white" size={20} />} text="تحميل" onClick={downloadNetworkAsImage} />
-        </div>
+        <div className="w-full my-t-4 mb-1 h-screen" ref={domNode} />
+        <a id="canvasImg" download="filename"></a>
+        <div className="flex items-center gap-3"></div>
       </div>
     </>
   )
