@@ -3,9 +3,16 @@ import { Network } from 'vis-network/standalone/esm/vis-network'
 import { useDispatch, useSelector } from 'react-redux'
 import { MdFileDownload } from 'react-icons/md'
 import Button from 'components/Button'
+import { useNavigate } from 'react-router-dom'
+import { addHiddenToEdge, addPosX, addPosXEdge, addPosY, addPosYEdge, addStakeholderArray, hideNode } from 'redux/slices/stakeholderSlice'
 const Results = () => {
   const domNode = useRef(null)
-  const { stakeholders, relations, stakeholdersTypes, relationsTypes } = useSelector((s) => s.stakeholders) //ndoes
+  const navigate = useNavigate()
+  // const { stakeholders, relations, stakeholdersTypes, relationsTypes } = useSelector((s) => s.stakeholders) //ndoes
+  const stakeholders = useSelector((s) => s.stakeholders.stakeholders)
+  const relations = useSelector((s) => s.stakeholders.relations)
+  const stakeholdersTypes = useSelector((s) => s.stakeholders.stakeholdersTypes)
+  const relationsTypes = useSelector((s) => s.stakeholders.relationsTypes)
   const [nodes, setNodes] = useState([])
   const [edges, setEdges] = useState([])
   // A reference to the vis network instance
@@ -67,14 +74,13 @@ const Results = () => {
     width: '100%',
     clickToUse: false,
   }
-  console.log(edges)
-  console.log(nodes)
 
   const dispatch = useDispatch()
 
   useEffect(() => {
     setEdges(relations)
     setNodes(stakeholders)
+
     if (network.current) {
       network.current.setOptions({ physics: false })
     }
@@ -87,14 +93,15 @@ const Results = () => {
     network.current.on('click', function (n) {
       // console.log(n);
       // console.log(n.nodes.length);
-
       var tempNodes = []
       nodes.forEach((node) => {
         const position = network.current.getPositions([node.id])
         const posX = position[`${node.id}`].x
         const posY = position[`${node.id}`].y
-        node.x = posX
-        node.y = posY
+        dispatch(addPosX({ id: node.id, posX: posX }))
+        dispatch(addPosY({ id: node.id, posY: posY }))
+        // node.x = posX
+        // node.y = posY
         // e.hidden = false
 
         tempNodes.push(node)
@@ -111,9 +118,12 @@ const Results = () => {
             const position = network.current.getPositions([e.id])
             const posX = position[`${e.id}`].x
             const posY = position[`${e.id}`].y
-            e.x = posX
-            e.y = posY
-            e.hidden = true
+            dispatch(addPosX({ id: e.id, posX: posX }))
+            dispatch(addPosY({ id: e.id, posY: posY }))
+            dispatch(hideNode({ id: e.id, hidden: true }))
+            // e.x = posX
+            // e.y = posY
+            // e.hidden = true
           }
           tempNodes.push(e)
         })
@@ -127,9 +137,12 @@ const Results = () => {
           const position = network.current.getPositions([e.id])
           const posX = position[`${e.id}`].x
           const posY = position[`${e.id}`].y
-          e.x = posX
-          e.y = posY
-          e.hidden = false
+          dispatch(addPosX({ id: e.id, posX: posX }))
+          dispatch(addPosY({ id: e.id, posY: posY }))
+          dispatch(hideNode({ id: e.id, hidden: false }))
+          // e.x = posX
+          // e.y = posY
+          // e.hidden = false
 
           tempNodes.push(e)
         })
@@ -166,6 +179,14 @@ const Results = () => {
 
   const downloadNetworkAsImage = () => {
     document.getElementById('canvasImg').click()
+  }
+  const confirmReset = () => {
+    var answer = window.confirm('هل انت متأكد من البدء من جديد؟')
+    if (answer) {
+      navigate('/stakeholders')
+    } else {
+      return null
+    }
   }
 
   return (
@@ -212,7 +233,10 @@ const Results = () => {
             </div>
           </div>
         </div>
-        <Button icon={<MdFileDownload color="white" size={20} />} text="تحميل" onClick={downloadNetworkAsImage} />
+        <div className="flex items-center gap-3">
+          <Button text="البدء من جديد" onClick={confirmReset} />
+          <Button icon={<MdFileDownload color="white" size={20} />} text="تحميل" onClick={downloadNetworkAsImage} />
+        </div>
       </div>
     </>
   )

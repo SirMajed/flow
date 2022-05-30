@@ -15,6 +15,7 @@ export const stakeholderSlice = createSlice({
       state.stakeholders.push(action.payload)
     },
     addStakeholderArray: (state, action) => {
+      // state.stakeholders = []
       state.stakeholders = action.payload
     },
     addStakeholdersTypes: (state, action) => {
@@ -44,6 +45,34 @@ export const stakeholderSlice = createSlice({
     addRelationsTypes: (state, action) => {
       state.relationsTypes = action.payload
     },
+    // ================================================= \\
+    addPosX: (state, action) => {
+      const updatedArray = state.stakeholders // copy of original
+      const { posX, id } = action.payload
+      let selectedItem = updatedArray.findIndex((element) => {
+        return element.id === id
+      })
+      updatedArray[selectedItem].x = posX
+      state.stakeholders = updatedArray
+    },
+    addPosY: (state, action) => {
+      const updatedArray = state.stakeholders // copy of original
+      const { posY, id } = action.payload
+      let selectedItem = updatedArray.findIndex((element) => {
+        return element.id === id
+      })
+      updatedArray[selectedItem].y = posY
+      state.stakeholders = updatedArray
+    },
+    hideNode: (state, action) => {
+      const updatedArray = state.stakeholders // copy of original
+      const { hidden, id } = action.payload
+      let selectedItem = updatedArray.findIndex((element) => {
+        return element.id === id
+      })
+      updatedArray[selectedItem].hidden = hidden
+      state.stakeholders = updatedArray
+    },
   },
 })
 
@@ -59,6 +88,9 @@ export const {
   clearRelations,
   addRelationArray,
   deleteRelation,
+  addPosX,
+  addPosY,
+  hideNode,
 } = stakeholderSlice.actions
 
 export default stakeholderSlice.reducer
