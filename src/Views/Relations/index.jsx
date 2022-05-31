@@ -17,7 +17,6 @@ const Index = () => {
   const handleForce = (data, fileInfo) => {
     console.log(data)
     let arr = []
-    let c = 1
     var edgeSet = new Set()
 
     data.forEach((row) => {

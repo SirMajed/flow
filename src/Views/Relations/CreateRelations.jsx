@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Input from 'components/Input'
 import Select from 'components/Select'
 import Button from 'components/Button'
-import { addRelation, clearRelations, deleteRelation } from 'redux/slices/stakeholderSlice'
+import { addRelation, addRelationsTypes, clearRelations, deleteRelation } from 'redux/slices/stakeholderSlice'
 import { Link } from 'react-router-dom'
 import Table from 'components/Table'
 import Form from 'components/Form'
@@ -24,6 +24,7 @@ const CreateRelations = ({ onPrevious }) => {
   const [openWarnModal, setOpenWarnModal] = useState(false)
   const [open, setOpen] = useState(false)
   const [counter, setCounter] = useState(1)
+  const { relationsTypes } = useSelector((s) => s.stakeholders)
   const toggleWarnModal = () => {
     setOpenWarnModal(!openWarnModal)
   }
@@ -55,6 +56,8 @@ const CreateRelations = ({ onPrevious }) => {
 
   const createRelation = (e) => {
     e.preventDefault()
+    var edgeSet = new Set([...relationsTypes])
+
     if (!selectedStakeholder1 || !selectedStakeholder2 || !relation || !width || !relationType || !selectedColor) {
       toast.error('قم بتعبئة الحقول')
     } else {
@@ -68,7 +71,10 @@ const CreateRelations = ({ onPrevious }) => {
         type: relationType,
         color: selectedColor,
       }
+      edgeSet.add(parseInt(relationType))
       dispatch(addRelation(data))
+      console.log(edgeSet)
+      dispatch(addRelationsTypes(Array.from(edgeSet)))
       setCounter((counter) => counter + 1)
       toast.success('تم إنشاء العلاقة بنجاح')
       // clearInputs()

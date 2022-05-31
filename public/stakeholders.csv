@@ -1,32 +1,5 @@
-NAME,TYPE
-test1,test
-test2,test
-test3,test
-test4,test2
-test5,test3
-test6,test4
-test7,test4
-test8,test5
-test9,test4
-test10,test
-test11,test
-test12,test3
-test13,test2
-test14,test2
-test15,test5
-test16,test5
-test17,test3
-test18,test
-test19,test
-test20,test
-test21,test2
-test22,test3
-test23,test4
-test24,test4
-test25,test5
-test26,test4
-test27,test
-test28,test
-test29,test3
-test30,test2
-test31,test2
+﻿name,type
+هيئة التطوير الدفاعي,1
+وزارة الدفاع,1
+وزارة التعليم,1
+وزارة المالية,3
