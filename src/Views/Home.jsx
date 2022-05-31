@@ -11,13 +11,17 @@ const Home = () => {
     const divElement = document.getElementById('cont')
     divElement.scrollIntoView({ behavior: 'smooth' })
   }
+  console.log(isElectron())
 
   return (
     <>
-      {isElectron() && <TitleBar />}
+      {/* {isElectron() && } */}
+      {/* <TitleBar /> */}
+      {/* <h1>{String(isElectron())}</h1> */}
+      {/* {isElectron() === true && <TitleBar />} */}
       <div
         style={{ backgroundImage: `linear-gradient(rgba(24, 93, 131, 0.1), rgba(24, 93, 131, 0.1)), url(${bg})` }}
-        className="flex flex-col justify-center h-screen relative bg-fixed bg-center bg-cover bg-no-repeat"
+        className="flex flex-col justify-center h-screen bg-fixed bg-center bg-cover bg-no-repeat"
       >
         <div className="overflow-y-hidden ">
           <div className="mx-auto container py-12 px-4 ">

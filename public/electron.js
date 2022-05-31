@@ -7,16 +7,16 @@ const isDev = require('electron-is-dev')
 function createWindow() {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
+    autoHideMenuBar: false,
     width: 1280,
     height: 720,
     icon: __dirname + '/logo192.png',
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
-      // devTools: false,
-      nodeIntegration: true,
+      devTools: false,
+      nodeIntegration: false,
       enableRemoteModule: true,
     },
-    autoHideMenuBar: true,
     frame: false,
     maximizable: true,
   })

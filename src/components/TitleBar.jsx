@@ -3,23 +3,6 @@ import React from 'react'
 import isElectron from 'is-electron'
 import { VscChromeMinimize, VscChromeClose, VscChromeMaximize } from 'react-icons/vsc'
 import { AiOutlineNodeIndex } from 'react-icons/ai'
-const title_bar = {
-  backgroundColor: '#000000',
-  height: '30px',
-  width: '100vw',
-  color: 'white',
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  position: 'fixed',
-  webkitAppRegion: 'drag',
-}
-const nav_link = {
-  fontSize: '14px',
-  fontWeight: 'bold',
-  webkitAppRegion: 'no-drag',
-  cursor: 'pointer',
-}
 
 const TitleBar = () => {
   const handleClose = () => {
@@ -38,7 +21,7 @@ const TitleBar = () => {
     }
   }
   return (
-    <nav className="bg-black h-7 w-full flex fixed justify-between text-white items-center drag">
+    <nav className="bg-black h-8 w-full flex fixed justify-between text-white items-center drag">
       <div className="flex items-center px-2">
         <AiOutlineNodeIndex className="text-primary" size={25} />
         <span className="px-2 text-sm text-white text-opacity-90">Stakeholders Diagram</span>

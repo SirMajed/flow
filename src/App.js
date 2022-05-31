@@ -9,10 +9,13 @@ import ImportStakeholders from './Views/Stakeholders/ImportStakeholders'
 import Relations from './Views/Relations'
 import CreateRelations from './Views/Relations/CreateRelations'
 import Results from 'Views/Results'
+import isElectron from 'is-electron'
+import TitleBar from 'components/TitleBar'
 function App() {
   return (
     <Router>
       <ToastContainer />
+      {isElectron() === true && <TitleBar />}
       <Routes>
         <Route path="/" index element={<Home />} />
         <Route path="/stakeholders" element={<Stakeholders />} />
