@@ -149,7 +149,7 @@ const Results = () => {
         dispatch(addPosX({ id: node.id, posX: posX }))
         dispatch(addPosY({ id: node.id, posY: posY }))
         dispatch(hideNode({ id: node.id, hidden: false }))
-      } else if (node.type !== e.target.value) {
+      } else if (node.type.toString() !== e.target.value.toString()) {
         const position = network.current.getPositions([node.id])
         const posX = position[`${node.id}`].x
         const posY = position[`${node.id}`].y
