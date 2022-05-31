@@ -20,7 +20,7 @@ const Results = () => {
   const options = {
     physics: {
       forceAtlas2Based: {
-        gravitationalConstant: -26,
+        gravitationalConstant: -50,
         centralGravity: 0.0015,
         springLength: 200,
         springConstant: 0.035,
@@ -39,7 +39,7 @@ const Results = () => {
     nodes: {
       widthConstraint: { maximum: 200 },
       font: {
-        size: 20,
+        size: 25,
       },
     },
 
@@ -57,6 +57,7 @@ const Results = () => {
         forceDirection: 'none',
       },
       font: {
+        size: 25,
         align: 'top',
         background: 'white',
       },
@@ -169,7 +170,7 @@ const Results = () => {
       dispatch(hideEdge({ id: edge.id, hidden: false }))
       if (e.target.value === 'none') {
         dispatch(hideEdge({ id: edge.id, hidden: false }))
-      } else if (edge.type !== e.target.value) {
+      } else if (edge.type.toString() !== e.target.value.toString()) {
         dispatch(hideEdge({ id: edge.id, hidden: true }))
       }
       tempEdges.push(edge)
