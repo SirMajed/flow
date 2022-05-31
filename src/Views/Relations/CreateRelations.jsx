@@ -11,11 +11,12 @@ import { toast } from 'react-toastify'
 import { Modal } from 'components/Modal'
 import NoStakeholdersAlert from './NoStakeholdersAlert'
 import { MdAdd } from 'react-icons/md'
+import uuid from 'react-uuid'
 const CreateRelations = ({ onPrevious }) => {
   const [selectedStakeholder1, setSelectedStakeholder1] = useState('')
   const [selectedStakeholder2, setSelectedStakeholder2] = useState('')
   const [selectedColor, setSelectedColor] = useState('')
-  const [weight, setWeight] = useState(0)
+  const [width, setWidth] = useState(0)
   const [relation, setRelation] = useState('')
   const [relationType, setRelationType] = useState(0)
   const { stakeholders } = useSelector((s) => s.stakeholders)
@@ -54,16 +55,16 @@ const CreateRelations = ({ onPrevious }) => {
 
   const createRelation = (e) => {
     e.preventDefault()
-    if (!selectedStakeholder1 || !selectedStakeholder2 || !relation || !weight || !relationType || !selectedColor) {
+    if (!selectedStakeholder1 || !selectedStakeholder2 || !relation || !width || !relationType || !selectedColor) {
       toast.error('قم بتعبئة الحقول')
     } else {
       const data = {
-        id: counter,
+        id: uuid(),
         from: selectedStakeholder1,
         to: selectedStakeholder2,
         arrows: 'to',
         label: relation,
-        width: weight,
+        width,
         type: relationType,
         color: selectedColor,
       }
@@ -78,7 +79,7 @@ const CreateRelations = ({ onPrevious }) => {
   const clearInputs = () => {
     setRelation('')
     setRelationType(0)
-    setWeight(0)
+    setWidth(0)
     setSelectedColor('')
     setSelectedStakeholder2('')
     setSelectedStakeholder1('')
@@ -146,7 +147,7 @@ const CreateRelations = ({ onPrevious }) => {
             </div>
             <div>
               <h1>وزن الخط:</h1>
-              <Input required value={weight} onChange={(e) => setWeight(e.target.value)} type={'number'} placeholder="Weight" />
+              <Input required value={width} onChange={(e) => setWidth(e.target.value)} type={'number'} placeholder="Weight" />
             </div>
             <div>
               <h1>نوع العلاقة:</h1>
