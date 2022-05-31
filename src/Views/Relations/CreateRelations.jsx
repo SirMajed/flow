@@ -116,7 +116,7 @@ const CreateRelations = ({ onPrevious }) => {
               data={relations}
               deleteTableData={clearTable}
               handleDelete={removeRelation}
-              tableHeaders={['من', 'الى', 'العلاقة', 'وزن الخط', 'نوع العلاقة', 'اللون', 'خيارات']}
+              tableHeaders={['من', 'الى', 'العلاقة', 'وزن الخط', 'نوع العلاقة', 'لون العلاقة', 'خيارات']}
             />
             <div className="flex flex-row items-center justify-between mt-4">
               <Button text="الخلف" onClick={onPrevious} />
