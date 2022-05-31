@@ -28,6 +28,7 @@
     "react-toastify": "^8.2.0",
     "react-tooltip": "^4.2.21",
     "react-uuid": "^1.0.2",
+    "uuid": "^8.3.2",
     "vis-data": "^7.1.2",
     "vis-network": "7.4.0",
     "wait-on": "^6.0.1",

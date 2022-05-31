@@ -3,30 +3,36 @@ import { useState } from 'react'
 import Input from 'components/Input'
 import Button from 'components/Button'
 import { useDispatch, useSelector } from 'react-redux'
-import { addStakeholder, clearStakeholders, deleteStakeholder } from 'redux/slices/stakeholderSlice'
+import { addStakeholder, addStakeholdersTypes, clearStakeholders, deleteStakeholder } from 'redux/slices/stakeholderSlice'
 import { useNavigate } from 'react-router-dom'
 import Table from 'components/Table'
 import { toast } from 'react-toastify'
 import Form from 'components/Form'
 import { MdAdd } from 'react-icons/md'
 import { Modal } from 'components/Modal'
-
+import { v4 as uuidv4 } from 'uuid';
 const CreateStakeholders = ({ onPrevious }) => {
   const { stakeholders } = useSelector((s) => s.stakeholders)
-  const [stakeholderName, setStakeholderName] = useState('')
-  const [stakeholderType, setStakeholderType] = useState('')
+  const [label, setLabel] = useState('')
+  const [type, setType] = useState('')
   const [open, setOpen] = useState(false)
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const { stakeholdersTypes } = useSelector((s) => s.stakeholders)
 
   const createStakeholder = () => {
-    if (!stakeholderName || !stakeholderType) {
+    if (!label || !type) {
       toast.error('قم بتعبئة حقول الإدخال')
     } else {
-      const obj = { name: stakeholderName, type: stakeholderType }
+      var edgeSet = new Set([...stakeholdersTypes])
+
+      const obj = { id: label, label, type, shape: 'box' }
       dispatch(addStakeholder(obj))
-      setStakeholderName('')
-      setStakeholderType('')
+      edgeSet.add(type)
+      dispatch(addStakeholdersTypes(Array.from(edgeSet)))
+
+      setLabel('')
+      setType('')
       setOpen(false)
     }
   }
@@ -72,7 +78,7 @@ const CreateStakeholders = ({ onPrevious }) => {
               tableHeaders={['اسم المساهم', 'نوع المساهم', 'خيارات']}
             />
             <div className="flex flex-row items-center justify-between mt-4">
-                <Button text="الخلف" onClick={onPrevious} />
+              <Button text="الخلف" onClick={onPrevious} />
               <Button
                 text="الخطوة التالية"
                 onClick={() => {
@@ -87,8 +93,8 @@ const CreateStakeholders = ({ onPrevious }) => {
       {toggleModal && (
         <Modal dir={'rtl'} closeModal={closeModal} isOpen={open} title={'إنشاء صاحب مصلحة جديد'}>
           <Form className="flex flex-col gap-4">
-            <Input required={true} placeholder="الأسم" value={stakeholderName} onChange={(e) => setStakeholderName(e.target.value)} />
-            <Input required={true} placeholder="النوع" value={stakeholderType} onChange={(e) => setStakeholderType(e.target.value)} />
+            <Input required={true} placeholder="الأسم" value={label} onChange={(e) => setLabel(e.target.value)} />
+            <Input required={true} placeholder="النوع" value={type} onChange={(e) => setType(e.target.value)} />
             <div className="flex items-center gap-3">
               <Button text="اضافة" onClick={createStakeholder} />
               <Button onClick={onPrevious} type="button" text="رجوع" classes="bg-transparent text-primary border border-primary hover:text-white" />
