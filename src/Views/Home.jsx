@@ -15,10 +15,6 @@ const Home = () => {
 
   return (
     <>
-      {/* {isElectron() && } */}
-      {/* <TitleBar /> */}
-      {/* <h1>{String(isElectron())}</h1> */}
-      {/* {isElectron() === true && <TitleBar />} */}
       <div
         style={{ backgroundImage: `linear-gradient(rgba(24, 93, 131, 0.1), rgba(24, 93, 131, 0.1)), url(${bg})` }}
         className="flex flex-col justify-center h-screen bg-fixed bg-center bg-cover bg-no-repeat"
@@ -35,7 +31,7 @@ const Home = () => {
                           شبكة اصحاب المصلحة
                         </h1>
                         <p className="text-lg md:text-base xl:text-lg font-t text-gray-200 xl:leading-normal pt-2">
-                          يمكنك رفع ملفات بصيغة (.csv, .xlsx, .xls) لإنشاء رسم بياني
+                          لإنشاء اصحاب المصلحة والعلاقات 
                         </p>
                       </div>
                       <Link to={'/stakeholders'}>
