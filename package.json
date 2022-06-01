@@ -27,7 +27,6 @@
     "react-scripts": "5.0.0",
     "react-toastify": "^8.2.0",
     "react-tooltip": "^4.2.21",
-    "react-uuid": "^1.0.2",
     "vis-data": "^7.1.2",
     "vis-network": "7.4.0",
     "wait-on": "^6.0.1",
@@ -36,10 +35,13 @@
   "homepage": "./",
   "main": "public/electron.js",
   "build": {
+    "productName": "Stakeholder Value Network",
     "appId": "com.example.electron-cra",
     "files": [
       "build/**/*",
-      "node_modules/**/*"
+      "node_modules/**/*",
+      "dist/**/*",
+      "package.json"
     ],
     "directories": {
       "buildResources": "assets"
@@ -52,7 +54,7 @@
     "eject": "react-scripts eject",
     "electron": "electron-builder",
     "electron-dev": "concurrently \"cross-env BROWSER=none npm start\" \"wait-on http://localhost:3000 && electron .\"",
-    "electron-pack": "npm run build && npm run electron -w",
+    "electron-pack": "npm run build && npm run electron",
     "preelectron-pack": "npm run build"
   },
   "eslintConfig": {
@@ -76,6 +78,7 @@
   "devDependencies": {
     "autoprefixer": "^10.4.2",
     "electron": "^17.1.0",
+    "electron-builder": "^23.0.3",
     "postcss": "^8.4.7",
     "tailwindcss": "^3.0.23"
   }

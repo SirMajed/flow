@@ -13,20 +13,22 @@ function createWindow() {
     icon: __dirname + '/logo192.png',
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
-      devTools: false,
-      nodeIntegration: false,
+      devTools: true,
+      nodeIntegration: true,
       enableRemoteModule: true,
     },
     frame: false,
     maximizable: true,
   })
 
-  const devBasePath = 'http://localhost:3000/'
-  const prodBasePath = `file://${path.join(__dirname, '../build/index.html')}`
-  const basePath = isDev ? devBasePath : prodBasePath
+  // const devBasePath = 'http://localhost:3000/'
+  // const prodBasePath = `file://${path.join(__dirname, '../build/index.html')}`
+  // const basePath = isDev ? devBasePath : prodBasePath
+
+  mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${__dirname}/../build/index.html`)
 
   // and load the index.html of the app.
-  mainWindow.loadURL(basePath)
+  // mainWindow.loadURL(basePath)
 
   // mainWindow.loadURL(`file://${path.join(__dirname, '../build/index.html')}`)
 

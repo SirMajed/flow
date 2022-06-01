@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { BrowserRouter as Router, HashRouter, Route, Routes } from 'react-router-dom'
 import Home from './Views/Home'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -13,7 +13,7 @@ import isElectron from 'is-electron'
 import TitleBar from 'components/TitleBar'
 function App() {
   return (
-    <Router>
+    <HashRouter>
       <ToastContainer />
       {isElectron() === true && <TitleBar />}
       <Routes>
@@ -27,7 +27,7 @@ function App() {
         <Route path="/results" element={<Results />} />
         <Route path="*" element={<h1>ERROR 404</h1>} />
       </Routes>
-    </Router>
+    </HashRouter>
   )
 }
 
