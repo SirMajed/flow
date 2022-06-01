@@ -8,8 +8,8 @@ function createWindow() {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     autoHideMenuBar: false,
-    width: 1280,
-    height: 720,
+    width: 1240,
+    height: 690,
     icon: __dirname + '/logo192.png',
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),

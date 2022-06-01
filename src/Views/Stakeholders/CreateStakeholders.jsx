@@ -33,10 +33,9 @@ const CreateStakeholders = ({ onPrevious }) => {
 
       setLabel('')
       setType('')
-      setOpen(false)
+      closeModal()
     }
   }
-  console.log(selectedStakeholder)
   const removeStakeholder = (name) => {
     dispatch(deleteStakeholder(name))
   }
@@ -102,11 +101,10 @@ const CreateStakeholders = ({ onPrevious }) => {
             <UpdateStakeholder stakeholder={selectedStakeholder} closeModal={closeModal} />
           ) : (
             <Form className="flex flex-col gap-4">
-              <Input required={true} placeholder="الأسم" value={label} onChange={(e) => setLabel(e.target.value)} />
-              <Input required={true} placeholder="النوع" value={type} onChange={(e) => setType(e.target.value)} />
+              <Input required placeholder="الأسم" value={label} onChange={(e) => setLabel(e.target.value)} />
+              <Input required placeholder="النوع" value={type} onChange={(e) => setType(e.target.value)} />
               <div className="flex items-center gap-3">
                 <Button text="اضافة" onClick={createStakeholder} />
-                {/* <Button onClick={onPrevious} type="button" text="رجوع" classes="bg-transparent text-primary border border-primary hover:text-white" /> */}
               </div>
             </Form>
           )}

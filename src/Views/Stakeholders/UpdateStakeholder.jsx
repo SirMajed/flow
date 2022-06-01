@@ -25,7 +25,7 @@ const UpdateStakeholder = ({ stakeholder, closeModal }) => {
     var edgeSet = new Set([...stakeholdersTypes])
 
     dispatch(updateStakeholder({ id: oldLabel, label, type }))
-    edgeSet.add(parseInt(type))
+    edgeSet.add(type)
     dispatch(addStakeholdersTypes(Array.from(edgeSet)))
 
     closeModal()
@@ -33,8 +33,8 @@ const UpdateStakeholder = ({ stakeholder, closeModal }) => {
   }
   return (
     <Form className="flex flex-col gap-4">
-      <Input required={true} placeholder="الأسم" value={label} onChange={(e) => setLabel(e.target.value)} />
-      <Input required={true} placeholder="النوع" value={type} onChange={(e) => setType(e.target.value)} />
+      <Input required placeholder="الأسم" value={label} onChange={(e) => setLabel(e.target.value)} />
+      <Input required placeholder="النوع" value={type} onChange={(e) => setType(e.target.value)} />
       <div className="flex items-center gap-3">
         <Button text="تحديث" onClick={handleUpdate} />
       </div>
