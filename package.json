@@ -27,11 +27,8 @@
     "react-scripts": "5.0.0",
     "react-toastify": "^8.2.0",
     "react-tooltip": "^4.2.21",
-<<<<<<< HEAD
-=======
     "react-uuid": "^1.0.2",
     "uuid": "^8.3.2",
->>>>>>> 97094e874f3a24f339723c239d064325dcc39852
     "vis-data": "^7.1.2",
     "vis-network": "7.4.0",
     "wait-on": "^6.0.1",
