@@ -4,7 +4,6 @@ import CSVReader from 'react-csv-reader'
 import { BsUpload } from 'react-icons/bs'
 import { IoCreateOutline } from 'react-icons/io5'
 import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
 
 import { addRelationArray, addRelationsTypes } from 'redux/slices/stakeholderSlice'
 import CreateRelations from './CreateRelations'
@@ -13,9 +12,7 @@ import { v4 as uuidv4 } from 'uuid';
 const Index = () => {
   const [fileName, setFileName] = useState(null)
   const dispatch = useDispatch()
-  const navigate = useNavigate()
   const handleForce = (data, fileInfo) => {
-    console.log(data)
     let arr = []
     var edgeSet = new Set()
 

@@ -17,7 +17,6 @@ const Index = () => {
   
   const handleForce = (data, fileInfo) => {
     const colorList = ['#fc8d8d', '#f8ffc7', '#ededed', '#34eb9b']
-    console.log(data)
     let arr = []
     let skTypes = []
     var typesSet = new Set()

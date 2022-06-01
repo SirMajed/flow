@@ -11,8 +11,6 @@ const Home = () => {
     const divElement = document.getElementById('cont')
     divElement.scrollIntoView({ behavior: 'smooth' })
   }
-  console.log(isElectron())
-
   return (
     <>
       <div

@@ -72,7 +72,6 @@ const CreateRelations = ({ onPrevious }) => {
       }
       edgeSet.add(parseInt(type))
       dispatch(addRelation(data))
-      console.log(edgeSet)
       dispatch(addRelationsTypes(Array.from(edgeSet)))
       toast.success('تم إنشاء العلاقة بنجاح')
       // clearInputs()

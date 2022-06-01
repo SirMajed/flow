@@ -35,39 +35,39 @@ const Table = ({ type, data, handleEdit, handleDelete, tableHeaders, deleteTable
             <tbody>
               {type === 'stakeholders'
                 ? data.map((item, i) => {
-                  return (
-                    // dark:bg-gray-800 dark:border-gray-700
-                    <tr key={i} className="bg-white border-b ">
-                      <td className="px-6 py-4">{i + 1}</td>
-                      <td className="px-6 py-4">{item.label || item.name || 'الإسم'}</td>
-                      <td>{item?.type || 'النوع'}</td>
-                      <td className="px-6 py-4 flex items-center justify-center gap-4">
-                        <MdDeleteOutline onClick={() => handleDelete(item.label)} className="cursor-pointer" size={20} />
-                        <MdOutlineModeEditOutline onClick={() => handleEdit(item)} className="cursor-pointer" size={20} />
-                      </td>
-                    </tr>
-                  )
-                })
+                    return (
+                      // dark:bg-gray-800 dark:border-gray-700
+                      <tr key={i} className="bg-white border-b ">
+                        <td className="px-6 py-4">{i + 1}</td>
+                        <td className="px-6 py-4">{item.label || item.name || 'الإسم'}</td>
+                        <td>{item?.type || 'النوع'}</td>
+                        <td className="px-6 py-4 flex items-center justify-center gap-4">
+                          <MdDeleteOutline onClick={() => handleDelete(item.label)} className="cursor-pointer" size={20} />
+                          <MdOutlineModeEditOutline onClick={() => handleEdit(item)} className="cursor-pointer" size={20} />
+                        </td>
+                      </tr>
+                    )
+                  })
                 : data.map((item, i) => {
-                  return (
-                    // dark:bg-gray-800 dark:border-gray-700
-                    <tr key={i} className="bg-white border-b ">
-                      <td className="px-6 py-4">{i + 1}</td>
-                      <td className="px-6 py-4">{item.from}</td>
-                      <td className="px-6 py-4">{item.to}</td>
-                      <td className="px-6 py-4">{item.label || item.rel}</td>
-                      <td className="px-6 py-4">{isNumber(item.width) ? Number(item.width).toFixed(2) : item.width}</td>
-                      <td className="px-6 py-4">{item.type || item.reltype}</td>
-                      <td className="px-6 py-4 ">
-                        <div style={{backgroundColor: item.color}} className={` mx-auto h-3 w-4 rounded `} />
-                      </td>
-                      <td className="px-6 py-4 flex items-center justify-center gap-4">
-                        <MdDeleteOutline onClick={() => handleDelete(i)} className="cursor-pointer" size={20} />
-                        <MdOutlineModeEditOutline onClick={() => handleEdit(item)} className="cursor-pointer" size={20} />
-                      </td>
-                    </tr>
-                  )
-                })}
+                    return (
+                      // dark:bg-gray-800 dark:border-gray-700
+                      <tr key={i} className="bg-white border-b ">
+                        <td className="px-6 py-4">{i + 1}</td>
+                        <td className="px-6 py-4">{item.from}</td>
+                        <td className="px-6 py-4">{item.to}</td>
+                        <td className="px-6 py-4">{item.label || item.rel}</td>
+                        <td className="px-6 py-4">{isNumber(item.width) ? Number(item.width).toFixed(2) : item.width}</td>
+                        <td className="px-6 py-4">{item.type || item.reltype}</td>
+                        <td className="px-6 py-4 ">
+                          <div style={{ backgroundColor: item.color }} className={` mx-auto h-3 w-4 rounded `} />
+                        </td>
+                        <td className="px-6 py-4 flex items-center justify-center gap-4">
+                          <MdDeleteOutline onClick={() => handleDelete(i)} className="cursor-pointer" size={20} />
+                          {/* <MdOutlineModeEditOutline onClick={() => handleEdit(item)} className="cursor-pointer" size={20} /> */}
+                        </td>
+                      </tr>
+                    )
+                  })}
             </tbody>
           </table>
         ) : (

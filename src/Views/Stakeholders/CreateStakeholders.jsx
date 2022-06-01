@@ -10,7 +10,8 @@ import { toast } from 'react-toastify'
 import Form from 'components/Form'
 import { MdAdd } from 'react-icons/md'
 import { Modal } from 'components/Modal'
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid'
+import UpdateStakeholder from './UpdateStakeholder'
 const CreateStakeholders = ({ onPrevious }) => {
   const { stakeholders } = useSelector((s) => s.stakeholders)
   const [label, setLabel] = useState('')
@@ -19,13 +20,12 @@ const CreateStakeholders = ({ onPrevious }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const { stakeholdersTypes } = useSelector((s) => s.stakeholders)
-
+  const [selectedStakeholder, setSelectedStakeholder] = useState(null)
   const createStakeholder = () => {
     if (!label || !type) {
       toast.error('قم بتعبئة حقول الإدخال')
     } else {
       var edgeSet = new Set([...stakeholdersTypes])
-
       const obj = { id: label, label, type, shape: 'box' }
       dispatch(addStakeholder(obj))
       edgeSet.add(type)
@@ -36,7 +36,7 @@ const CreateStakeholders = ({ onPrevious }) => {
       setOpen(false)
     }
   }
-
+  console.log(selectedStakeholder)
   const removeStakeholder = (name) => {
     dispatch(deleteStakeholder(name))
   }
@@ -50,8 +50,13 @@ const CreateStakeholders = ({ onPrevious }) => {
   }
   const closeModal = () => {
     setOpen(false)
+    setSelectedStakeholder(null)
   }
 
+  const handleEditStakeholder = (stakeholder) => {
+    setSelectedStakeholder(stakeholder)
+    toggleModal()
+  }
   return (
     <>
       <div className="mb-2 flex flex-col justify-center gap-5 items-center">
@@ -75,6 +80,7 @@ const CreateStakeholders = ({ onPrevious }) => {
               data={stakeholders}
               deleteTableData={deleteTableData}
               handleDelete={removeStakeholder}
+              handleEdit={handleEditStakeholder}
               tableHeaders={['اسم المساهم', 'نوع المساهم', 'خيارات']}
             />
             <div className="flex flex-row items-center justify-between mt-4">
@@ -92,14 +98,18 @@ const CreateStakeholders = ({ onPrevious }) => {
 
       {toggleModal && (
         <Modal dir={'rtl'} closeModal={closeModal} isOpen={open} title={'إنشاء صاحب مصلحة جديد'}>
-          <Form className="flex flex-col gap-4">
-            <Input required={true} placeholder="الأسم" value={label} onChange={(e) => setLabel(e.target.value)} />
-            <Input required={true} placeholder="النوع" value={type} onChange={(e) => setType(e.target.value)} />
-            <div className="flex items-center gap-3">
-              <Button text="اضافة" onClick={createStakeholder} />
-              <Button onClick={onPrevious} type="button" text="رجوع" classes="bg-transparent text-primary border border-primary hover:text-white" />
-            </div>
-          </Form>
+          {selectedStakeholder ? (
+            <UpdateStakeholder stakeholder={selectedStakeholder} closeModal={closeModal} />
+          ) : (
+            <Form className="flex flex-col gap-4">
+              <Input required={true} placeholder="الأسم" value={label} onChange={(e) => setLabel(e.target.value)} />
+              <Input required={true} placeholder="النوع" value={type} onChange={(e) => setType(e.target.value)} />
+              <div className="flex items-center gap-3">
+                <Button text="اضافة" onClick={createStakeholder} />
+                {/* <Button onClick={onPrevious} type="button" text="رجوع" classes="bg-transparent text-primary border border-primary hover:text-white" /> */}
+              </div>
+            </Form>
+          )}
         </Modal>
       )}
     </>

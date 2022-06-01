@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, current } from '@reduxjs/toolkit'
 
 const initialState = {
   stakeholders: [],
@@ -13,6 +13,17 @@ export const stakeholderSlice = createSlice({
   reducers: {
     addStakeholder: (state, action) => {
       state.stakeholders.push(action.payload)
+    },
+    updateStakeholder: (state, action) => {
+      const updatedArray = state.stakeholders // copy of original
+      const { id, label, type } = action.payload
+      let selectedItem = updatedArray.findIndex((element) => {
+        return element.id === id
+      })
+      updatedArray[selectedItem].label = label
+      updatedArray[selectedItem].type = type
+      updatedArray[selectedItem].id = label
+      state.stakeholders = updatedArray
     },
     addStakeholderArray: (state, action) => {
       // state.stakeholders = []
@@ -101,6 +112,7 @@ export const {
   addPosY,
   hideNode,
   hideEdge,
+  updateStakeholder,
 } = stakeholderSlice.actions
 
 export default stakeholderSlice.reducer
