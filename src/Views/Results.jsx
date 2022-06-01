@@ -72,6 +72,8 @@ const Results = () => {
   useEffect(() => {
     setEdges(relations)
     setNodes(stakeholders)
+    console.log(nodes);
+    console.log(edges);
 
     if (network.current) {
       network.current.setOptions({ physics: false })
@@ -81,51 +83,51 @@ const Results = () => {
       this.setOptions({ physics: false })
     })
 
-    network.current.on('click', function (n) {
-      var tempNodes = []
-      nodes.forEach((node) => {
-        const position = network.current.getPositions([node.id])
-        const posX = position[`${node.id}`].x
-        const posY = position[`${node.id}`].y
-        dispatch(addPosX({ id: node.id, posX: posX }))
-        dispatch(addPosY({ id: node.id, posY: posY }))
-        tempNodes.push(node)
-      })
+    // network.current.on('click', function (n) {
+    //   var tempNodes = []
+    //   nodes.forEach((node) => {
+    //     const position = network.current.getPositions([node.id])
+    //     const posX = position[`${node.id}`].x
+    //     const posY = position[`${node.id}`].y
+    //     dispatch(addPosX({ id: node.id, posX: posX }))
+    //     dispatch(addPosY({ id: node.id, posY: posY }))
+    //     tempNodes.push(node)
+    //   })
 
-      if (network.current && n.nodes.length > 0) {
-        var nnn = network.current.getConnectedNodes(n.nodes[0])
+    //   if (network.current && n.nodes.length > 0) {
+    //     var nnn = network.current.getConnectedNodes(n.nodes[0])
 
-        nnn.push(n.nodes[0])
+    //     nnn.push(n.nodes[0])
 
-        tempNodes = []
-        nodes.forEach((e) => {
-          if (!nnn.includes(e.id)) {
-            const position = network.current.getPositions([e.id])
-            const posX = position[`${e.id}`].x
-            const posY = position[`${e.id}`].y
-            dispatch(addPosX({ id: e.id, posX: posX }))
-            dispatch(addPosY({ id: e.id, posY: posY }))
-            dispatch(hideNode({ id: e.id, hidden: true }))
-          }
-          tempNodes.push(e)
-        })
-      }
+    //     tempNodes = []
+    //     nodes.forEach((e) => {
+    //       if (!nnn.includes(e.id)) {
+    //         const position = network.current.getPositions([e.id])
+    //         const posX = position[`${e.id}`].x
+    //         const posY = position[`${e.id}`].y
+    //         dispatch(addPosX({ id: e.id, posX: posX }))
+    //         dispatch(addPosY({ id: e.id, posY: posY }))
+    //         dispatch(hideNode({ id: e.id, hidden: true }))
+    //       }
+    //       tempNodes.push(e)
+    //     })
+    //   }
 
-      if (n.items.length === 0 && n.nodes.length === 0 && n.edges.length === 0) {
-        tempNodes = []
-        nodes.forEach((e) => {
-          const position = network.current.getPositions([e.id])
-          const posX = position[`${e.id}`].x
-          const posY = position[`${e.id}`].y
-          dispatch(addPosX({ id: e.id, posX: posX }))
-          dispatch(addPosY({ id: e.id, posY: posY }))
-          dispatch(hideNode({ id: e.id, hidden: false }))
+    //   if (n.items.length === 0 && n.nodes.length === 0 && n.edges.length === 0) {
+    //     tempNodes = []
+    //     nodes.forEach((e) => {
+    //       const position = network.current.getPositions([e.id])
+    //       const posX = position[`${e.id}`].x
+    //       const posY = position[`${e.id}`].y
+    //       dispatch(addPosX({ id: e.id, posX: posX }))
+    //       dispatch(addPosY({ id: e.id, posY: posY }))
+    //       dispatch(hideNode({ id: e.id, hidden: false }))
 
-          tempNodes.push(e)
-        })
-      }
-      setNodes(tempNodes)
-    })
+    //       tempNodes.push(e)
+    //     })
+    //   }
+    //   setNodes(tempNodes)
+    // })
 
     network.current.on('afterDrawing', function (ctx) {
       var dataURL = ctx.canvas.toDataURL()

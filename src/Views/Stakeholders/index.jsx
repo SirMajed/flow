@@ -8,11 +8,13 @@ import { addStakeholderArray, addStakeholdersTypes } from 'redux/slices/stakehol
 import FormLayout from 'components/FormLayout'
 import CreateStakeholders from './CreateStakeholders'
 import { useNavigate } from 'react-router-dom'
+
 const Index = () => {
   const [fileName, setFileName] = useState(null)
   const [createStakeholdersClicked, setCreateStakeholdersClicked] = useState(false)
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  
   const handleForce = (data, fileInfo) => {
     const colorList = ['#fc8d8d', '#f8ffc7', '#ededed', '#34eb9b']
     console.log(data)

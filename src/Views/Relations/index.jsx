@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom'
 import { addRelationArray, addRelationsTypes } from 'redux/slices/stakeholderSlice'
 import CreateRelations from './CreateRelations'
 import FormLayout from 'components/FormLayout'
-import uuid from 'react-uuid'
+import { v4 as uuidv4 } from 'uuid';
 const Index = () => {
   const [fileName, setFileName] = useState(null)
   const dispatch = useDispatch()
@@ -23,7 +23,7 @@ const Index = () => {
       edgeSet.add(row.type)
 
       var obj = {
-        id: row.id || uuid(),
+        id: row.id || uuidv4(),
         from: row.from,
         to: row.to,
         arrows: 'to',

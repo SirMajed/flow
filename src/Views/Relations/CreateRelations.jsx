@@ -11,19 +11,18 @@ import { toast } from 'react-toastify'
 import { Modal } from 'components/Modal'
 import NoStakeholdersAlert from './NoStakeholdersAlert'
 import { MdAdd } from 'react-icons/md'
-import uuid from 'react-uuid'
+import { v4 as uuidv4 } from 'uuid';
 const CreateRelations = ({ onPrevious }) => {
   const [selectedStakeholder1, setSelectedStakeholder1] = useState('')
   const [selectedStakeholder2, setSelectedStakeholder2] = useState('')
-  const [selectedColor, setSelectedColor] = useState('')
+  const [color, setColor] = useState('')
   const [width, setWidth] = useState(0)
-  const [relation, setRelation] = useState('')
-  const [relationType, setRelationType] = useState(0)
+  const [label, setLabel] = useState('')
+  const [type, setType] = useState(0)
   const { stakeholders } = useSelector((s) => s.stakeholders)
   const { relations } = useSelector((s) => s.stakeholders)
   const [openWarnModal, setOpenWarnModal] = useState(false)
   const [open, setOpen] = useState(false)
-  const [counter, setCounter] = useState(1)
   const { relationsTypes } = useSelector((s) => s.stakeholders)
   const toggleWarnModal = () => {
     setOpenWarnModal(!openWarnModal)
@@ -58,24 +57,23 @@ const CreateRelations = ({ onPrevious }) => {
     e.preventDefault()
     var edgeSet = new Set([...relationsTypes])
 
-    if (!selectedStakeholder1 || !selectedStakeholder2 || !relation || !width || !relationType || !selectedColor) {
+    if (!selectedStakeholder1 || !selectedStakeholder2 || !label || !width || !type || !color) {
       toast.error('قم بتعبئة الحقول')
     } else {
       const data = {
-        id: uuid(),
+        id: uuidv4(),
         from: selectedStakeholder1,
         to: selectedStakeholder2,
         arrows: 'to',
-        label: relation,
-        width,
-        type: relationType,
-        color: selectedColor,
+        label,
+        width: parseInt(width),
+        type: parseInt(type),
+        color,
       }
-      edgeSet.add(parseInt(relationType))
+      edgeSet.add(parseInt(type))
       dispatch(addRelation(data))
       console.log(edgeSet)
       dispatch(addRelationsTypes(Array.from(edgeSet)))
-      setCounter((counter) => counter + 1)
       toast.success('تم إنشاء العلاقة بنجاح')
       // clearInputs()
       setOpen(false)
@@ -83,10 +81,10 @@ const CreateRelations = ({ onPrevious }) => {
   }
 
   const clearInputs = () => {
-    setRelation('')
-    setRelationType(0)
+    setLabel('')
+    setType(0)
     setWidth(0)
-    setSelectedColor('')
+    setColor('')
     setSelectedStakeholder2('')
     setSelectedStakeholder1('')
   }
@@ -118,12 +116,12 @@ const CreateRelations = ({ onPrevious }) => {
               data={relations}
               deleteTableData={clearTable}
               handleDelete={removeRelation}
-              tableHeaders={['من', 'الى', 'العلاقة', 'وزن الخط', 'نوع العلاقة', 'اللون', 'خيارات']}
+              tableHeaders={['من', 'الى', 'العلاقة', 'وزن الخط', 'نوع العلاقة', 'لون العلاقة', 'خيارات']}
             />
             <div className="flex flex-row items-center justify-between mt-4">
               <Button text="الخلف" onClick={onPrevious} />
               <Link to={'/results'}>
-                <Button classes={'rounded-md'} text="النتائج" onClick={() => {}} />
+                <Button classes={'rounded-md'} text="النتائج" onClick={() => { }} />
               </Link>
             </div>
           </div>
@@ -149,19 +147,19 @@ const CreateRelations = ({ onPrevious }) => {
             </div>
             <div>
               <h1>العلاقة:</h1>
-              <Input required value={relation} onChange={(e) => setRelation(e.target.value)} placeholder="العلاقة" />
+              <Input required value={label} onChange={(e) => setLabel(e.target.value)} placeholder="العلاقة" />
             </div>
             <div>
               <h1>وزن الخط:</h1>
-              <Input required value={width} onChange={(e) => setWidth(e.target.value)} type={'number'} placeholder="Weight" />
+              <Input required value={width} onChange={(e) => setWidth(e.target.value)} type={'number'} placeholder="سماكة الخط" />
             </div>
             <div>
               <h1>نوع العلاقة:</h1>
-              <Input required value={relationType} onChange={(e) => setRelationType(e.target.value)} placeholder="Relation type" />
+              <Input required value={type} onChange={(e) => setType(e.target.value)} type={'number'} placeholder="نوع العلاقة (رقم فقط)" />
             </div>
             <div>
               <h1>اللون:</h1>
-              <Select isColors items={colors} onChange={(e) => setSelectedColor(e.target.value)} value={selectedColor} />
+              <Select isColors items={colors} onChange={(e) => setColor(e.target.value)} value={color} />
             </div>
             <div className="flex items-center gap-3">
               <Button type="submit" text="إنشاء علاقة" />
