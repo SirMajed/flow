@@ -11,7 +11,7 @@ import { toast } from 'react-toastify'
 import { Modal } from 'components/Modal'
 import NoStakeholdersAlert from './NoStakeholdersAlert'
 import { MdAdd } from 'react-icons/md'
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid'
 const CreateRelations = ({ onPrevious }) => {
   const [selectedStakeholder1, setSelectedStakeholder1] = useState('')
   const [selectedStakeholder2, setSelectedStakeholder2] = useState('')
@@ -120,7 +120,7 @@ const CreateRelations = ({ onPrevious }) => {
             <div className="flex flex-row items-center justify-between mt-4">
               <Button text="الخلف" onClick={onPrevious} />
               <Link to={'/results'}>
-                <Button classes={'rounded-md'} text="النتائج" onClick={() => { }} />
+                <Button classes={'rounded-md'} text="النتائج" onClick={() => {}} />
               </Link>
             </div>
           </div>
@@ -142,7 +142,12 @@ const CreateRelations = ({ onPrevious }) => {
             </div>
             <div>
               <h1>إلى:</h1>
-              <Select required items={stakeholders} onChange={(e) => setSelectedStakeholder2(e.target.value)} value={selectedStakeholder2} />
+              <Select
+                required
+                items={stakeholders.filter((item) => item.label !== selectedStakeholder1)}
+                onChange={(e) => setSelectedStakeholder2(e.target.value)}
+                value={selectedStakeholder2}
+              />
             </div>
             <div>
               <h1>العلاقة:</h1>
