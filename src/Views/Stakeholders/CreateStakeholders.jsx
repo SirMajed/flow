@@ -10,7 +10,6 @@ import { toast } from 'react-toastify'
 import Form from 'components/Form'
 import { MdAdd } from 'react-icons/md'
 import { Modal } from 'components/Modal'
-import { v4 as uuidv4 } from 'uuid'
 import UpdateStakeholder from './UpdateStakeholder'
 const CreateStakeholders = ({ onPrevious }) => {
   const { stakeholders } = useSelector((s) => s.stakeholders)
@@ -21,19 +20,24 @@ const CreateStakeholders = ({ onPrevious }) => {
   const navigate = useNavigate()
   const { stakeholdersTypes } = useSelector((s) => s.stakeholders)
   const [selectedStakeholder, setSelectedStakeholder] = useState(null)
+
   const createStakeholder = () => {
     if (!label || !type) {
       toast.error('قم بتعبئة حقول الإدخال')
     } else {
-      var edgeSet = new Set([...stakeholdersTypes])
-      const obj = { id: label, label, type, shape: 'box' }
-      dispatch(addStakeholder(obj))
-      edgeSet.add(type)
-      dispatch(addStakeholdersTypes(Array.from(edgeSet)))
-
-      setLabel('')
-      setType('')
-      closeModal()
+      if (!stakeholders.find((sk) => sk.label === label)) {
+        var edgeSet = new Set([...stakeholdersTypes])
+        const obj = { id: label, label, type, shape: 'box' }
+        dispatch(addStakeholder(obj))
+        edgeSet.add(type)
+        dispatch(addStakeholdersTypes(Array.from(edgeSet)))
+        setLabel('')
+        setType('')
+        closeModal()
+        toast.success('تم إضافة صاحب المصلحة')
+      } else {
+        toast.error('صاحب المصلحة موجود مسبقا, الرجاء ادخال اسم آخر')
+      }
     }
   }
   const removeStakeholder = (name) => {
