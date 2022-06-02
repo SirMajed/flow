@@ -12,6 +12,7 @@ import { Modal } from 'components/Modal'
 import NoStakeholdersAlert from './NoStakeholdersAlert'
 import { MdAdd } from 'react-icons/md'
 import { v4 as uuidv4 } from 'uuid'
+import UpdateRelation from './UpdateRelation'
 const CreateRelations = ({ onPrevious }) => {
   const [selectedStakeholder1, setSelectedStakeholder1] = useState('')
   const [selectedStakeholder2, setSelectedStakeholder2] = useState('')
@@ -24,6 +25,7 @@ const CreateRelations = ({ onPrevious }) => {
   const [openWarnModal, setOpenWarnModal] = useState(false)
   const [open, setOpen] = useState(false)
   const { relationsTypes } = useSelector((s) => s.stakeholders)
+  const [selectedRelation, setSelectedRelation] = useState(null)
   const toggleWarnModal = () => {
     setOpenWarnModal(!openWarnModal)
   }
@@ -32,6 +34,7 @@ const CreateRelations = ({ onPrevious }) => {
   }
   const closeModal = () => {
     setOpen(false)
+    setSelectedRelation(null)
   }
   const closeWarnModal = () => {
     setOpenWarnModal(false)
@@ -94,6 +97,10 @@ const CreateRelations = ({ onPrevious }) => {
   const clearTable = () => {
     dispatch(clearRelations())
   }
+  const handleEditRelation = (relation) => {
+    setSelectedRelation(relation)
+    toggleModal()
+  }
   return (
     <>
       <div className="mb-2 flex flex-col justify-center gap-5 items-center">
@@ -114,6 +121,7 @@ const CreateRelations = ({ onPrevious }) => {
               type="relations"
               data={relations}
               deleteTableData={clearTable}
+              handleEdit={handleEditRelation}
               handleDelete={removeRelation}
               tableHeaders={['من', 'الى', 'العلاقة', 'وزن الخط', 'نوع العلاقة', 'لون العلاقة', 'خيارات']}
             />
@@ -134,42 +142,46 @@ const CreateRelations = ({ onPrevious }) => {
       )}
 
       {toggleModal && (
-        <Modal isOpen={open} closeModal={closeModal} title={'إنشاء علاقة'} dir={'rtl'}>
-          <Form className="flex flex-col gap-4" onSubmit={createRelation}>
-            <div>
-              <h1>من:</h1>
-              <Select required items={stakeholders} onChange={(e) => setSelectedStakeholder1(e.target.value)} value={selectedStakeholder1} />
-            </div>
-            <div>
-              <h1>إلى:</h1>
-              <Select
-                required
-                items={stakeholders.filter((item) => item.label !== selectedStakeholder1)}
-                onChange={(e) => setSelectedStakeholder2(e.target.value)}
-                value={selectedStakeholder2}
-              />
-            </div>
-            <div>
-              <h1>العلاقة:</h1>
-              <Input required value={label} onChange={(e) => setLabel(e.target.value)} placeholder="العلاقة" />
-            </div>
-            <div>
-              <h1>وزن الخط:</h1>
-              <Input required value={width} onChange={(e) => setWidth(e.target.value)} type={'number'} placeholder="سماكة الخط" />
-            </div>
-            <div>
-              <h1>نوع العلاقة:</h1>
-              <Input required value={type} onChange={(e) => setType(e.target.value)} type={'number'} placeholder="نوع العلاقة (رقم فقط)" />
-            </div>
-            <div>
-              <h1>اللون:</h1>
-              <Select isColors items={colors} onChange={(e) => setColor(e.target.value)} value={color} />
-            </div>
-            <div className="flex items-center gap-3">
-              <Button type="submit" text="إنشاء علاقة" />
-              <Button onClick={onPrevious} type="button" text="رجوع" classes="bg-transparent text-primary border border-primary hover:text-white" />
-            </div>
-          </Form>
+        <Modal isOpen={open} closeModal={closeModal} title={selectedRelation ? 'تحديث العلاقة' : 'إنشاء علاقة'} dir={'rtl'}>
+          {selectedRelation ? (
+            <UpdateRelation closeModal={closeModal} relation={selectedRelation} colors={colors} />
+          ) : (
+            <Form className="flex flex-col gap-4" onSubmit={createRelation}>
+              <div>
+                <h1>من:</h1>
+                <Select required items={stakeholders} onChange={(e) => setSelectedStakeholder1(e.target.value)} value={selectedStakeholder1} />
+              </div>
+              <div>
+                <h1>إلى:</h1>
+                <Select
+                  required
+                  items={stakeholders.filter((item) => item.label !== selectedStakeholder1)}
+                  onChange={(e) => setSelectedStakeholder2(e.target.value)}
+                  value={selectedStakeholder2}
+                />
+              </div>
+              <div>
+                <h1>العلاقة:</h1>
+                <Input required value={label} onChange={(e) => setLabel(e.target.value)} placeholder="العلاقة" />
+              </div>
+              <div>
+                <h1>وزن الخط:</h1>
+                <Input required value={width} onChange={(e) => setWidth(e.target.value)} type={'number'} placeholder="سماكة الخط" />
+              </div>
+              <div>
+                <h1>نوع العلاقة:</h1>
+                <Input required value={type} onChange={(e) => setType(e.target.value)} type={'number'} placeholder="نوع العلاقة (رقم فقط)" />
+              </div>
+              <div>
+                <h1>اللون:</h1>
+                <Select isColors items={colors} onChange={(e) => setColor(e.target.value)} value={color} />
+              </div>
+              <div className="flex items-center gap-3">
+                <Button type="submit" text="إنشاء علاقة" />
+                <Button onClick={onPrevious} type="button" text="رجوع" classes="bg-transparent text-primary border border-primary hover:text-white" />
+              </div>
+            </Form>
+          )}
         </Modal>
       )}
     </>

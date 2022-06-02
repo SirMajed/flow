@@ -25,8 +25,19 @@ export const stakeholderSlice = createSlice({
       updatedArray[selectedItem].id = label
       state.stakeholders = updatedArray
     },
+    updateRelation: (state, action) => {
+      const updatedArray = state.relations // copy of original
+      const { id, label, type, width, color } = action.payload
+      let selectedItem = updatedArray.findIndex((element) => {
+        return element.id === id
+      })
+      updatedArray[selectedItem].label = label
+      updatedArray[selectedItem].type = type
+      updatedArray[selectedItem].width = width
+      updatedArray[selectedItem].color = color
+      state.relations = updatedArray
+    },
     addStakeholderArray: (state, action) => {
-      // state.stakeholders = []
       state.stakeholders = action.payload
     },
     addStakeholdersTypes: (state, action) => {
@@ -113,6 +124,7 @@ export const {
   hideNode,
   hideEdge,
   updateStakeholder,
+  updateRelation,
 } = stakeholderSlice.actions
 
 export default stakeholderSlice.reducer

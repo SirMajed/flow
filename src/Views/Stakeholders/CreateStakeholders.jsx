@@ -100,7 +100,7 @@ const CreateStakeholders = ({ onPrevious }) => {
       </div>
 
       {toggleModal && (
-        <Modal dir={'rtl'} closeModal={closeModal} isOpen={open} title={'إنشاء صاحب مصلحة جديد'}>
+        <Modal dir={'rtl'} closeModal={closeModal} isOpen={open} title={selectedStakeholder ? 'تحديث' : 'إنشاء صاحب مصلحة جديد'}>
           {selectedStakeholder ? (
             <UpdateStakeholder stakeholder={selectedStakeholder} closeModal={closeModal} />
           ) : (

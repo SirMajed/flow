@@ -14,7 +14,7 @@ const Index = () => {
   const [createStakeholdersClicked, setCreateStakeholdersClicked] = useState(false)
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  
+
   const handleForce = (data, fileInfo) => {
     const colorList = ['#fc8d8d', '#f8ffc7', '#ededed', '#34eb9b']
     let arr = []
