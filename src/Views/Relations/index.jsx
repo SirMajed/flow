@@ -1,17 +1,35 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react'
 import CSVReader from 'react-csv-reader'
 import { BsUpload } from 'react-icons/bs'
 import { IoCreateOutline } from 'react-icons/io5'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { addRelationArray, addRelationsTypes } from 'redux/slices/stakeholderSlice'
 import CreateRelations from './CreateRelations'
 import FormLayout from 'components/FormLayout'
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid'
+import NoStakeholdersAlert from './NoStakeholdersAlert'
+import { Modal } from 'components/Modal'
 const Index = () => {
   const [fileName, setFileName] = useState(null)
+  const { stakeholders } = useSelector((s) => s.stakeholders)
   const dispatch = useDispatch()
+  const [openWarnModal, setOpenWarnModal] = useState(false)
+
+  useEffect(() => {
+    if (stakeholders && stakeholders.length <= 0) {
+      setOpenWarnModal(true)
+    }
+  }, [])
+
+  const closeWarnModal = () => {
+    setOpenWarnModal(false)
+  }
+  const toggleWarnModal = () => {
+    setOpenWarnModal(!openWarnModal)
+  }
+
   const handleForce = (data, fileInfo) => {
     let arr = []
     var edgeSet = new Set()
@@ -82,6 +100,12 @@ const Index = () => {
           </div>
         )}
       </FormLayout>
+
+      {toggleWarnModal && (
+        <Modal hideIcon dir="rtl" isOpen={stakeholders && stakeholders.length >= 1 ? openWarnModal : true} title="تنبيه" closeModal={closeWarnModal}>
+          <NoStakeholdersAlert />
+        </Modal>
+      )}
     </>
   )
 }

@@ -22,13 +22,10 @@ const CreateRelations = ({ onPrevious }) => {
   const [type, setType] = useState(0)
   const { stakeholders } = useSelector((s) => s.stakeholders)
   const { relations } = useSelector((s) => s.stakeholders)
-  const [openWarnModal, setOpenWarnModal] = useState(false)
   const [open, setOpen] = useState(false)
   const { relationsTypes } = useSelector((s) => s.stakeholders)
   const [selectedRelation, setSelectedRelation] = useState(null)
-  const toggleWarnModal = () => {
-    setOpenWarnModal(!openWarnModal)
-  }
+
   const toggleModal = () => {
     setOpen(!open)
   }
@@ -36,9 +33,7 @@ const CreateRelations = ({ onPrevious }) => {
     setOpen(false)
     setSelectedRelation(null)
   }
-  const closeWarnModal = () => {
-    setOpenWarnModal(false)
-  }
+
   const colors = [
     { name: 'اسود', value: 'black' },
     { name: 'احمر', value: 'red' },
@@ -50,11 +45,7 @@ const CreateRelations = ({ onPrevious }) => {
   ]
   const dispatch = useDispatch()
 
-  useEffect(() => {
-    if (stakeholders && stakeholders.length <= 0) {
-      setOpenWarnModal(true)
-    }
-  }, [])
+
 
   const createRelation = (e) => {
     e.preventDefault()
@@ -134,12 +125,6 @@ const CreateRelations = ({ onPrevious }) => {
           </div>
         )}
       </div>
-
-      {toggleWarnModal && (
-        <Modal hideIcon dir="rtl" isOpen={stakeholders && stakeholders.length >= 1 ? openWarnModal : true} title="تنبيه" closeModal={closeWarnModal}>
-          <NoStakeholdersAlert />
-        </Modal>
-      )}
 
       {toggleModal && (
         <Modal isOpen={open} closeModal={closeModal} title={selectedRelation ? 'تحديث العلاقة' : 'إنشاء علاقة'} dir={'rtl'}>

@@ -1,10 +1,12 @@
 import React from 'react'
 import { MdFileDownload } from 'react-icons/md'
+import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import Button from './Button'
 
 const ResultsNav = ({ confirmReset, downloadNetworkAsImage, stakeholdersTypes, handleEdgeFilter, handleNodeFilter, relationsTypes }) => {
   const navigate = useNavigate()
+  const { relations } = useSelector((s) => s.stakeholders)
   return (
     <div className="flex justify-between items-center bg-zinc-50 shadow-md sticky top-0 w-full py-3 px-8">
       <div className="flex flex-row gap-4">
@@ -32,7 +34,16 @@ const ResultsNav = ({ confirmReset, downloadNetworkAsImage, stakeholdersTypes, h
             </option>
           ))}
         </select>
-        <div onClick={() => navigate('/relations')} className="flex items-center cursor-pointer text-primary">
+        <div
+          onClick={() => {
+            if (relations && relations.length <= 0) {
+              navigate('/stakeholders')
+            } else {
+              navigate('/relations')
+            }
+          }}
+          className="flex items-center cursor-pointer text-primary"
+        >
           <p className="text-primary text-sm ">العودة</p>
           <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 " fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
             <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />

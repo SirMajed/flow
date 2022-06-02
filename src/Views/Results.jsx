@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { addPosX, addPosY, hideEdge, hideNode } from 'redux/slices/stakeholderSlice'
 import ResultsNav from 'components/ResultsNav'
+import { Modal } from 'components/Modal'
 const Results = () => {
   const domNode = useRef(null)
   const navigate = useNavigate()
@@ -68,6 +69,19 @@ const Results = () => {
   }
 
   const dispatch = useDispatch()
+  const [openWarnModal, setOpenWarnModal] = useState(false)
+  const closeWarnModal = () => {
+    setOpenWarnModal(false)
+  }
+  const toggleWarnModal = () => {
+    setOpenWarnModal(!openWarnModal)
+  }
+
+  useEffect(() => {
+    if (stakeholders.length <= 0 || relations.length <= 0) {
+      toggleWarnModal()
+    }
+  }, [])
 
   useEffect(() => {
     setEdges(relations)
@@ -207,6 +221,18 @@ const Results = () => {
         <a id="canvasImg" download="Stakeholder-Network"></a>
         <div className="flex items-center gap-3"></div>
       </div>
+
+      {toggleWarnModal && (
+        <Modal isOpen={openWarnModal} closeModal={closeWarnModal} title={'تنبيه'} dir={'rtl'}>
+          <div className="">
+            <h1 className="text-red-600 ">لا توجد بيانات للرسم عليها</h1>
+            <p>الرجاء تعبئة بيانات اصحاب المصلحة و العلاقات لإنشاء الرسمة</p>
+            <p onClick={() => navigate('/stakeholders')} className="text-primaryHover cursor-pointer hover:underline">
+              اضغط هنا للإنتقال لصفحة اصحاب المصلحة
+            </p>
+          </div>
+        </Modal>
+      )}
     </>
   )
 }
