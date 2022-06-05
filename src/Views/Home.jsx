@@ -28,9 +28,7 @@ const Home = () => {
                         <h1 className="text-xl md:text-2xl lg:text-3xl xl:text-3xl lg:w-10/12 text-white font-black leading-6 lg:leading-10 md:text-right text-center">
                           شبكة اصحاب المصلحة
                         </h1>
-                        <p className="text-lg md:text-base xl:text-lg font-t text-gray-200 xl:leading-normal pt-2">
-                          لإنشاء اصحاب المصلحة والعلاقات 
-                        </p>
+                        <p className="text-lg md:text-base xl:text-lg font-t text-gray-200 xl:leading-normal pt-2">لإنشاء اصحاب المصلحة والعلاقات</p>
                       </div>
                       <Link to={'/stakeholders'}>
                         <button className="rounded-tr-md rounded-br-md mt-5 lg:mt-8 py-3 lg:py-4 px-4 lg:px-8 bg-white font-bold text-black text-sm lg:text-lg xl:text-xl hover:bg-opacity-90  focus:ring-2 focus:ring-offset-2 focus:ring-white focus:outline-none">

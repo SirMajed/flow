@@ -27,7 +27,22 @@ export const stakeholderSlice = createSlice({
       state.stakeholders = updatedArray
     },
     deleteStakeholder: (state, action) => {
-      state.stakeholders = state.stakeholders.filter((item) => item.label !== action.payload)
+      // 0. store current stakeholder Type
+      const { label: id, type: skType } = action.payload
+      // 1. Delete stakeholder itself
+      state.stakeholders = state.stakeholders.filter((item) => item.label !== id)
+      // 2. check for stakeholdersTypes
+
+      // state.stakeholdersTypes.forEach((type, i) => {
+      //   if (skType === type) {
+      //     return null
+      //   } else {
+      //     state.stakeholdersTypes = state.stakeholdersTypes.filter((item) => {
+      //       return item !== skType
+      //     })
+      //   }
+      // })
+
       if (state.stakeholders.length <= 0) {
         state.stakeholdersTypes = []
       }

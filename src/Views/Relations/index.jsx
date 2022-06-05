@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useState } from 'react'
 import CSVReader from 'react-csv-reader'
 import { BsUpload } from 'react-icons/bs'
-import { IoCreateOutline } from 'react-icons/io5'
+import { IoCreateOutline, IoEyeOutline } from 'react-icons/io5'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { addRelationArray, addRelationsTypes } from 'redux/slices/stakeholderSlice'
@@ -16,7 +16,7 @@ const Index = () => {
   const { stakeholders } = useSelector((s) => s.stakeholders)
   const dispatch = useDispatch()
   const [openWarnModal, setOpenWarnModal] = useState(false)
-
+  const { relations } = useSelector((s) => s.stakeholders)
   useEffect(() => {
     if (stakeholders && stakeholders.length <= 0) {
       setOpenWarnModal(true)
@@ -81,7 +81,8 @@ const Index = () => {
                 style={{ height: 'fit-content' }}
               >
                 <p className="flex items-center gap-3">
-                  {fileName ?? ' رفع الملف'}
+                  {(relations && relations.length <= 0 && fileName) || ' رفع الملف'}
+
                   <BsUpload size={22} />
                 </p>
                 <CSVReader inputId="CSVReader" inputStyle={{ display: 'none' }} onFileLoaded={handleForce} parserOptions={papaparseOptions} />
@@ -93,8 +94,8 @@ const Index = () => {
                 }}
                 className="flex items-center gap-2 rounded-md bg-primaryHover hover:bg-gray-900 transition text-white font-bold  border shadow-lg p-5 cursor-pointer"
               >
-                إنشاء العلاقات
-                <IoCreateOutline size={25} />
+                {relations && relations.length >= 1 ? 'عرض العلاقات' : 'إنشاء العلاقات'}
+                {relations && relations.length >= 1 ? <IoEyeOutline size={25} /> : <IoCreateOutline size={25} />}
               </div>
             </div>
           </div>

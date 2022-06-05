@@ -40,8 +40,8 @@ const CreateStakeholders = ({ onPrevious }) => {
       }
     }
   }
-  const removeStakeholder = (name) => {
-    dispatch(deleteStakeholder(name))
+  const removeStakeholder = (stakeholder) => {
+    dispatch(deleteStakeholder(stakeholder))
   }
 
   const deleteTableData = () => {
