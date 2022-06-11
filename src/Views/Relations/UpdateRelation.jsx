@@ -2,6 +2,7 @@ import Button from 'components/Button'
 import Form from 'components/Form'
 import Input from 'components/Input'
 import Select from 'components/Select'
+import { t } from 'i18next'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
@@ -31,7 +32,7 @@ const UpdateRelation = ({ relation, closeModal, colors }) => {
   const handleUpdate = () => {
     var edgeSet = new Set([...relationsTypes])
     if (!label || !width || !type || !color) {
-      toast.error('قم بتعبئة الحقول')
+      toast.error(t('fillInputs'))
     } else {
       edgeSet.add(parseInt(type))
       dispatch(
@@ -44,18 +45,18 @@ const UpdateRelation = ({ relation, closeModal, colors }) => {
         })
       )
       dispatch(addRelationsTypes(Array.from(edgeSet)))
-      toast.info('تم تحديث العلاقة بنجاح')
+      toast.info(t('updated'))
       closeModal()
     }
   }
   return (
     <Form className="flex flex-col gap-4">
       <div>
-        <h1>من:</h1>
+      <h1>{t('from')}</h1>
         <Select disabled items={stakeholders} onChange={(e) => setSelectedStakeholder1(e.target.value)} value={selectedStakeholder1} />
       </div>
       <div>
-        <h1>إلى:</h1>
+      <h1>{t('to')}</h1>
         <Select
           disabled
           items={stakeholders.filter((item) => item.label !== selectedStakeholder1)}
@@ -64,23 +65,23 @@ const UpdateRelation = ({ relation, closeModal, colors }) => {
         />
       </div>
       <div>
-        <h1>العلاقة:</h1>
-        <Input required value={label} onChange={(e) => setLabel(e.target.value)} placeholder="العلاقة" />
+      <h1>{t('relation')}</h1>
+        <Input required value={label} onChange={(e) => setLabel(e.target.value)} placeholder={t('relation')} />
       </div>
       <div>
-        <h1>وزن الخط:</h1>
-        <Input required value={width} onChange={(e) => setWidth(e.target.value)} type={'number'} placeholder="سماكة الخط" />
+      <h1>{t('fontWeight')}</h1>
+        <Input required value={width} onChange={(e) => setWidth(e.target.value)} type={'number'} placeholder={t('fontWeight')}  />
       </div>
       <div>
-        <h1>نوع العلاقة:</h1>
-        <Input required value={type} onChange={(e) => setType(e.target.value)} type={'number'} placeholder="نوع العلاقة (رقم فقط)" />
+      <h1>{t('relationType')}</h1>
+        <Input required value={type} onChange={(e) => setType(e.target.value)} type={'number'}  placeholder={t('numberOnly')}/>
       </div>
       <div>
-        <h1>اللون:</h1>
+      <h1>{t('relationColor')}</h1>
         <Select isColors items={colors} onChange={(e) => setColor(e.target.value)} value={color} />
       </div>
       <div className="flex items-center gap-3">
-        <Button type="button" text="تحديث" onClick={handleUpdate} />
+        <Button type="button" text={t('update')} onClick={handleUpdate} />
       </div>
     </Form>
   )

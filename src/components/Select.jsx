@@ -1,3 +1,5 @@
+import { t } from "i18next"
+
 const Select = ({ onChange, required, items, value, itemsWithNoObjects = false, disabled = false }) => {
   return (
     <select
@@ -9,7 +11,7 @@ const Select = ({ onChange, required, items, value, itemsWithNoObjects = false, 
       disabled={disabled}
     >
       <option disabled={true} value="">
-        إختر
+        {t('choose')}
       </option>
       {items.map((item, i) => {
         return (

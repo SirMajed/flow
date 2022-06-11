@@ -7,7 +7,7 @@ export const Modal = ({ children, title, isOpen, closeModal, hasList, dir, hideI
     <>
       <div>
         <Transition.Root show={isOpen} as={Fragment}>
-          <Dialog as="div" className="fixed z-20 inset-0 overflow-y-auto" onClose={closeModal}>
+          <Dialog as="div" className="fixed z-50 inset-0 overflow-y-auto" onClose={closeModal}>
             <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 sm:mx-4 text-center sm:block sm:p-0 ">
               <Transition.Child
                 as={Fragment}
@@ -48,7 +48,7 @@ export const Modal = ({ children, title, isOpen, closeModal, hasList, dir, hideI
                   </div>
                   <hr className="dark:border-gray-700" />
                   <div className="bg-white dark:bg-dark_accent">
-                    <main className={`${hasList && 'h-96 overflow-y-auto mx-auto'} px-5 w-auto text-right py-4 `}>{children}</main>
+                    <main className={`${hasList && 'h-96 overflow-y-auto mx-auto'} px-5 w-auto rtl:text-right ltr:text-left py-4 `}>{children}</main>
                   </div>
                 </div>
               </Transition.Child>

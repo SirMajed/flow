@@ -13,6 +13,8 @@ import NoStakeholdersAlert from './NoStakeholdersAlert'
 import { MdAdd } from 'react-icons/md'
 import { v4 as uuidv4 } from 'uuid'
 import UpdateRelation from './UpdateRelation'
+import { t } from 'i18next'
+import OutlineButton from 'components/OutlineButton'
 const CreateRelations = ({ onPrevious }) => {
   const [selectedStakeholder1, setSelectedStakeholder1] = useState('')
   const [selectedStakeholder2, setSelectedStakeholder2] = useState('')
@@ -35,13 +37,13 @@ const CreateRelations = ({ onPrevious }) => {
   }
 
   const colors = [
-    { name: 'اسود', value: 'black' },
-    { name: 'احمر', value: 'red' },
-    { name: 'ازرق', value: 'blue' },
-    { name: 'اصفر', value: 'yellow' },
-    { name: 'بني', value: 'brown' },
-    { name: 'اخضر', value: 'green' },
-    { name: 'برتقالي', value: 'orange' },
+    { name: t('black'), value: 'black' },
+    { name: t('red'), value: 'red' },
+    { name: t('blue'), value: 'blue' },
+    { name: t('yellow'), value: 'yellow' },
+    { name: t('brown'), value: 'brown' },
+    { name: t('green'), value: 'green' },
+    { name: t('orange'), value: 'orange' },
   ]
   const dispatch = useDispatch()
 
@@ -52,7 +54,7 @@ const CreateRelations = ({ onPrevious }) => {
     var edgeSet = new Set([...relationsTypes])
 
     if (!selectedStakeholder1 || !selectedStakeholder2 || !label || !width || !type || !color) {
-      toast.error('قم بتعبئة الحقول')
+      toast.error(t('fillInputs'))
     } else {
       const data = {
         id: uuidv4(),
@@ -67,7 +69,7 @@ const CreateRelations = ({ onPrevious }) => {
       edgeSet.add(parseInt(type))
       dispatch(addRelation(data))
       dispatch(addRelationsTypes(Array.from(edgeSet)))
-      toast.success('تم إنشاء العلاقة بنجاح')
+      toast.success(t('relationHasBeenCreated'))
       // clearInputs()
       setOpen(false)
     }
@@ -95,11 +97,11 @@ const CreateRelations = ({ onPrevious }) => {
   return (
     <>
       <div className="mb-2 flex flex-col justify-center gap-5 items-center">
-        <h1 className="text-xl md:text-2xl lg:text-4xl xl:text-4xl lg:w-full text-primary font-black leading-6 lg:leading-10 md:text-center text-center">العلاقات</h1>
+        <h1 className="text-xl md:text-2xl lg:text-4xl xl:text-4xl lg:w-full text-primary font-black leading-6 lg:leading-10 md:text-center text-center">{t('relations')}</h1>
         {relations && relations.length <= 0 && (
           <div className="flex items-center gap-4">
-            <Button onClick={toggleModal} icon={<MdAdd size={22} color="white" />} text="إنشاء علاقة جديدة" />
-            <Button onClick={onPrevious} type="button" text="رجوع" classes="bg-transparent text-primary border border-primary hover:text-white" />
+            <Button onClick={toggleModal} icon={<MdAdd size={22} color="white" />} text={t('createRelations')} />
+            <Button onClick={onPrevious} type="button" text={t('back')} classes="bg-transparent text-primary border border-primary hover:text-white" />
           </div>
         )}
       </div>
@@ -107,19 +109,20 @@ const CreateRelations = ({ onPrevious }) => {
       <div className="mt-12">
         {relations && relations.length >= 1 && (
           <div className="">
-            <Button onClick={toggleModal} icon={<MdAdd size={22} color="white" />} text="إنشاء علاقة" />
             <Table
               type="relations"
               data={relations}
               deleteTableData={clearTable}
               handleEdit={handleEditRelation}
               handleDelete={removeRelation}
-              tableHeaders={['من', 'الى', 'العلاقة', 'وزن الخط', 'نوع العلاقة', 'لون العلاقة', 'خيارات']}
+              tableHeaders={[t('from'),t('to'),t('relation'),t('fontWeight'),t('relationType'),t('relationColor'),t('actions')]}
+              addButtonFunction={toggleModal}
+              buttonText={t('createRelation')}
             />
             <div className="flex flex-row items-center justify-between mt-4">
-              <Button text="الخلف" onClick={onPrevious} />
+              <OutlineButton text={t('back')} onClick={onPrevious} />
               <Link to={'/results'}>
-                <Button classes={'rounded-md'} text="النتائج" onClick={() => {}} />
+              <OutlineButton text={t('results')} onClick={()=>{}} />
               </Link>
             </div>
           </div>
@@ -127,17 +130,17 @@ const CreateRelations = ({ onPrevious }) => {
       </div>
 
       {toggleModal && (
-        <Modal isOpen={open} closeModal={closeModal} title={selectedRelation ? 'تحديث العلاقة' : 'إنشاء علاقة'} dir={'rtl'}>
+        <Modal isOpen={open} closeModal={closeModal} title={selectedRelation ? t('updateRelation'): t('createRelation')}>
           {selectedRelation ? (
             <UpdateRelation closeModal={closeModal} relation={selectedRelation} colors={colors} />
           ) : (
             <Form className="flex flex-col gap-4" onSubmit={createRelation}>
               <div>
-                <h1>من:</h1>
+                <h1>{t('from')}</h1>
                 <Select required items={stakeholders} onChange={(e) => setSelectedStakeholder1(e.target.value)} value={selectedStakeholder1} />
               </div>
               <div>
-                <h1>إلى:</h1>
+                <h1>{t('to')}</h1>
                 <Select
                   required
                   items={stakeholders.filter((item) => item.label !== selectedStakeholder1)}
@@ -146,24 +149,24 @@ const CreateRelations = ({ onPrevious }) => {
                 />
               </div>
               <div>
-                <h1>العلاقة:</h1>
-                <Input required value={label} onChange={(e) => setLabel(e.target.value)} placeholder="العلاقة" />
+                <h1>{t('relation')}</h1>
+                <Input required value={label} onChange={(e) => setLabel(e.target.value)} placeholder={t('relation')} />
               </div>
               <div>
-                <h1>وزن الخط:</h1>
-                <Input required value={width} onChange={(e) => setWidth(e.target.value)} type={'number'} placeholder="سماكة الخط" />
+                <h1>{t('fontWeight')}</h1>
+                <Input required value={width} onChange={(e) => setWidth(e.target.value)} type={'number'} placeholder={t('fontWeight')} />
               </div>
               <div>
-                <h1>نوع العلاقة:</h1>
-                <Input required value={type} onChange={(e) => setType(e.target.value)} type={'number'} placeholder="نوع العلاقة (رقم فقط)" />
+                <h1>{t('relationType')}</h1>
+                <Input required value={type} onChange={(e) => setType(e.target.value)} type={'number'} placeholder={t('numberOnly')} />
               </div>
               <div>
-                <h1>اللون:</h1>
+                <h1>{t('relationColor')}</h1>
                 <Select isColors items={colors} onChange={(e) => setColor(e.target.value)} value={color} />
               </div>
               <div className="flex items-center gap-3">
-                <Button type="submit" text="إنشاء علاقة" />
-                <Button onClick={onPrevious} type="button" text="رجوع" classes="bg-transparent text-primary border border-primary hover:text-white" />
+                <Button type="submit" text={t('createRelation')} />
+                <Button onClick={onPrevious} type="button" text={t('back')} classes="bg-transparent text-primary border border-primary hover:text-white" />
               </div>
             </Form>
           )}

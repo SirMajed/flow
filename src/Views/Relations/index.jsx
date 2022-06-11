@@ -11,6 +11,7 @@ import FormLayout from 'components/FormLayout'
 import { v4 as uuidv4 } from 'uuid'
 import NoStakeholdersAlert from './NoStakeholdersAlert'
 import { Modal } from 'components/Modal'
+import { t } from 'i18next'
 const Index = () => {
   const [fileName, setFileName] = useState(null)
   const { stakeholders } = useSelector((s) => s.stakeholders)
@@ -71,8 +72,8 @@ const Index = () => {
         ) : (
           <div className="flex flex-col justify-center">
             <div className="my-6">
-              <p className="text-xl font-medium text-gray-800">اختر الطريقة المناسبة</p>
-              <p className="font-normal text-gray-600">يمكنك إنشاء العلاقات بنفسك وتعبئة البيانات او يمكنك رفع ملف بصيغة إكسل لقراءة البيانات والتعديل عليها</p>
+              <p className="text-xl font-medium text-gray-800">{t('chooseWay')}</p>
+              <p className="font-normal text-gray-600">{t('relationsDescription')}</p>
             </div>
 
             <div className="flex flex-row items-center justify-center gap-10 mt-20">
@@ -81,20 +82,20 @@ const Index = () => {
                 style={{ height: 'fit-content' }}
               >
                 <p className="flex items-center gap-3">
-                  {(relations && relations.length <= 0 && fileName) || ' رفع الملف'}
+                  {(relations && relations.length <= 0 && fileName) || t('uploadRelationsFile')}
 
                   <BsUpload size={22} />
                 </p>
                 <CSVReader inputId="CSVReader" inputStyle={{ display: 'none' }} onFileLoaded={handleForce} parserOptions={papaparseOptions} />
               </label>
-              <p>او</p>
+              <p>{t('or')}</p>
               <div
                 onClick={() => {
                   setCreateRelationsClicked(true)
                 }}
                 className="flex items-center gap-2 rounded-md bg-primaryHover hover:bg-gray-900 transition text-white font-bold  border shadow-lg p-5 cursor-pointer"
               >
-                {relations && relations.length >= 1 ? 'عرض العلاقات' : 'إنشاء العلاقات'}
+                {relations && relations.length >= 1 ? t('viewRelations') : t('createRelations')}
                 {relations && relations.length >= 1 ? <IoEyeOutline size={25} /> : <IoCreateOutline size={25} />}
               </div>
             </div>
@@ -103,7 +104,7 @@ const Index = () => {
       </FormLayout>
 
       {toggleWarnModal && (
-        <Modal hideIcon dir="rtl" isOpen={stakeholders && stakeholders.length >= 1 ? openWarnModal : true} title="تنبيه" closeModal={closeWarnModal}>
+        <Modal hideIcon isOpen={stakeholders && stakeholders.length >= 1 ? openWarnModal : true} title={t('caution')} closeModal={closeWarnModal}>
           <NoStakeholdersAlert />
         </Modal>
       )}

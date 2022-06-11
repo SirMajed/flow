@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { addPosX, addPosY, hideEdge, hideNode } from 'redux/slices/stakeholderSlice'
 import ResultsNav from 'components/ResultsNav'
 import { Modal } from 'components/Modal'
+import { t } from 'i18next'
 const Results = () => {
   const domNode = useRef(null)
   const navigate = useNavigate()
@@ -197,7 +198,7 @@ const Results = () => {
     document.getElementById('canvasImg').click()
   }
   const confirmReset = () => {
-    var answer = window.confirm('هل انت متأكد من البدء من جديد؟')
+    var answer = window.confirm(t('areYouSureToStart'))
     if (answer) {
       navigate('/stakeholders')
     } else {
@@ -223,12 +224,12 @@ const Results = () => {
       </div>
 
       {toggleWarnModal && (
-        <Modal isOpen={openWarnModal} closeModal={closeWarnModal} title={'تنبيه'} dir={'rtl'}>
+        <Modal isOpen={openWarnModal} closeModal={closeWarnModal} title={t('caution')}>
           <div className="">
-            <h1 className="text-red-600 ">لا توجد بيانات للرسم عليها</h1>
-            <p>الرجاء تعبئة بيانات اصحاب المصلحة و العلاقات لإنشاء الرسمة</p>
+            <h1 className="text-red-600 text-lg">{t('noDataToDraw')}</h1>
+            <p>{t('pleaseFillSkAndRelations')}</p>
             <p onClick={() => navigate('/stakeholders')} className="text-primaryHover cursor-pointer hover:underline">
-              اضغط هنا للإنتقال لصفحة اصحاب المصلحة
+              {t('clickToGoBackToStakeholders')}
             </p>
           </div>
         </Modal>

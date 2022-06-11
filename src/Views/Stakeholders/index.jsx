@@ -8,6 +8,7 @@ import { addStakeholderArray, addStakeholdersTypes } from 'redux/slices/stakehol
 import FormLayout from 'components/FormLayout'
 import CreateStakeholders from './CreateStakeholders'
 import { useNavigate } from 'react-router-dom'
+import { t } from 'i18next'
 
 const Index = () => {
   const [fileName, setFileName] = useState(null)
@@ -15,6 +16,7 @@ const Index = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const { stakeholders } = useSelector((s) => s.stakeholders)
+  const { language } = useSelector((s) => s.ui)
   const handleForce = (data, fileInfo) => {
     const colorList = ['#fc8d8d', '#f8ffc7', '#ededed', '#34eb9b']
     let arr = []
@@ -65,33 +67,37 @@ const Index = () => {
           <div className="flex flex-col justify-center">
             <div className="text-primary">
               <div onClick={() => navigate('/')} className="flex items-center cursor-pointer">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                {language === 'ar' ? <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                </svg>
-                <p className="text-primary text-sm mb-2">العودة للصفحة الرئيسية</p>
+                </svg> : <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>}
+                <p className="text-primary text-sm mb-2">{t('backToHomePage')}</p>
               </div>
-              <p className="text-xl font-medium text-gray-800">اختر الطريقة المناسبة</p>
-              <p className="font-normal text-gray-600">يمكنك إنشاء اصحاب المصلحة بنفسك وتعبئة البيانات او يمكنك رفع ملف بصيغة إكسل لقراءة البيانات والتعديل عليها</p>
+              <p className="text-xl font-medium text-gray-800">{t('chooseWay')}</p>
+              <p className="font-normal text-gray-600">{t('stakeholdersDescription')}</p>
             </div>
+
+            
             <div className="flex flex-row items-center justify-center gap-10 mt-20">
               <label
                 className="rounded-md bg-primaryHover hover:bg-gray-900 transition text-white font-bold  border shadow-lg p-5 cursor-pointer"
                 style={{ height: 'fit-content' }}
               >
                 <p className="flex items-center gap-3">
-                  {(stakeholders && stakeholders.length <= 0 && fileName) || ' رفع الملف'}
+                  {(stakeholders && stakeholders.length <= 0 && fileName) || t('uploadStakeholdersFile')}
                   <BsUpload size={22} />
                 </p>
                 <CSVReader inputId="CSVReader" inputStyle={{ display: 'none' }} onFileLoaded={handleForce} parserOptions={papaparseOptions} />
               </label>
-              <p>او</p>
+              <p>{t('or')}</p>
               <div
                 onClick={() => {
                   setCreateStakeholdersClicked(true)
                 }}
                 className="flex items-center gap-2 rounded-md bg-primaryHover hover:bg-gray-900 transition text-white font-bold  border shadow-lg p-5 cursor-pointer"
               >
-                {stakeholders && stakeholders.length >= 1 ? 'عرض أصحاب المصلحة' : 'إنشاء اصحاب المصلحة'}
+                {stakeholders && stakeholders.length >= 1 ? t('viewStakeholders') : t('createStakeholders')}
                 {stakeholders && stakeholders.length >= 1 ? <IoEyeOutline size={25} /> : <IoCreateOutline size={25} />}
               </div>
             </div>

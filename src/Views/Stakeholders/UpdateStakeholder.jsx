@@ -1,6 +1,7 @@
 import Button from 'components/Button'
 import Form from 'components/Form'
 import Input from 'components/Input'
+import { t } from 'i18next'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
@@ -29,14 +30,14 @@ const UpdateStakeholder = ({ stakeholder, closeModal }) => {
     dispatch(addStakeholdersTypes(Array.from(edgeSet)))
 
     closeModal()
-    toast.success('تم التحديث')
+    toast.info(t('updated'))
   }
   return (
     <Form className="flex flex-col gap-4">
-      <Input required placeholder="الأسم" value={label} onChange={(e) => setLabel(e.target.value)} />
-      <Input required placeholder="النوع" value={type} onChange={(e) => setType(e.target.value)} />
+      <Input required placeholder={t('stakeholderName')} value={label} onChange={(e) => setLabel(e.target.value)} />
+      <Input required placeholder={t('stakeholderType')} value={type} onChange={(e) => setType(e.target.value)} />
       <div className="flex items-center gap-3">
-        <Button text="تحديث" onClick={handleUpdate} />
+        <Button text={t('update')} onClick={handleUpdate} />
       </div>
     </Form>
   )

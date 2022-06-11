@@ -5,12 +5,7 @@ import darkLogo from '../assets/images/darkLogo.png'
 import { Link } from 'react-router-dom'
 import bg from '../assets/images/bg.jpg'
 import ntisbg from '../assets/images/ntisbg.jpg'
-import ar from '../assets/images/ar.png'
-import en from '../assets/images/en.png'
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux'
-import { changeLanguage } from 'redux/slices/uiSlice'
-
 const Home = () => {
   function scrollToCont() {
     const divElement = document.getElementById('cont')
@@ -30,7 +25,7 @@ const Home = () => {
           <div className="p-3 mt-4 z-40 absolute top-0 right-0">
             <img src={logo} height={250} width={250} />
           </div>
-          <h2 className="text-xl md:text-5xl text-white font-bold">{t('svn')}</h2>
+          <h1 className="text-xl md:text-5xl text-white font-bold">{t('svn')}</h1>
           <p className="text-gray-200 text-lg">{t('landingBody')}</p>
           <div className="flex text-white">
             <Link to={'/stakeholders'}>
