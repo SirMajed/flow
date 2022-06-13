@@ -2,26 +2,25 @@ import { t } from 'i18next'
 import { CSVLink } from 'react-csv'
 import { MdAdd, MdDeleteOutline, MdOutlineModeEditOutline } from 'react-icons/md'
 import Button from './Button'
-const Table = ({ type, data, handleEdit, handleDelete, tableHeaders, deleteTableData,addButtonFunction, buttonText }) => {
+const Table = ({ type, data, handleEdit, handleDelete, tableHeaders, deleteTableData, addButtonFunction, buttonText }) => {
   function isNumber(n) {
     return !isNaN(parseFloat(n)) && !isNaN(n - 0)
   }
 
   return (
     <>
-      <div className="flex flex-row-reverse justify-between  mx-2">
-        <div className='flex gap-5 items-end'>
-        <CSVLink filename={type === 'stakeholders' ? 'stakeholders' : 'relations'} className="text-sm text-primary2" data={data}>
-        {t('downloadTableAsCsv')}
-        </CSVLink>
-        <h1 onClick={deleteTableData} className="text-primary2 text-sm cursor-pointer">
-        {t('deleteTable')}
-        </h1>
+      <div className="flex flex-col-reverse md:flex-row-reverse gap-5 md:gap-0 justify-between mx-2">
+        <div className="flex flex-row gap-9 md:gap-5 items-end">
+          <CSVLink filename={type === 'stakeholders' ? 'stakeholders' : 'relations'} className="text-sm text-primary2" data={data}>
+            {t('downloadTableAsCsv')}
+          </CSVLink>
+          <h1 onClick={deleteTableData} className="text-primary2 text-sm cursor-pointer">
+            {t('deleteTable')}
+          </h1>
         </div>
-        <Button onClick={addButtonFunction} icon={<MdAdd size={22} color="white" />} text={buttonText}/>
-        
+        <Button onClick={addButtonFunction} icon={<MdAdd size={22} color="white" />} text={buttonText} />
       </div>
-      <div className="relative h-[20rem] overflow-y-auto overflow-x-auto shadow-md sm:rounded-lg mt-2">
+      <div className="relative max-h-[45rem] overflow-y-auto overflow-x-auto shadow-md sm:rounded-lg mt-2">
         {data.length >= 1 ? (
           <table className="w-full  text-sm text-center text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-zinc-100 dark:bg-gray-700 dark:text-gray-400 sticky top-0 shadow-md">

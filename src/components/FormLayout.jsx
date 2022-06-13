@@ -14,8 +14,8 @@ const FormLayout = ({ children, state }) => {
     <>
       <div style={{ backgroundImage: `url(${test})` }} className="flex-1 items-center gap-20 justify-between h-screen overflow-hidden">
         <div className="w-full mx-auto bg-white shadow " />
-        <div className="w-full h-full overflow-auto bg-white">
-          <div className="flex justify-evenly pt-[30px]  pb- border-b border-gray-300 ">
+        <div className="w-full h-full overflow-auto bg-white ">
+          <div className="flex justify-evenly pt-[30px] border-b border-gray-300 bg-white sticky top-0 z-50">
             <div>
               <div
                 onClick={() => {
@@ -56,7 +56,7 @@ const FormLayout = ({ children, state }) => {
               </div>
             </div>
           </div>
-          <div className="px-10 md:px-20 lg:px-48 xl:px-[400px] pt-10">{children}</div>
+          <div className="max-w-[34rem] md:max-w-[50rem] lg:max-w-[60rem] xl:max-w-[70rem] px-5 md:px-10 lg:px-0 mx-auto pt-10 pb-10">{children}</div>
         </div>
         {/* <Footer /> */}
       </div>

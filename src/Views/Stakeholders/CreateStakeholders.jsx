@@ -66,7 +66,7 @@ const CreateStakeholders = ({ onPrevious }) => {
     <>
       <div className="mb-2 flex flex-col justify-center gap-5 items-center">
         <h1 className="text-xl md:text-2xl lg:text-4xl xl:text-4xl lg:w-full text-primary font-black leading-6 lg:leading-10 md:text-center text-center">
-        {t('stakeholders')}
+          {t('stakeholders')}
         </h1>
         {stakeholders && stakeholders.length <= 0 && (
           <div className="flex items-center gap-4">
@@ -86,12 +86,11 @@ const CreateStakeholders = ({ onPrevious }) => {
               deleteTableData={deleteTableData}
               handleDelete={removeStakeholder}
               handleEdit={handleEditStakeholder}
-              tableHeaders={[t('stakeholderName'),t('stakeholderType'),t('actions')]}
+              tableHeaders={[t('stakeholderName'), t('stakeholderType'), t('actions')]}
               addButtonFunction={toggleModal}
               buttonText={t('addStakeholder')}
             />
             <div className="flex flex-row items-center justify-between mt-4">
-
               <OutlineButton text={t('back')} onClick={onPrevious} />
               <OutlineButton
                 text={t('nextStep')}
