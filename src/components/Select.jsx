@@ -1,4 +1,4 @@
-import { t } from "i18next"
+import { t } from 'i18next'
 
 const Select = ({ onChange, required, items, value, itemsWithNoObjects = false, disabled = false }) => {
   return (

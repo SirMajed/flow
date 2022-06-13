@@ -24,9 +24,13 @@ function App() {
   return (
     <HashRouter>
       <ToastContainer />
-      {isElectron() === true && <TitleBar />}
-      <div className='mt-4 z-40 fixed bottom-0 left-0 bg-opacity-50 rounded-full ml-3 mb-2'>
-        {language === 'en' ? <Arabic onClick={changeLang} className='w-10 h-10 cursor-pointer p-1' /> : <English onClick={changeLang} className='w-10 h-10 cursor-pointer p-1' />}
+      {/* {isElectron() === true && <TitleBar />} */}
+      <div className="mt-4 z-40 fixed bottom-0 left-0 bg-opacity-50 rounded-full ml-3 mb-2">
+        {language === 'en' ? (
+          <Arabic onClick={changeLang} className="w-10 h-10 cursor-pointer p-1" />
+        ) : (
+          <English onClick={changeLang} className="w-10 h-10 cursor-pointer p-1" />
+        )}
       </div>
       <Routes>
         <Route path="/" index element={<Home />} />

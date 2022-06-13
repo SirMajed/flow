@@ -21,7 +21,7 @@ const TitleBar = () => {
     }
   }
   return (
-    <nav className="bg-black h-8 w-full flex sticky top-0 justify-between text-white items-center drag z-50">
+    <nav className="bg-black h-8 w-full flex fixed top-0 justify-between text-white items-center drag z-50">
       <div className="flex items-center px-2">
         <AiOutlineNodeIndex className="text-primary" size={25} />
         <span className="px-2 text-sm text-white text-opacity-90">Stakeholders Diagram</span>

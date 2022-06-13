@@ -47,8 +47,6 @@ const CreateRelations = ({ onPrevious }) => {
   ]
   const dispatch = useDispatch()
 
-
-
   const createRelation = (e) => {
     e.preventDefault()
     var edgeSet = new Set([...relationsTypes])
@@ -97,7 +95,9 @@ const CreateRelations = ({ onPrevious }) => {
   return (
     <>
       <div className="mb-2 flex flex-col justify-center gap-5 items-center">
-        <h1 className="text-xl md:text-2xl lg:text-4xl xl:text-4xl lg:w-full text-primary font-black leading-6 lg:leading-10 md:text-center text-center">{t('relations')}</h1>
+        <h1 className="text-xl md:text-2xl lg:text-4xl xl:text-4xl lg:w-full text-primary font-black leading-6 lg:leading-10 md:text-center text-center">
+          {t('relations')}
+        </h1>
         {relations && relations.length <= 0 && (
           <div className="flex items-center gap-4">
             <Button onClick={toggleModal} icon={<MdAdd size={22} color="white" />} text={t('createRelations')} />
@@ -115,14 +115,14 @@ const CreateRelations = ({ onPrevious }) => {
               deleteTableData={clearTable}
               handleEdit={handleEditRelation}
               handleDelete={removeRelation}
-              tableHeaders={[t('from'),t('to'),t('relation'),t('fontWeight'),t('relationType'),t('relationColor'),t('actions')]}
+              tableHeaders={[t('from'), t('to'), t('relation'), t('fontWeight'), t('relationType'), t('relationColor'), t('actions')]}
               addButtonFunction={toggleModal}
               buttonText={t('createRelation')}
             />
             <div className="flex flex-row items-center justify-between mt-4">
               <OutlineButton text={t('back')} onClick={onPrevious} />
               <Link to={'/results'}>
-              <OutlineButton text={t('results')} onClick={()=>{}} />
+                <OutlineButton text={t('results')} onClick={() => {}} />
               </Link>
             </div>
           </div>
@@ -130,7 +130,7 @@ const CreateRelations = ({ onPrevious }) => {
       </div>
 
       {toggleModal && (
-        <Modal isOpen={open} closeModal={closeModal} title={selectedRelation ? t('updateRelation'): t('createRelation')}>
+        <Modal isOpen={open} closeModal={closeModal} title={selectedRelation ? t('updateRelation') : t('createRelation')}>
           {selectedRelation ? (
             <UpdateRelation closeModal={closeModal} relation={selectedRelation} colors={colors} />
           ) : (
@@ -153,7 +153,10 @@ const CreateRelations = ({ onPrevious }) => {
                 <Input required value={label} onChange={(e) => setLabel(e.target.value)} placeholder={t('relation')} />
               </div>
               <div>
-                <h1>{t('fontWeight')}</h1>
+                <h1>
+                  {t('fontWeight')} <span className="text-sm text-gray-500">{t('fontWeightDescription')}</span>
+                </h1>
+
                 <Input required value={width} onChange={(e) => setWidth(e.target.value)} type={'number'} placeholder={t('fontWeight')} />
               </div>
               <div>

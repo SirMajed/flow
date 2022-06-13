@@ -51,12 +51,11 @@
 [dir="rtl"] .form-select {
   background-position: left 0.5rem center;
 }
-[dir="ltr"] select {
-  background-position: right 0.5rem center;
+[dir="rtl"] option {
+  background-position: left 0.5rem center;
 }
-[dir="ltr"] .form-select {
-  background-position: right 0.5rem center;
-}
+
+
 .drag {
   -webkit-user-select: none;
   -webkit-app-region: drag;

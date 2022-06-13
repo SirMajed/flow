@@ -17,14 +17,15 @@ function createWindow() {
       nodeIntegration: true,
       enableRemoteModule: true,
     },
-    frame: false,
+
+    frame: true,
     maximizable: true,
   })
 
   // const devBasePath = 'http://localhost:3000/'
   // const prodBasePath = `file://${path.join(__dirname, '../build/index.html')}`
   // const basePath = isDev ? devBasePath : prodBasePath
-
+  mainWindow.setMenuBarVisibility(false)
   mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${__dirname}/../build/index.html`)
 
   // and load the index.html of the app.

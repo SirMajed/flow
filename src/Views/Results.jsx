@@ -208,7 +208,7 @@ const Results = () => {
 
   return (
     <>
-      <div className="flex flex-col items-center justify-center h-screen bg-gray-50">
+      <div className="flex flex-col items-center justify-center h-screen bg-gray-50 overflow-hidden">
         <ResultsNav
           confirmReset={confirmReset}
           downloadNetworkAsImage={downloadNetworkAsImage}

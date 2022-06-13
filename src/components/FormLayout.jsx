@@ -14,7 +14,7 @@ const FormLayout = ({ children, state }) => {
     <>
       <div style={{ backgroundImage: `url(${test})` }} className="flex-1 items-center gap-20 justify-between h-screen overflow-hidden">
         <div className="w-full mx-auto bg-white shadow " />
-        <div  className="w-full h-full overflow-auto bg-white">
+        <div className="w-full h-full overflow-auto bg-white">
           <div className="flex justify-evenly pt-[30px]  pb- border-b border-gray-300 ">
             <div>
               <div

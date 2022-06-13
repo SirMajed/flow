@@ -1,5 +1,5 @@
-import i18n from "i18next";
-import { initReactI18next } from "react-i18next";
+import i18n from 'i18next'
+import { initReactI18next } from 'react-i18next'
 
 // the translations
 // (tip move them in a JSON file and import them,
@@ -7,11 +7,11 @@ import { initReactI18next } from "react-i18next";
 const resources = {
   en: {
     translation: {
-      svn: "Stakeholders value network",
-      landingBody: "To analyze stakeholders and relations",
-      contributors: "Contributors",
-      startNow: "Get started",
-      contributorsToProject: "Contributors to this project",
+      svn: 'Stakeholders value network',
+      landingBody: 'To analyze stakeholders and relations',
+      contributors: 'Contributors',
+      startNow: 'Get started',
+      contributorsToProject: 'Contributors to this project',
       alhasin: 'Majed Alhasin',
       khayat: 'Abdulrahman Khayyat',
       baik: 'Murad Baik',
@@ -19,9 +19,9 @@ const resources = {
       ghuraibi: 'Ryan Alghuraibi',
       softwareEngineer: 'Software Engineer',
       back: 'Back',
-      finalDiagram:'Final diagram',
-      filterStakeholders:'Filter stakeholders',
-      filterRelations:'Filter relations',
+      finalDiagram: 'Final diagram',
+      filterStakeholders: 'Filter stakeholders',
+      filterRelations: 'Filter relations',
       startOver: 'Start over',
       download: 'Download',
       stakeholders: 'Stakeholders',
@@ -48,6 +48,7 @@ const resources = {
       to: 'To',
       relation: 'Relation',
       fontWeight: 'Font weight',
+      fontWeightDescription: 'Width of the line that will be showing in the diagram Ex:(1 too thin, 8 too large)',
       relationType: 'Type',
       relationColor: 'Color',
       viewStakeholders: 'View stakeholders',
@@ -65,10 +66,10 @@ const resources = {
       numberOnly: 'Number only',
       caution: 'Caution',
       youCannotCreateRelations: 'You cannot create relations before creating stakeholders',
-      clickToGoBackToStakeholders:'Click here to go back to stakeholders page',
+      clickToGoBackToStakeholders: 'Click here to go back to stakeholders page',
       add: 'Add',
       update: 'Update',
-      updated:'Updated successfully',
+      updated: 'Updated successfully',
       areYouSureToStart: 'Are you sure you want to start from the beginning?',
       noDataToDraw: 'There are no data to generate the diagram',
       pleaseFillSkAndRelations: 'Please fill stakeholders and relations to generate the diagram',
@@ -78,18 +79,16 @@ const resources = {
       yellow: 'Yellow',
       blue: 'Blue',
       green: 'Green',
-      orange:'Orange'
-
-      
-    }
+      orange: 'Orange',
+    },
   },
   ar: {
     translation: {
-      svn: "شبكة أصحاب المصلحة",
-      landingBody: "لتحليل أصحاب المصلحة و العلاقات",
-      contributors: "المساهمين",
-      startNow: "إبدأ الآن",
-      contributorsToProject: "المساهمين في بناء هذا المشروع",
+      svn: 'شبكة أصحاب المصلحة',
+      landingBody: 'لتحليل أصحاب المصلحة و العلاقات',
+      contributors: 'المساهمين',
+      startNow: 'إبدأ الآن',
+      contributorsToProject: 'المساهمين في بناء هذا المشروع',
       alhasin: 'ماجد الحاسن',
       khayat: 'عبدالرحمن خياط',
       baik: 'مراد بيك',
@@ -97,11 +96,11 @@ const resources = {
       ghuraibi: 'ريان الغريبي',
       softwareEngineer: 'مهندس برمجيات',
       back: 'العودة',
-      finalDiagram:'الرسمة النهائية',
-      filterStakeholders:'تصفية اصحاب المصلحة',
-      filterRelations:'تصفية العلاقات',
-      startOver: "البدء من جديد",
-      download: "تحميل",
+      finalDiagram: 'الرسمة النهائية',
+      filterStakeholders: 'تصفية اصحاب المصلحة',
+      filterRelations: 'تصفية العلاقات',
+      startOver: 'البدء من جديد',
+      download: 'تحميل',
       stakeholders: 'اصحاب المصلحة',
       relations: 'العلاقات',
       results: 'النتائج',
@@ -125,25 +124,26 @@ const resources = {
       from: 'من',
       to: 'إلى',
       relation: 'العلاقة',
-      fontWeight: 'وزن الحط',
+      fontWeight: 'وزن الخط',
+      fontWeightDescription: 'سماكة الخط الذي سيعرض في الرسمة (مثلا 1 نحيف جدا و 8 متين جدا)',
       relationType: 'نوع العلاقة',
       relationColor: 'لون العلاقة',
       viewStakeholders: 'عرض اصحاب المصلحة',
       viewRelations: 'عرض العلاقات',
       updateRelation: 'تحديث العلاقة',
-      createRelation:'إنشاء علاقة',
+      createRelation: 'إنشاء علاقة',
       createStakeholder: 'إنشاء صاحب مصلحة',
       pleaseAddRelations: 'الرجاء اضافة العلاقات!',
-      choose:'إختر',
+      choose: 'إختر',
       noData: 'لا توجد بيانات, قم بإنشاؤها ',
       stakeholderHasBeenCreated: 'تم إنشاء صاحب المصلحة بنجاح',
       relationHasBeenCreated: 'تم إنشاء العلاقة بنجاح',
       stakeholderAlreadyExists: 'صاحب المصلحة موجود مسبقا, الرجاء ادخال اسم آخر',
-      fillInputs:'قم بتعبئة حقول الإدخال',
-      numberOnly:'رقم فقط',
+      fillInputs: 'قم بتعبئة حقول الإدخال',
+      numberOnly: 'رقم فقط',
       caution: 'تنبيه',
       youCannotCreateRelations: '*لا يمكنك انشاء العلاقات قبل ان تضيف اصحاب المصلحة',
-      clickToGoBackToStakeholders:'اضغط هنا للعودة الى صفحة (اصحاب المصلحة)',
+      clickToGoBackToStakeholders: 'اضغط هنا للعودة الى صفحة (اصحاب المصلحة)',
       add: 'إضافة',
       update: 'تحديث',
       updated: 'تم التحديث',
@@ -156,22 +156,22 @@ const resources = {
       yellow: 'اصفر',
       blue: 'ازرق',
       green: 'اخضر',
-      orange:'برتقالي'
-    }
-  }
-};
+      orange: 'برتقالي',
+    },
+  },
+}
 
 i18n
   .use(initReactI18next) // passes i18n down to react-i18next
   .init({
     resources,
-    lng: "ar", // language to use, more information here: https://www.i18next.com/overview/configuration-options#languages-namespaces-resources
+    lng: 'ar', // language to use, more information here: https://www.i18next.com/overview/configuration-options#languages-namespaces-resources
     // you can use the i18n.changeLanguage function to change the language manually: https://www.i18next.com/overview/api#changelanguage
     // if you're using a language detector, do not define the lng option
 
     interpolation: {
-      escapeValue: false // react already safes from xss
-    }
-  });
+      escapeValue: false, // react already safes from xss
+    },
+  })
 
-  export default i18n;
+export default i18n
