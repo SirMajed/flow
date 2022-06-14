@@ -37,7 +37,7 @@ const UpdateStakeholder = ({ stakeholder, closeModal }) => {
       <Input required placeholder={t('stakeholderName')} value={label} onChange={(e) => setLabel(e.target.value)} />
       <Input required placeholder={t('stakeholderType')} value={type} onChange={(e) => setType(e.target.value)} />
       <div className="flex items-center gap-3">
-        <Button text={t('update')} onClick={handleUpdate} />
+        <Button type={'button'} text={t('update')} onClick={handleUpdate} />
       </div>
     </Form>
   )

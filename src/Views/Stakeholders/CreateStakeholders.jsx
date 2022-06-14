@@ -18,10 +18,14 @@ const CreateStakeholders = ({ onPrevious }) => {
   const [label, setLabel] = useState('')
   const [type, setType] = useState('')
   const [open, setOpen] = useState(false)
+  const [openUpdateModal, setOpenUpdateModal] = useState(false)
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const { stakeholdersTypes } = useSelector((s) => s.stakeholders)
   const [selectedStakeholder, setSelectedStakeholder] = useState(null)
+
+  const toggleUpdateModal = () => setOpenUpdateModal(!openUpdateModal)
+  const closeUpdateModal = () => setOpenUpdateModal(false)
 
   const createStakeholder = () => {
     if (!label || !type) {
@@ -60,7 +64,7 @@ const CreateStakeholders = ({ onPrevious }) => {
 
   const handleEditStakeholder = (stakeholder) => {
     setSelectedStakeholder(stakeholder)
-    toggleModal()
+    toggleUpdateModal()
   }
   return (
     <>
@@ -103,19 +107,21 @@ const CreateStakeholders = ({ onPrevious }) => {
         )}
       </div>
 
+      {toggleUpdateModal && (
+        <Modal closeModal={closeUpdateModal} isOpen={openUpdateModal} title={t('update')}>
+          <UpdateStakeholder stakeholder={selectedStakeholder} closeModal={closeUpdateModal} />
+        </Modal>
+      )}
+
       {toggleModal && (
-        <Modal closeModal={closeModal} isOpen={open} title={selectedStakeholder ? t('update') : t('createStakeholder')}>
-          {selectedStakeholder ? (
-            <UpdateStakeholder stakeholder={selectedStakeholder} closeModal={closeModal} />
-          ) : (
-            <Form className="flex flex-col gap-4">
-              <Input required placeholder={t('stakeholderName')} value={label} onChange={(e) => setLabel(e.target.value)} />
-              <Input required placeholder={t('stakeholderType')} value={type} onChange={(e) => setType(e.target.value)} />
-              <div className="flex items-center gap-3">
-                <Button text={t('add')} onClick={createStakeholder} />
-              </div>
-            </Form>
-          )}
+        <Modal closeModal={closeModal} isOpen={open} title={t('createStakeholder')}>
+          <Form className="flex flex-col gap-4">
+            <Input required placeholder={t('stakeholderName')} value={label} onChange={(e) => setLabel(e.target.value)} />
+            <Input required placeholder={t('stakeholderType')} value={type} onChange={(e) => setType(e.target.value)} />
+            <div className="flex items-center gap-3">
+              <Button text={t('add')} onClick={createStakeholder} />
+            </div>
+          </Form>
         </Modal>
       )}
     </>
