@@ -27,6 +27,7 @@ const CreateRelations = ({ onPrevious }) => {
   const [open, setOpen] = useState(false)
   const { relationsTypes } = useSelector((s) => s.stakeholders)
   const [selectedRelation, setSelectedRelation] = useState(null)
+  const [openUpdateModal, setOpenUpdateModal] = useState(false)
 
   const toggleModal = () => {
     setOpen(!open)
@@ -35,6 +36,8 @@ const CreateRelations = ({ onPrevious }) => {
     setOpen(false)
     setSelectedRelation(null)
   }
+  const toggleUpdateModal = () => setOpenUpdateModal(!openUpdateModal)
+  const closeUpdateModal = () => setOpenUpdateModal(false)
 
   const colors = [
     { name: t('black'), value: 'black' },
@@ -90,7 +93,7 @@ const CreateRelations = ({ onPrevious }) => {
   }
   const handleEditRelation = (relation) => {
     setSelectedRelation(relation)
-    toggleModal()
+    toggleUpdateModal()
   }
   return (
     <>
@@ -129,50 +132,52 @@ const CreateRelations = ({ onPrevious }) => {
         )}
       </div>
 
-      {toggleModal && (
-        <Modal isOpen={open} closeModal={closeModal} title={selectedRelation ? t('updateRelation') : t('createRelation')}>
-          {selectedRelation ? (
-            <UpdateRelation closeModal={closeModal} relation={selectedRelation} colors={colors} />
-          ) : (
-            <Form className="flex flex-col gap-4" onSubmit={createRelation}>
-              <div>
-                <h1>{t('from')}</h1>
-                <Select required items={stakeholders} onChange={(e) => setSelectedStakeholder1(e.target.value)} value={selectedStakeholder1} />
-              </div>
-              <div>
-                <h1>{t('to')}</h1>
-                <Select
-                  required
-                  items={stakeholders.filter((item) => item.label !== selectedStakeholder1)}
-                  onChange={(e) => setSelectedStakeholder2(e.target.value)}
-                  value={selectedStakeholder2}
-                />
-              </div>
-              <div>
-                <h1>{t('relation')}</h1>
-                <Input required value={label} onChange={(e) => setLabel(e.target.value)} placeholder={t('relation')} />
-              </div>
-              <div>
-                <h1>
-                  {t('fontWeight')} <span className="text-sm text-gray-500">{t('fontWeightDescription')}</span>
-                </h1>
+      {toggleUpdateModal && (
+        <Modal isOpen={openUpdateModal} closeModal={closeUpdateModal} title={t('updateRelation')}>
+          <UpdateRelation closeModal={closeUpdateModal} relation={selectedRelation} colors={colors} />
+        </Modal>
+      )}
 
-                <Input required value={width} onChange={(e) => setWidth(e.target.value)} type={'number'} placeholder={t('fontWeight')} />
-              </div>
-              <div>
-                <h1>{t('relationType')}</h1>
-                <Input required value={type} onChange={(e) => setType(e.target.value)} type={'number'} placeholder={t('numberOnly')} />
-              </div>
-              <div>
-                <h1>{t('relationColor')}</h1>
-                <Select isColors items={colors} onChange={(e) => setColor(e.target.value)} value={color} />
-              </div>
-              <div className="flex items-center gap-3">
-                <Button type="submit" text={t('createRelation')} />
-                <Button onClick={onPrevious} type="button" text={t('back')} classes="bg-transparent text-primary border border-primary hover:text-white" />
-              </div>
-            </Form>
-          )}
+      {toggleModal && (
+        <Modal isOpen={open} closeModal={closeModal} title={t('createRelation')}>
+          <Form className="flex flex-col gap-4" onSubmit={createRelation}>
+            <div>
+              <h1>{t('from')}</h1>
+              <Select required items={stakeholders} onChange={(e) => setSelectedStakeholder1(e.target.value)} value={selectedStakeholder1} />
+            </div>
+            <div>
+              <h1>{t('to')}</h1>
+              <Select
+                required
+                items={stakeholders.filter((item) => item.label !== selectedStakeholder1)}
+                onChange={(e) => setSelectedStakeholder2(e.target.value)}
+                value={selectedStakeholder2}
+              />
+            </div>
+            <div>
+              <h1>{t('relation')}</h1>
+              <Input required value={label} onChange={(e) => setLabel(e.target.value)} placeholder={t('relation')} />
+            </div>
+            <div>
+              <h1>
+                {t('fontWeight')} <span className="text-sm text-gray-500">{t('fontWeightDescription')}</span>
+              </h1>
+
+              <Input required value={width} onChange={(e) => setWidth(e.target.value)} type={'number'} placeholder={t('fontWeight')} />
+            </div>
+            <div>
+              <h1>{t('relationType')}</h1>
+              <Input required value={type} onChange={(e) => setType(e.target.value)} type={'number'} placeholder={t('numberOnly')} />
+            </div>
+            <div>
+              <h1>{t('relationColor')}</h1>
+              <Select isColors items={colors} onChange={(e) => setColor(e.target.value)} value={color} />
+            </div>
+            <div className="flex items-center gap-3">
+              <Button type="submit" text={t('createRelation')} />
+              <Button onClick={onPrevious} type="button" text={t('back')} classes="bg-transparent text-primary border border-primary hover:text-white" />
+            </div>
+          </Form>
         </Modal>
       )}
     </>
