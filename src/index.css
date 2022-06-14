@@ -45,15 +45,13 @@
   font-style: italic;
 }
 
-[dir="rtl"] select {
-  background-position: left 0.5rem center;
+[dir="rtl"] select{
+  background-position: right 0.5rem center;
 }
 [dir="rtl"] .form-select {
-  background-position: left 0.5rem center;
+  background-position: right 0.5rem center;
 }
-[dir="rtl"] option {
-  background-position: left 0.5rem center;
-}
+
 
 
 .drag {

@@ -4,6 +4,7 @@ import { MdFileDownload } from 'react-icons/md'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import Button from './Button'
+import Select from './Select'
 
 const ResultsNav = ({ confirmReset, downloadNetworkAsImage, stakeholdersTypes, handleEdgeFilter, handleNodeFilter, relationsTypes }) => {
   const navigate = useNavigate()
@@ -34,23 +35,8 @@ const ResultsNav = ({ confirmReset, downloadNetworkAsImage, stakeholdersTypes, h
           )}
         </div>
 
-        <select className="border border-primary text-primary rounded-md focus:outline focus:ring-0 focus:border-primary" onChange={handleNodeFilter}>
-          <option value="none">{t('filterStakeholders')}</option>
-          {stakeholdersTypes.map((t, i) => (
-            <option key={i} value={t}>
-              {t}
-            </option>
-          ))}
-        </select>
-
-        <select className="border border-primary text-primary rounded-md focus:outline focus:ring-0 focus:border-primary" onChange={handleEdgeFilter}>
-          <option value="none">{t('filterRelations')}</option>
-          {relationsTypes.map((t, i) => (
-            <option key={i} value={t}>
-              {t}
-            </option>
-          ))}
-        </select>
+        <Select fullWidth={false} itemsWithNoObjects items={stakeholdersTypes} onChange={handleNodeFilter} OptionDefaultValue={t('filterStakeholders')} />
+        <Select fullWidth={false} itemsWithNoObjects items={relationsTypes} onChange={handleEdgeFilter} OptionDefaultValue={t('filterRelations')} />
       </div>
 
       <h1 className="text-3xl text-primary font-medium">{t('finalDiagram')}</h1>

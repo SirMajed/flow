@@ -18,7 +18,7 @@ const Index = () => {
   const { stakeholders } = useSelector((s) => s.stakeholders)
   const { language } = useSelector((s) => s.ui)
   const handleForce = (data, fileInfo) => {
-    const colorList = ['#fc8d8d', '#f8ffc7', '#ededed', '#34eb9b']
+    const colorList = ['#fc8d8d', '#f8ffc7', '#ededed', '#34eb9b'] // [red, yellow, grey, green]
     let arr = []
     let skTypes = []
     var typesSet = new Set()
@@ -26,27 +26,33 @@ const Index = () => {
     var dict = {}
 
     data.forEach((row) => {
-      typesSet.add(row.type)
+      typesSet.add(row.type) // {1,3}
     })
-    types = Array.from(typesSet)
+
+    types = Array.from(typesSet) // [1,3]
+
     types.forEach((type, index) => {
       dict[type] = colorList[index]
     })
+
     dispatch(addStakeholdersTypes(types))
 
     data.forEach((row) => {
       var obj = {
-        id: row.name,
-        label: row.name,
+        id: row.label,
+        label: row.label,
         shape: 'box',
         type: row.type,
+        color: dict[row.type],
       }
-      if (Object.keys(dict).includes(row.type)) {
-        obj.color = dict[row.type]
-      }
+      // if (Object.keys(dict).includes(row.type)) {
+      //   obj.color = dict[row.type]
+      // }
       arr.push(obj)
       skTypes.push(obj.type)
+      console.log(arr)
     })
+
     dispatch(addStakeholderArray(arr))
     setFileName(fileInfo.name)
     setCreateStakeholdersClicked(true)
@@ -67,18 +73,21 @@ const Index = () => {
           <div className="flex flex-col justify-center">
             <div className="text-primary">
               <div onClick={() => navigate('/')} className="flex items-center cursor-pointer">
-                {language === 'ar' ? <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                </svg> : <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
-                </svg>}
+                {language === 'ar' ? (
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                  </svg>
+                ) : (
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                  </svg>
+                )}
                 <p className="text-primary text-sm mb-2">{t('backToHomePage')}</p>
               </div>
               <p className="text-xl font-medium text-gray-800">{t('chooseWay')}</p>
               <p className="font-normal text-gray-600">{t('stakeholdersDescription')}</p>
             </div>
 
-            
             <div className="flex flex-row items-center justify-center gap-10 mt-20">
               <label
                 className="rounded-md bg-primaryHover hover:bg-gray-900 transition text-white font-bold  border shadow-lg p-5 cursor-pointer"
