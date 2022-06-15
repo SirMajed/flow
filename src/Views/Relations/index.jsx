@@ -44,7 +44,7 @@ const Index = () => {
         to: row.to,
         arrows: 'to',
         label: row.label,
-        width: (row.width * 10) / 1.2,
+        width: row.width,
         color: row.color,
         type: row.type,
       }
