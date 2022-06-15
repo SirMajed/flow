@@ -33,7 +33,7 @@ const CreateStakeholders = ({ onPrevious }) => {
     } else {
       if (!stakeholders.find((sk) => sk.label === label)) {
         var edgeSet = new Set([...stakeholdersTypes])
-        const obj = { id: label, label, type, shape: 'box' }
+        const obj = { id: label, label, type, shape: 'box', color: '#3c97c9' }
         dispatch(addStakeholder(obj))
         edgeSet.add(type)
         dispatch(addStakeholdersTypes(Array.from(edgeSet)))
