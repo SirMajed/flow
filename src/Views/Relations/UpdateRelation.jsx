@@ -52,11 +52,11 @@ const UpdateRelation = ({ relation, closeModal, colors }) => {
   return (
     <Form className="flex flex-col gap-4">
       <div>
-      <h1>{t('from')}</h1>
+        <h1>{t('from')}</h1>
         <Select disabled items={stakeholders} onChange={(e) => setSelectedStakeholder1(e.target.value)} value={selectedStakeholder1} />
       </div>
       <div>
-      <h1>{t('to')}</h1>
+        <h1>{t('to')}</h1>
         <Select
           disabled
           items={stakeholders.filter((item) => item.label !== selectedStakeholder1)}
@@ -65,19 +65,21 @@ const UpdateRelation = ({ relation, closeModal, colors }) => {
         />
       </div>
       <div>
-      <h1>{t('relation')}</h1>
+        <h1>{t('relation')}</h1>
         <Input required value={label} onChange={(e) => setLabel(e.target.value)} placeholder={t('relation')} />
       </div>
       <div>
-      <h1>{t('fontWeight')}</h1>
-        <Input required value={width} onChange={(e) => setWidth(e.target.value)} type={'number'} placeholder={t('fontWeight')}  />
+        <h1>
+          {t('fontWeight')} <span className="text-sm text-gray-500">{t('fontWeightDescription')}</span>
+        </h1>{' '}
+        <Input required value={width} onChange={(e) => setWidth(e.target.value)} type={'number'} placeholder={t('fontWeight')} />
       </div>
       <div>
-      <h1>{t('relationType')}</h1>
-        <Input required value={type} onChange={(e) => setType(e.target.value)} type={'number'}  placeholder={t('numberOnly')}/>
+        <h1>{t('relationType')}</h1>
+        <Input required value={type} onChange={(e) => setType(e.target.value)} type={'number'} placeholder={t('numberOnly')} />
       </div>
       <div>
-      <h1>{t('relationColor')}</h1>
+        <h1>{t('relationColor')}</h1>
         <Select isColors items={colors} onChange={(e) => setColor(e.target.value)} value={color} />
       </div>
       <div className="flex items-center gap-3">

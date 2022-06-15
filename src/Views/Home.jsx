@@ -26,7 +26,7 @@ const Home = () => {
           </div>
           <h1 className="text-xl md:text-5xl text-white font-bold">{t('svn')}</h1>
           <p className="text-gray-200 text-lg">{t('landingBody')}</p>
-          <div className="flex text-white">
+          <div className="flex gap-4 text-white">
             <Link to={'/stakeholders'}>
               <button className="rounded-md mt-5 lg:mt-8 py-3 lg:py-4 px-4 lg:px-8 bg-white font-bold text-black text-sm lg:text-lg xl:text-xl hover:bg-opacity-90  focus:ring-2 focus:ring-offset-2 focus:ring-white focus:outline-none">
                 {t('startNow')}
