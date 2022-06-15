@@ -6,8 +6,6 @@ import 'react-toastify/dist/ReactToastify.css'
 import Stakeholders from './Views/Stakeholders/index'
 import Relations from './Views/Relations'
 import Results from 'Views/Results'
-import isElectron from 'is-electron'
-import TitleBar from 'components/TitleBar'
 import { useDispatch, useSelector } from 'react-redux'
 import { changeLanguage, initLang } from 'redux/slices/uiSlice'
 import { ReactComponent as Arabic } from '../src/assets/images/ar.svg'
@@ -24,7 +22,6 @@ function App() {
   return (
     <HashRouter>
       <ToastContainer />
-      {/* {isElectron() === true && <TitleBar />} */}
       <div className="mt-4 z-40 fixed bottom-0 left-0 bg-opacity-50 rounded-full ml-3 mb-2">
         {language === 'en' ? (
           <Arabic onClick={changeLang} className="w-10 h-10 cursor-pointer p-1" />

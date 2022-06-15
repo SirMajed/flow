@@ -5,19 +5,18 @@ import darkLogo from '../assets/images/darkLogo.png'
 import { Link } from 'react-router-dom'
 import bg from '../assets/images/bg.jpg'
 import ntisbg from '../assets/images/ntisbg.jpg'
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next'
 const Home = () => {
   function scrollToCont() {
     const divElement = document.getElementById('cont')
     divElement.scrollIntoView({ behavior: 'smooth' })
   }
-  const { t, i18n } = useTranslation();
-  console.log(i18n.language);
+  const { t, i18n } = useTranslation()
+  console.log(i18n.language)
 
   return (
     <>
       <div className="relative">
-
         <div
           style={{ background: `linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, .5)),url(${bg})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}
           className="bg-contain bg-no-repeat sticky top-0 h-screen flex flex-col items-center justify-center "
