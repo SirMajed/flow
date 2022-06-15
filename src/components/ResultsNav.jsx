@@ -11,7 +11,7 @@ const ResultsNav = ({ confirmReset, downloadNetworkAsImage, stakeholdersTypes, h
   const { relations } = useSelector((s) => s.stakeholders)
   const { language } = useSelector((s) => s.ui)
   return (
-    <div className="flex justify-between items-center bg-zinc-50 shadow-md sticky top-0 w-full py-3 px-8">
+    <div className="hidden md:flex justify-between items-center bg-zinc-50 shadow-md sticky top-0 w-full py-3 px-8">
       <div className="flex flex-row items-center gap-4">
         <div
           onClick={() => {
