@@ -2,7 +2,7 @@ import { t } from 'i18next'
 import { CSVLink } from 'react-csv'
 import { MdAdd, MdDeleteOutline, MdOutlineModeEditOutline } from 'react-icons/md'
 import Button from './Button'
-const Table = ({ type, data, handleEdit, handleDelete, tableHeaders, deleteTableData, addButtonFunction, buttonText }) => {
+const Table = ({ type, secondButtonFunction, secondBtnText, data, handleEdit, handleDelete, tableHeaders, deleteTableData, addButtonFunction, buttonText }) => {
   function isNumber(n) {
     return !isNaN(parseFloat(n)) && !isNaN(n - 0)
   }
@@ -18,7 +18,10 @@ const Table = ({ type, data, handleEdit, handleDelete, tableHeaders, deleteTable
             {t('deleteTable')}
           </h1>
         </div>
-        <Button onClick={addButtonFunction} icon={<MdAdd size={22} color="white" />} text={buttonText} />
+        <div className="flex gap-4 items-center">
+          <Button onClick={addButtonFunction} icon={<MdAdd size={22} color="white" />} text={buttonText} />
+          {secondButtonFunction && <Button onClick={secondButtonFunction} icon={<MdAdd size={22} color="white" />} text={secondBtnText} />}
+        </div>
       </div>
       <div className="relative max-h-[45rem] overflow-y-auto overflow-x-auto shadow-md sm:rounded-lg mt-2">
         {data.length >= 1 ? (

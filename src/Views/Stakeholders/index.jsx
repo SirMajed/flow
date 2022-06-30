@@ -9,6 +9,7 @@ import FormLayout from 'components/FormLayout'
 import CreateStakeholders from './CreateStakeholders'
 import { useNavigate } from 'react-router-dom'
 import { t } from 'i18next'
+import { Button, Chip } from 'baseet'
 
 const Index = () => {
   const [fileName, setFileName] = useState(null)
@@ -78,8 +79,8 @@ const Index = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                   </svg>
                 ) : (
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
                   </svg>
                 )}
                 <p className="text-primary text-sm mb-2">{t('backToHomePage')}</p>
@@ -100,15 +101,15 @@ const Index = () => {
                 <CSVReader inputId="CSVReader" inputStyle={{ display: 'none' }} onFileLoaded={handleForce} parserOptions={papaparseOptions} />
               </label>
               <p>{t('or')}</p>
-              <div
+
+              <Button
                 onClick={() => {
                   setCreateStakeholdersClicked(true)
                 }}
-                className="flex items-center gap-2 rounded-md bg-primaryHover hover:bg-gray-900 transition text-white font-bold  border shadow-lg p-5 cursor-pointer"
-              >
-                {stakeholders && stakeholders.length >= 1 ? t('viewStakeholders') : t('createStakeholders')}
-                {stakeholders && stakeholders.length >= 1 ? <IoEyeOutline size={25} /> : <IoCreateOutline size={25} />}
-              </div>
+                size="large"
+                text={stakeholders && stakeholders.length >= 1 ? t('viewStakeholders') : t('createStakeholders')}
+                icon={stakeholders && stakeholders.length >= 1 ? <IoEyeOutline size={25} /> : <IoCreateOutline size={25} />}
+              />
             </div>
           </div>
         )}

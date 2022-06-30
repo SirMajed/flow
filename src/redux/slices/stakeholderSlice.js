@@ -53,6 +53,9 @@ export const stakeholderSlice = createSlice({
     addStakeholdersTypes: (state, action) => {
       state.stakeholdersTypes = action.payload
     },
+    addStakeholderType: (state, action) => {
+      state.stakeholdersTypes.push(action.payload)
+    },
     clearStakeholders: (state) => {
       state.stakeholders = []
     },
@@ -146,6 +149,7 @@ export const {
   hideEdge,
   updateStakeholder,
   updateRelation,
+  addStakeholderType,
 } = stakeholderSlice.actions
 
 export default stakeholderSlice.reducer

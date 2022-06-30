@@ -80,6 +80,8 @@ const resources = {
       blue: 'Blue',
       green: 'Green',
       orange: 'Orange',
+      addStakeholderType: 'Add stakeholders types',
+      typeHasBeenAdded: 'Stakeholder type has been added',
     },
   },
   ar: {
@@ -157,6 +159,8 @@ const resources = {
       blue: 'ازرق',
       green: 'اخضر',
       orange: 'برتقالي',
+      addStakeholderType: 'إضافة انواع اصحاب المصلحة',
+      typeHasBeenAdded: 'تم اضافة نوع صاحب المصلحة',
     },
   },
 }

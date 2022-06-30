@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { changeLanguage, initLang } from 'redux/slices/uiSlice'
 import { ReactComponent as Arabic } from '../src/assets/images/ar.svg'
 import { ReactComponent as English } from '../src/assets/images/uk.svg'
+
 function App() {
   const dispatch = useDispatch()
   const { language } = useSelector((s) => s.ui)

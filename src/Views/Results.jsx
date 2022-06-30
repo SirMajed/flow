@@ -220,7 +220,11 @@ const Results = () => {
 
         <div className="w-full my-t-4 mb-1 h-screen" ref={domNode} />
         <a id="canvasImg" download="Stakeholder-Network"></a>
-        <div className="flex items-center gap-3"></div>
+        <div className="shadow-md mb-5 mr-5 fixed bottom-0 right-0">
+          <div className="flex justify-center items-center gap-3">
+            <h1 className="bg-primary bg-opacity-80 p-2 rounded-md text-white hover:bg-opacity-90 transition cursor-pointer">الإحصائيات</h1>
+          </div>
+        </div>
       </div>
 
       {toggleWarnModal && (

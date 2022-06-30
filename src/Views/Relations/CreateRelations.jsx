@@ -174,7 +174,7 @@ const CreateRelations = ({ onPrevious }) => {
               <Select isColors items={colors} onChange={(e) => setColor(e.target.value)} value={color} />
             </div>
             <div className="flex items-center gap-3">
-              <Button type="submit" text={t('createRelation')} />
+              <Button text={t('createRelation')} />
               <Button onClick={onPrevious} type="button" text={t('back')} classes="bg-transparent text-primary border border-primary hover:text-white" />
             </div>
           </Form>

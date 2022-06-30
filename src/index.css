@@ -52,8 +52,6 @@
   background-position: right 0.5rem center;
 }
 
-
-
 .drag {
   -webkit-user-select: none;
   -webkit-app-region: drag;

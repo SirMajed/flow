@@ -8,18 +8,18 @@ export const uiSlice = createSlice({
   initialState,
   reducers: {
     initLang: (state) => {
+      localStorage.setItem('language', 'ar')
       let localLang = localStorage.getItem('language')
       if (localLang === 'ar') {
         state.language = 'ar'
         document.documentElement.lang = 'ar'
         document.documentElement.dir = 'rtl'
+        i18next.changeLanguage('ar')
       } else if (localLang === 'en') {
         state.language = 'en'
         document.documentElement.lang = 'en'
         document.documentElement.dir = 'ltr'
         i18next.changeLanguage(state.language)
-      } else {
-        localStorage.setItem('language', 'ar')
       }
     },
     changeLanguage: (state) => {
@@ -37,9 +37,15 @@ export const uiSlice = createSlice({
         localStorage.setItem('language', state.language)
       }
     },
+    setArabic: (state) => {
+      state.language = 'ar'
+    },
+    setEnglish: (state) => {
+      state.language = 'en'
+    },
   },
 })
 
-export const { changeLanguage, initLang } = uiSlice.actions
+export const { changeLanguage, initLang, setArabic, setEnglish } = uiSlice.actions
 
 export default uiSlice.reducer
