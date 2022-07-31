@@ -61,11 +61,12 @@ export const stakeholderSlice = createSlice({
     },
     addPosX: (state, action) => {
       const updatedArray = state.stakeholders // copy of original
-      const { posX, id } = action.payload
+      const { posX, id, posY } = action.payload
       let selectedItem = updatedArray.findIndex((element) => {
         return element.id === id
       })
       updatedArray[selectedItem].x = posX
+      updatedArray[selectedItem].y = posY
       state.stakeholders = updatedArray
     },
     addPosY: (state, action) => {
@@ -74,29 +75,35 @@ export const stakeholderSlice = createSlice({
       let selectedItem = updatedArray.findIndex((element) => {
         return element.id === id
       })
-      updatedArray[selectedItem].y = posY
-      state.stakeholders = updatedArray
+      // state.stakeholders = updatedArray
     },
     hideNode: (state, action) => {
       const updatedArray = state.stakeholders // copy of original
-      const { hidden, id } = action.payload
+      const { hidden, id, posX, posY } = action.payload
       let selectedItem = updatedArray.findIndex((element) => {
         return element.id === id
       })
+      updatedArray[selectedItem].x = posX
+      updatedArray[selectedItem].y = posY
       updatedArray[selectedItem].hidden = hidden
       state.stakeholders = updatedArray
     },
     //////////////////// RELATIONS (EDGES) \\\\\\\\\\\\\\\\\\\\\\\
     updateRelation: (state, action) => {
       const updatedArray = state.relations // copy of original
-      const { id, label, type, width, color } = action.payload
+      const { id, label, type, width, color, smooth, length } = action.payload
       let selectedItem = updatedArray.findIndex((element) => {
         return element.id === id
       })
-      updatedArray[selectedItem].label = label
-      updatedArray[selectedItem].type = type
-      updatedArray[selectedItem].width = width
-      updatedArray[selectedItem].color = color
+      // updatedArray[selectedItem].label = label
+      // updatedArray[selectedItem].type = type
+      // updatedArray[selectedItem].width = width
+      // updatedArray[selectedItem].color = color
+      updatedArray[selectedItem].smooth = smooth
+      // updatedArray[selectedItem].length = length
+      // updatedArray[selectedItem].physics = false
+
+
       state.relations = updatedArray
     },
     deleteRelation: (state, action) => {

@@ -130,6 +130,7 @@ const resources = {
       fontWeightDescription: 'سماكة الخط الذي سيعرض في الرسمة (مثلا 1 نحيف جدا و 8 متين جدا)',
       relationType: 'نوع العلاقة',
       relationColor: 'لون العلاقة',
+      relationLevel: 'مستوى العلاقة',
       viewStakeholders: 'عرض اصحاب المصلحة',
       viewRelations: 'عرض العلاقات',
       updateRelation: 'تحديث العلاقة',

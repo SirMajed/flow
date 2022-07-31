@@ -47,6 +47,15 @@ const Index = () => {
         width: row.width,
         color: row.color,
         type: row.type,
+        level: row.level,
+        hidden: row.level !== 1 ? true: false,
+        // length: row.level === 1 ? parseInt(3000 / (row.width) ) : 500,
+        // physics: false,
+        // smooth: {
+        //   type: 'dynamic',
+        //   forceDirection: 'none',
+        //   roundness: 0
+        // },
       }
       arr.push(obj)
     })
