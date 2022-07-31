@@ -17,6 +17,7 @@ const UpdateRelation = ({ relation, closeModal, colors }) => {
   const [width, setWidth] = useState(0)
   const [label, setLabel] = useState('')
   const [type, setType] = useState(0)
+  const [level, setLevel] = useState(1)
   const dispatch = useDispatch()
   useEffect(() => {
     if (relation) {
@@ -26,6 +27,7 @@ const UpdateRelation = ({ relation, closeModal, colors }) => {
       setWidth(relation.width)
       setLabel(relation.label)
       setType(relation.type)
+      setLevel(relation.level)
     }
   }, [])
 
@@ -42,6 +44,7 @@ const UpdateRelation = ({ relation, closeModal, colors }) => {
           label,
           width,
           type,
+          level,
         })
       )
       dispatch(addRelationsTypes(Array.from(edgeSet)))
@@ -73,6 +76,12 @@ const UpdateRelation = ({ relation, closeModal, colors }) => {
           {t('fontWeight')} <span className="text-sm text-gray-500">{t('fontWeightDescription')}</span>
         </h1>{' '}
         <Input required value={width} onChange={(e) => setWidth(e.target.value)} type={'number'} placeholder={t('fontWeight')} />
+      </div>
+      <div>
+        <h1>
+          {t('relationLevel')} 
+        </h1>
+        <Input required value={level} onChange={(e) => setLevel(e.target.value)} type={'number'} placeholder={t('relationLevel')} />
       </div>
       <div>
         <h1>{t('relationType')}</h1>

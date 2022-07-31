@@ -10,7 +10,7 @@ import Form from 'components/Form'
 import { toast } from 'react-toastify'
 import { Modal } from 'components/Modal'
 import NoStakeholdersAlert from './NoStakeholdersAlert'
-import { MdAdd } from 'react-icons/md'
+import { MdAdd, MdRowing } from 'react-icons/md'
 import { v4 as uuidv4 } from 'uuid'
 import UpdateRelation from './UpdateRelation'
 import { t } from 'i18next'
@@ -22,6 +22,7 @@ const CreateRelations = ({ onPrevious }) => {
   const [width, setWidth] = useState(0)
   const [label, setLabel] = useState('')
   const [type, setType] = useState(0)
+  const [level, setLevel] = useState(1)
   const { stakeholders } = useSelector((s) => s.stakeholders)
   const { relations } = useSelector((s) => s.stakeholders)
   const [open, setOpen] = useState(false)
@@ -65,7 +66,11 @@ const CreateRelations = ({ onPrevious }) => {
         label,
         width: parseInt(width),
         type: parseInt(type),
+        level: parseInt(level),
         color,
+        // length: parseInt(2000 / parseInt(width)),
+        physics: false,
+      // length: 1000
       }
       edgeSet.add(parseInt(type))
       dispatch(addRelation(data))
@@ -81,6 +86,7 @@ const CreateRelations = ({ onPrevious }) => {
     setType(0)
     setWidth(0)
     setColor('')
+    setLevel(1)
     setSelectedStakeholder2('')
     setSelectedStakeholder1('')
   }
@@ -118,7 +124,7 @@ const CreateRelations = ({ onPrevious }) => {
               deleteTableData={clearTable}
               handleEdit={handleEditRelation}
               handleDelete={removeRelation}
-              tableHeaders={[t('from'), t('to'), t('relation'), t('fontWeight'), t('relationType'), t('relationColor'), t('actions')]}
+              tableHeaders={[t('from'), t('to'), t('relation'), t('fontWeight'), t('relationLevel'), t('relationType'), t('relationColor'), t('actions')]}
               addButtonFunction={toggleModal}
               buttonText={t('createRelation')}
             />
@@ -162,8 +168,13 @@ const CreateRelations = ({ onPrevious }) => {
               <h1>
                 {t('fontWeight')} <span className="text-sm text-gray-500">{t('fontWeightDescription')}</span>
               </h1>
-
               <Input required value={width} onChange={(e) => setWidth(e.target.value)} type={'number'} placeholder={t('fontWeight')} />
+            </div>
+            <div>
+              <h1>
+                {t('relationLevel')} 
+              </h1>
+              <Input required value={level} onChange={(e) => setLevel(e.target.value)} type={'number'} placeholder={t('relationLevel')} />
             </div>
             <div>
               <h1>{t('relationType')}</h1>

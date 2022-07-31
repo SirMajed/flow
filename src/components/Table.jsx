@@ -65,6 +65,7 @@ const Table = ({ type, secondButtonFunction, secondBtnText, data, handleEdit, ha
                         <td className="px-6 py-4">{item.to}</td>
                         <td className="px-6 py-4">{item.label || item.rel}</td>
                         <td className="px-6 py-4">{isNumber(item.width) ? Number(item.width).toFixed(2) : item.width}</td>
+                        <td className="px-6 py-4">{item.level || item.level}</td>
                         <td className="px-6 py-4">{item.type || item.reltype}</td>
                         <td className="px-6 py-4 ">
                           <div style={{ backgroundColor: item.color }} className={` mx-auto h-3 w-4 rounded `} />
