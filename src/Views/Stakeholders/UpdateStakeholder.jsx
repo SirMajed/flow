@@ -1,4 +1,4 @@
-import Button from 'components/Button'
+import { Button } from 'baseet'
 import Form from 'components/Form'
 import Input from 'components/Input'
 import { t } from 'i18next'

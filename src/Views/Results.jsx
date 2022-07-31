@@ -18,7 +18,14 @@ const Results = () => {
   const [pos, setPos] = useState({})
 
   // const roundness = [0.2, -2.2, 0.5, -2.5, 0.8, -3]
-  const roundness = [{type: 'horizontal', roundness: 0.2}, {type: 'vertical', roundness: 0.2}, {type: 'horizontal', roundness: 0.8}, {type: 'vertical', roundness: 0.8}, {type: 'horizontal', roundness: 1.5}, {type: 'vertical', roundness: 1.5}]
+  const roundness = [
+    { type: 'horizontal', roundness: 0.2 },
+    { type: 'vertical', roundness: 0.2 },
+    { type: 'horizontal', roundness: 0.8 },
+    { type: 'vertical', roundness: 0.8 },
+    { type: 'horizontal', roundness: 1.5 },
+    { type: 'vertical', roundness: 1.5 },
+  ]
 
   const network = useRef(null)
   const data = {
@@ -30,15 +37,15 @@ const Results = () => {
     physics: {
       // Even though it's disabled the options still apply to network.stabilize().
       // enabled: false,
-      solver: "repulsion",
+      solver: 'repulsion',
       repulsion: {
         nodeDistance: 200, // Put more distance between the nodes.
         // springConstant: 1,
-      }
+      },
     },
     layout: {
       randomSeed: 1,
-  },
+    },
     // layout: {
     //   improvedLayout:true,
 
@@ -86,7 +93,7 @@ const Results = () => {
         background: 'white',
       },
     },
-    interaction: {    hover: true  },
+    interaction: { hover: true },
     height: '100%',
     width: '100%',
     clickToUse: false,
@@ -113,7 +120,6 @@ const Results = () => {
 
     if (network.current) {
       network.current.setOptions({ physics: false })
-      
     }
     network.current = network.currnet || new Network(domNode.current, data, options)
     // network.current.once('afterDrawing', function (){
@@ -124,9 +130,8 @@ const Results = () => {
       // edges.forEach((edge) => {
       //   dispatch(updateRelation({ id: edge.id, length: 1000}))
       // })
-      if (level === 2){
-        
-        this.moveTo({scale: 1.0})
+      if (level === 2) {
+        this.moveTo({ scale: 1.0 })
       }
       // else{
       //   this.moveTo({scale: 0.5})
@@ -153,7 +158,7 @@ const Results = () => {
     //       dispatch(addPosY({ id: node.id, posY: posY }))
     //       // tempNodes.push(node)
     //     })
-        
+
     //     // setNodes(tempNodes)
     //     edges.forEach((edge) => {
     //       console.log(edge);
@@ -168,8 +173,8 @@ const Results = () => {
     //     })
     //     setLevel(2)
     //     // this.moveTo({scale: 1.2})
-    //     // setPos(tempPos)        
-        
+    //     // setPos(tempPos)
+
     //   }
     //   else if(n.scale < 0.9 && level === 2){
     //     const tempEdges = []
@@ -183,10 +188,10 @@ const Results = () => {
     //     })
     //     setLevel(1)
     //   }
-      
+
     // })
     network.current.on('click', function (n) {
-      console.log('xxxx');
+      console.log('xxxx')
       // var tempNodes = []
       nodes.forEach((node) => {
         const position = network.current.getPositions([node.id])
@@ -210,7 +215,7 @@ const Results = () => {
             const posY = position[`${e.id}`].y
             dispatch(addPosX({ id: e.id, posX: posX, posY: posY }))
             // dispatch(addPosY({ id: e.id, posY: posY }))
-            dispatch(hideNode({ id: e.id, hidden: true,posX, posY  }))
+            dispatch(hideNode({ id: e.id, hidden: true, posX, posY }))
           }
           // tempNodes.push(e)
         })
@@ -310,11 +315,11 @@ const Results = () => {
 
         <div className="w-full my-t-4 mb-1 h-screen" ref={domNode} />
         <a id="canvasImg" download="Stakeholder-Network"></a>
-        <div className="shadow-md mb-5 mr-5 fixed bottom-0 right-0">
+        {/* <div className="shadow-md mb-5 mr-5 fixed bottom-0 right-0">
           <div className="flex justify-center items-center gap-3">
             <h1 className="bg-primary bg-opacity-80 p-2 rounded-md text-white hover:bg-opacity-90 transition cursor-pointer">الإحصائيات</h1>
           </div>
-        </div>
+        </div> */}
       </div>
 
       {toggleWarnModal && (

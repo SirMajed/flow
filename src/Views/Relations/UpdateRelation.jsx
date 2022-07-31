@@ -1,4 +1,4 @@
-import Button from 'components/Button'
+import { Button } from 'baseet'
 import Form from 'components/Form'
 import Input from 'components/Input'
 import Select from 'components/Select'
@@ -78,9 +78,7 @@ const UpdateRelation = ({ relation, closeModal, colors }) => {
         <Input required value={width} onChange={(e) => setWidth(e.target.value)} type={'number'} placeholder={t('fontWeight')} />
       </div>
       <div>
-        <h1>
-          {t('relationLevel')} 
-        </h1>
+        <h1>{t('relationLevel')}</h1>
         <Input required value={level} onChange={(e) => setLevel(e.target.value)} type={'number'} placeholder={t('relationLevel')} />
       </div>
       <div>
