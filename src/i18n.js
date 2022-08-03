@@ -82,6 +82,8 @@ const resources = {
       orange: 'Orange',
       addStakeholderType: 'Add stakeholders types',
       typeHasBeenAdded: 'Stakeholder type has been added',
+      detailedRelations: 'Enter level 2 sub relations, seperated with dash ( - )',
+      secondLevelRelation: 'Level 2 relations',
     },
   },
   ar: {
@@ -162,6 +164,8 @@ const resources = {
       orange: 'برتقالي',
       addStakeholderType: 'إضافة انواع اصحاب المصلحة',
       typeHasBeenAdded: 'تم اضافة نوع صاحب المصلحة',
+      detailedRelations: 'ادخل العلاقات الخاصه بالمستوى الثاني مفصوله ب شرطة ( - )',
+      secondLevelRelation: 'ادخل علاقات المستوى الثاني',
     },
   },
 }

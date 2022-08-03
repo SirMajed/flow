@@ -19,9 +19,9 @@ const CreateRelations = ({ onPrevious }) => {
   const [selectedStakeholder1, setSelectedStakeholder1] = useState('')
   const [selectedStakeholder2, setSelectedStakeholder2] = useState('')
   const [color, setColor] = useState('')
-  const [width, setWidth] = useState(0)
+  const [width, setWidth] = useState(1)
   const [label, setLabel] = useState('')
-  const [type, setType] = useState(0)
+  const [type, setType] = useState(1)
   const [level, setLevel] = useState(1)
   const { stakeholders } = useSelector((s) => s.stakeholders)
   const { relations } = useSelector((s) => s.stakeholders)
@@ -29,7 +29,8 @@ const CreateRelations = ({ onPrevious }) => {
   const { relationsTypes } = useSelector((s) => s.stakeholders)
   const [selectedRelation, setSelectedRelation] = useState(null)
   const [openUpdateModal, setOpenUpdateModal] = useState(false)
-
+  const [detailedRelations, setDetailedRelations] = useState('')
+  const relationLevelArray = [1, 2]
   const toggleModal = () => {
     setOpen(!open)
   }
@@ -67,11 +68,13 @@ const CreateRelations = ({ onPrevious }) => {
         width: parseInt(width),
         type: parseInt(type),
         level: parseInt(level),
+        title: level === '2' ? detailedRelations : '',
         color,
         // length: parseInt(2000 / parseInt(width)),
         // physics: false,
-      // length: 1000
+        // length: 1000
       }
+      console.log(data)
       edgeSet.add(parseInt(type))
       dispatch(addRelation(data))
       dispatch(addRelationsTypes(Array.from(edgeSet)))
@@ -171,11 +174,17 @@ const CreateRelations = ({ onPrevious }) => {
               <Input required value={width} onChange={(e) => setWidth(e.target.value)} type={'number'} placeholder={t('fontWeight')} />
             </div>
             <div>
-              <h1>
-                {t('relationLevel')} 
-              </h1>
-              <Input required value={level} onChange={(e) => setLevel(e.target.value)} type={'number'} placeholder={t('relationLevel')} />
+              <h1>{t('relationLevel')}</h1>
+              <Select items={relationLevelArray} onChange={(e) => setLevel(e.target.value)} value={level} itemsWithNoObjects />
             </div>
+
+            {level === '2' && (
+              <div>
+                <h1>{t('secondLevelRelation')}</h1>
+                <Input required value={detailedRelations} onChange={(e) => setDetailedRelations(e.target.value)} type={'text'} placeholder={t('detailedRelations')} />
+              </div>
+            )}
+
             <div>
               <h1>{t('relationType')}</h1>
               <Input required value={type} onChange={(e) => setType(e.target.value)} type={'number'} placeholder={t('numberOnly')} />
