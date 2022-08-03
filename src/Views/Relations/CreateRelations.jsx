@@ -69,7 +69,7 @@ const CreateRelations = ({ onPrevious }) => {
         level: parseInt(level),
         color,
         // length: parseInt(2000 / parseInt(width)),
-        physics: false,
+        // physics: false,
       // length: 1000
       }
       edgeSet.add(parseInt(type))

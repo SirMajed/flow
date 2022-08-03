@@ -83,8 +83,10 @@ export const stakeholderSlice = createSlice({
       let selectedItem = updatedArray.findIndex((element) => {
         return element.id === id
       })
-      updatedArray[selectedItem].x = posX
-      updatedArray[selectedItem].y = posY
+      // updatedArray[selectedItem].x = posX
+      // updatedArray[selectedItem].y = posY
+      updatedArray[selectedItem].x = updatedArray[selectedItem].x
+      updatedArray[selectedItem].y = updatedArray[selectedItem].y
       updatedArray[selectedItem].hidden = hidden
       state.stakeholders = updatedArray
     },
@@ -132,6 +134,8 @@ export const stakeholderSlice = createSlice({
       let selectedItem = updatedArray.findIndex((element) => {
         return element.id === id
       })
+      updatedArray[selectedItem].x = updatedArray[selectedItem].x
+      updatedArray[selectedItem].y = updatedArray[selectedItem].y
       updatedArray[selectedItem].hidden = hidden
       state.relations = updatedArray
     },

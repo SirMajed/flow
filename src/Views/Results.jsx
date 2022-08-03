@@ -15,7 +15,7 @@ const Results = () => {
   const [nodes, setNodes] = useState([])
   const [edges, setEdges] = useState([])
   const [level, setLevel] = useState(1)
-  const [pos, setPos] = useState({})
+  const [firstTime, setFirstTime] = useState(true)
 
   // const roundness = [0.2, -2.2, 0.5, -2.5, 0.8, -3]
   const roundness = [{type: 'horizontal', roundness: 0.2}, {type: 'vertical', roundness: 0.2}, {type: 'horizontal', roundness: 0.8}, {type: 'vertical', roundness: 0.8}, {type: 'horizontal', roundness: 1.5}, {type: 'vertical', roundness: 1.5}]
@@ -29,16 +29,24 @@ const Results = () => {
   const options = {
     physics: {
       // Even though it's disabled the options still apply to network.stabilize().
-      // enabled: false,
+      enabled: true,
       solver: "repulsion",
       repulsion: {
-        nodeDistance: 200, // Put more distance between the nodes.
+        nodeDistance: 500, // Put more distance between the nodes.
+        // springLength: 200,
         // springConstant: 1,
-      }
+        // centralGravity: 0.3
+      },
+        stabilization: {
+        enabled: true,
+        iterations: 10000,
+        updateInterval: 500,
+        fit: true,
+      },
     },
     layout: {
       randomSeed: 1,
-  },
+    },
     // layout: {
     //   improvedLayout:true,
 
@@ -69,24 +77,28 @@ const Results = () => {
     },
     edges: {
       // physics: false,
-      // length: 200,
+      // length: 100,
+      
       selectionWidth: function (width) {
         return width * 2
       },
       hoverWidth: function (width) {
         return width * 2
       },
-      // smooth: {
-      //   type: 'continuous',
-      //   forceDirection: 'none',
-      // },
+      smooth: {
+        type: 'continuous',
+        forceDirection: 'none',
+      },
       font: {
         size: 20,
         align: 'top',
         background: 'white',
       },
     },
-    interaction: {    hover: true  },
+    interaction: {
+      hover: true,
+      tooltipDelay: 300,
+    },
     height: '100%',
     width: '100%',
     clickToUse: false,
@@ -117,85 +129,75 @@ const Results = () => {
     }
     network.current = network.currnet || new Network(domNode.current, data, options)
     // network.current.once('afterDrawing', function (){
-    //   this.stabilize()
+    //   console.log(121222);
+    //   console.log(level);
+    //   if(level === 1){
+    //     this.moveTo({scale: 0.5})
+    //   }
+
+    //   edges.forEach((edge) => {
+    //     // console.log(edge);
+    //     const length = 1000 / edge.width
+    //     console.log(length);
+    //     dispatch(updateRelation({ id: edge.id, length }))
+    //   });
     // })
     network.current.on('stabilizationIterationsDone', function () {
-      this.setOptions({ physics: false })
-      // edges.forEach((edge) => {
-      //   dispatch(updateRelation({ id: edge.id, length: 1000}))
-      // })
+      this.setOptions({ physics: false });
       if (level === 2){
-        
-        this.moveTo({scale: 1.0})
+        this.moveTo({scale: 1});
       }
-      // else{
-      //   this.moveTo({scale: 0.5})
+      // if (level === 1 && !firstTime){
+      //   this.moveTo({scale: 0.33});
       // }
     })
-    // network.current.on('zoom', function(n) {
-    //   // let tempPos = ''
-    //   console.log(n.scale);
-    //   let count = 0;
-    //   // console.log(this.getViewPosition());
-    //   if(n.scale > 1.0 && level === 1){
-    //     // console.log(level);
-    //     // this.moveTo({
-    //     //   position: pos
-    //     // })
-    //     // var tempNodes = []
-    //     nodes.forEach((node) => {
-    //       // console.log(node);
-    //       // console.log(this.getConnectedEdges(node.id));
-    //       const position = network.current.getPositions([node.id])
-    //       const posX = position[`${node.id}`].x
-    //       const posY = position[`${node.id}`].y
-    //       dispatch(addPosX({ id: node.id, posX: posX, posY: posY }))
-    //       dispatch(addPosY({ id: node.id, posY: posY }))
-    //       // tempNodes.push(node)
-    //     })
+    network.current.on('zoom', function(n) {
+      let count = 0;
+      // nodes.forEach((node) => {
+      //   console.log(node.x);
+      // });
+      console.log(n.scale);
+      if(n.scale > 1 && level === 1){
+        if (firstTime){
+          nodes.forEach((node) => {
+            const position = network.current.getPositions([node.id])
+            const posX = position[`${node.id}`].x
+            const posY = position[`${node.id}`].y
+            dispatch(addPosX({ id: node.id, posX: posX, posY: posY }))
+  
+          })
+          setFirstTime(false)
+        }
         
-    //     // setNodes(tempNodes)
-    //     edges.forEach((edge) => {
-    //       console.log(edge);
-    //       if (edge.level === 1) {
-    //         dispatch(hideEdge({ id: edge.id, hidden: true }))
-    //       }
-    //       else if (edge.level === 2){
-    //         dispatch(updateRelation({ id: edge.id, smooth: roundness[count]}))
-    //         dispatch(hideEdge({ id: edge.id, hidden: false }))
-    //         count++
-    //       }
-    //     })
-    //     setLevel(2)
-    //     // this.moveTo({scale: 1.2})
-    //     // setPos(tempPos)        
         
-    //   }
-    //   else if(n.scale < 0.9 && level === 2){
-    //     const tempEdges = []
-    //     edges.forEach((edge) => {
-    //       if (edge.level === 1) {
-    //         dispatch(hideEdge({ id: edge.id, hidden: false }))
-    //       }
-    //       else if (edge.level === 2){
-    //         dispatch(hideEdge({ id: edge.id, hidden: true }))
-    //       }
-    //     })
-    //     setLevel(1)
-    //   }
+        edges.forEach((edge) => {
+          if (edge.level === 1) {
+            dispatch(hideEdge({ id: edge.id, hidden: true }))
+          }
+          else if (edge.level === 2){
+            dispatch(updateRelation({ id: edge.id, smooth: roundness[count]}))
+            dispatch(hideEdge({ id: edge.id, hidden: false }))
+            count++
+          }
+        })
+        setLevel(2)
+        
+      }
+      else if(n.scale < 0.7 && level === 2){
+        const tempEdges = []
+        edges.forEach((edge) => {
+          if (edge.level === 1) {
+            dispatch(hideEdge({ id: edge.id, hidden: false }))
+          }
+          else if (edge.level === 2){
+            dispatch(hideEdge({ id: edge.id, hidden: true }))
+          }
+        })
+        setLevel(1)
+      }
       
-    // })
+    })
     network.current.on('click', function (n) {
-      console.log('xxxx');
-      // var tempNodes = []
-      nodes.forEach((node) => {
-        const position = network.current.getPositions([node.id])
-        const posX = position[`${node.id}`].x
-        const posY = position[`${node.id}`].y
-        dispatch(addPosX({ id: node.id, posX: posX, posY: posY }))
-        // dispatch(addPosY({ id: node.id, posY: posY }))
-        // tempNodes.push(node)
-      })
 
       if (network.current && n.nodes.length > 0) {
         var nnn = network.current.getConnectedNodes(n.nodes[0])
@@ -208,7 +210,7 @@ const Results = () => {
             const position = network.current.getPositions([e.id])
             const posX = position[`${e.id}`].x
             const posY = position[`${e.id}`].y
-            dispatch(addPosX({ id: e.id, posX: posX, posY: posY }))
+            // dispatch(addPosX({ id: e.id, posX: posX, posY: posY }))
             // dispatch(addPosY({ id: e.id, posY: posY }))
             dispatch(hideNode({ id: e.id, hidden: true,posX, posY  }))
           }
@@ -222,7 +224,7 @@ const Results = () => {
           const position = network.current.getPositions([e.id])
           const posX = position[`${e.id}`].x
           const posY = position[`${e.id}`].y
-          dispatch(addPosX({ id: e.id, posX: posX, posY: posY }))
+          // dispatch(addPosX({ id: e.id, posX: posX, posY: posY }))
           // dispatch(addPosY({ id: e.id, posY: posY }))
           dispatch(hideNode({ id: e.id, hidden: false, posX, posY }))
 
@@ -245,7 +247,7 @@ const Results = () => {
       const posX = position[`${node.id}`].x
       const posY = position[`${node.id}`].y
       dispatch(addPosX({ id: node.id, posX: posX, posY: posY }))
-      dispatch(addPosY({ id: node.id, posY: posY }))
+      // dispatch(addPosY({ id: node.id, posY: posY }))
       dispatch(hideNode({ id: node.id, hidden: false }))
 
       if (e.target.value === 'none') {
@@ -253,20 +255,20 @@ const Results = () => {
         const posX = position[`${node.id}`].x
         const posY = position[`${node.id}`].y
         dispatch(addPosX({ id: node.id, posX: posX, posY: posY }))
-        dispatch(addPosY({ id: node.id, posY: posY }))
+        // dispatch(addPosY({ id: node.id, posY: posY }))
         dispatch(hideNode({ id: node.id, hidden: false }))
       } else if (node.type.toString() !== e.target.value.toString()) {
         const position = network.current.getPositions([node.id])
         const posX = position[`${node.id}`].x
         const posY = position[`${node.id}`].y
         dispatch(addPosX({ id: node.id, posX: posX, posY: posY }))
-        dispatch(addPosY({ id: node.id, posY: posY }))
+        // dispatch(addPosY({ id: node.id, posY: posY }))
         dispatch(hideNode({ id: node.id, hidden: true }))
       }
-      tempNodes.push(node)
+      // tempNodes.push(node)
     })
 
-    setNodes(tempNodes)
+    // setNodes(tempNodes)
   }
 
   const handleEdgeFilter = (e) => {
