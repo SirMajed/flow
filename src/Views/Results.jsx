@@ -16,6 +16,7 @@ const Results = () => {
   const [edges, setEdges] = useState([])
   const [level, setLevel] = useState(1)
   const [firstTime, setFirstTime] = useState(true)
+  const [position, setPosition] = useState()
 
   // const roundness = [0.2, -2.2, 0.5, -2.5, 0.8, -3]
   const roundness = [
@@ -23,8 +24,8 @@ const Results = () => {
     { type: 'vertical', roundness: 0.2 },
     { type: 'horizontal', roundness: 0.8 },
     { type: 'vertical', roundness: 0.8 },
-    { type: 'horizontal', roundness: 1.5 },
-    { type: 'vertical', roundness: 1.5 },
+    { type: 'horizontal', roundness: 1.8 },
+    { type: 'vertical', roundness: 1.8 },
   ]
 
   const network = useRef(null)
@@ -39,7 +40,7 @@ const Results = () => {
       enabled: true,
       solver: "repulsion",
       repulsion: {
-        nodeDistance: 500, // Put more distance between the nodes.
+        nodeDistance: 600, // Put more distance between the nodes.
         // springLength: 200,
         // springConstant: 1,
         // centralGravity: 0.3
@@ -153,17 +154,21 @@ const Results = () => {
       if (level === 2){
         this.moveTo({scale: 1});
       }
-      // if (level === 1 && !firstTime){
-      //   this.moveTo({scale: 0.33});
-      // }
+
+      if(firstTime){
+        this.storePositions()
+      }
+      if(position){
+        this.moveTo({position: position})
+      }
     })
     network.current.on('zoom', function(n) {
       let count = 0;
       // nodes.forEach((node) => {
       //   console.log(node.x);
       // });
-      console.log(n.scale);
       if(n.scale > 1 && level === 1){
+        setPosition(this.getViewPosition())
         if (firstTime){
           nodes.forEach((node) => {
             const position = network.current.getPositions([node.id])
@@ -239,7 +244,6 @@ const Results = () => {
       }
       // setNodes(tempNodes)
     })
-
     network.current.on('afterDrawing', function (ctx) {
       var dataURL = ctx.canvas.toDataURL()
       document.getElementById('canvasImg').href = dataURL

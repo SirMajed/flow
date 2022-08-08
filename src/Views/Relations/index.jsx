@@ -38,16 +38,16 @@ const Index = () => {
     data.forEach((row) => {
       edgeSet.add(row.type)
 
-      let length = 0 
-      if (row.level !== 1){
-          const x = arr.filter((item) => {
-              return item.from === row.from && item.to === row.to && item.level === 1
-          })
-          length = x[0].length
-      }
-      else if (row.level === 1){
-        length = Math.round(1500 / row.width)
-      }
+      // let length = 0 
+      // if (row.level !== 1){
+      //     const x = arr.filter((item) => {
+      //         return item.from === row.from && item.to === row.to && item.level === 1
+      //     })
+      //     length = x[0].length
+      // }
+      // else if (row.level === 1){
+      //   length = Math.round(1200 / row.width)
+      // }
       var obj = {
         id: row.id || uuidv4(),
         from: row.from,
@@ -59,16 +59,12 @@ const Index = () => {
         type: row.type,
         level: row.level,
         hidden: row.level !== 1 ? true: false,
-        length: length,
-        title: `Test#1 •  </br> Test#2 • </br> Test#3 •`
-        // physics: false,
-        // smooth: {
-        //   type: 'dynamic',
-        //   forceDirection: 'none',
-        //   roundness: 0
-        // },
+        length: row.length,
       }
-      arr.push(obj)
+      if (row.level === 2){
+        obj.title = row.title
+      }
+        arr.push(obj)
     })
     dispatch(addRelationArray(arr))
     dispatch(addRelationsTypes(Array.from(edgeSet)))

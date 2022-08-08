@@ -85,8 +85,8 @@ export const stakeholderSlice = createSlice({
       })
       // updatedArray[selectedItem].x = posX
       // updatedArray[selectedItem].y = posY
-      updatedArray[selectedItem].x = updatedArray[selectedItem].x
-      updatedArray[selectedItem].y = updatedArray[selectedItem].y
+      // updatedArray[selectedItem].x = updatedArray[selectedItem].x
+      // updatedArray[selectedItem].y = updatedArray[selectedItem].y
       updatedArray[selectedItem].hidden = hidden
       state.stakeholders = updatedArray
     },
@@ -97,14 +97,12 @@ export const stakeholderSlice = createSlice({
       let selectedItem = updatedArray.findIndex((element) => {
         return element.id === id
       })
-      // updatedArray[selectedItem].label = label
-      // updatedArray[selectedItem].type = type
-      // updatedArray[selectedItem].width = width
-      // updatedArray[selectedItem].color = color
-      updatedArray[selectedItem].smooth = smooth
-      // updatedArray[selectedItem].length = length
-      // updatedArray[selectedItem].physics = false
-
+      updatedArray[selectedItem].label = label || updatedArray[selectedItem].label
+      updatedArray[selectedItem].type = type || updatedArray[selectedItem].type
+      updatedArray[selectedItem].width = width || updatedArray[selectedItem].width
+      updatedArray[selectedItem].color = color || updatedArray[selectedItem].color
+      updatedArray[selectedItem].smooth = smooth || updatedArray[selectedItem].smooth
+      updatedArray[selectedItem].length = length || updatedArray[selectedItem].length
 
       state.relations = updatedArray
     },

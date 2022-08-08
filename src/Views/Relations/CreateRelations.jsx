@@ -59,6 +59,16 @@ const CreateRelations = ({ onPrevious }) => {
     if (!selectedStakeholder1 || !selectedStakeholder2 || !label || !width || !type || !color) {
       toast.error(t('fillInputs'))
     } else {
+      let length = 0 
+      if (level !== 1){
+          const x = relations.filter((item) => {
+              return item.from === selectedStakeholder1 && item.to === selectedStakeholder2 && item.level === 1
+          })
+          length = x[0].length
+      }
+      else if (level === 1){
+        length = Math.round(2000 / (2 * Math.sqrt(width)))
+      }
       const data = {
         id: uuidv4(),
         from: selectedStakeholder1,
@@ -68,13 +78,19 @@ const CreateRelations = ({ onPrevious }) => {
         width: parseInt(width),
         type: parseInt(type),
         level: parseInt(level),
-        title: level === '2' ? detailedRelations : '',
         color,
-        // length: parseInt(2000 / parseInt(width)),
-        // physics: false,
-        // length: 1000
+        hidden: level !== 1 ? true: false,
+        length: length,
       }
-      console.log(data)
+      if (level === '2'){
+        var titleArr = detailedRelations.split('-')
+        var title = ''
+        titleArr.forEach((item) =>{
+          title += item +` - `+ `</br>` 
+        })
+        console.log(titleArr);
+        data.title = title
+      }
       edgeSet.add(parseInt(type))
       dispatch(addRelation(data))
       dispatch(addRelationsTypes(Array.from(edgeSet)))

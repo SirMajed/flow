@@ -18,6 +18,8 @@ const UpdateRelation = ({ relation, closeModal, colors }) => {
   const [label, setLabel] = useState('')
   const [type, setType] = useState(0)
   const [level, setLevel] = useState(1)
+  const [detailedRelations, setDetailedRelations] = useState('')
+
   const dispatch = useDispatch()
   useEffect(() => {
     if (relation) {
@@ -81,6 +83,12 @@ const UpdateRelation = ({ relation, closeModal, colors }) => {
         <h1>{t('relationLevel')}</h1>
         <Input required value={level} onChange={(e) => setLevel(e.target.value)} type={'number'} placeholder={t('relationLevel')} />
       </div>
+      {level === '2' && (
+              <div>
+                <h1>{t('secondLevelRelation')}</h1>
+                <Input required value={detailedRelations} onChange={(e) => setDetailedRelations(e.target.value)} type={'text'} placeholder={t('detailedRelations')} />
+              </div>
+            )}
       <div>
         <h1>{t('relationType')}</h1>
         <Input required value={type} onChange={(e) => setType(e.target.value)} type={'number'} placeholder={t('numberOnly')} />
