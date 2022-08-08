@@ -208,42 +208,42 @@ const Results = () => {
       }
       
     })
-    // network.current.on('click', function (n) {
+    network.current.on('click', function (n) {
 
-    //   if (network.current && n.nodes.length > 0) {
-    //     var nnn = network.current.getConnectedNodes(n.nodes[0])
+      if (network.current && n.nodes.length > 0) {
+        var nnn = network.current.getConnectedNodes(n.nodes[0])
 
-    //     nnn.push(n.nodes[0])
+        nnn.push(n.nodes[0])
 
-    //     // tempNodes = []
-    //     nodes.forEach((e) => {
-    //       if (!nnn.includes(e.id)) {
-    //         const position = network.current.getPositions([e.id])
-    //         const posX = position[`${e.id}`].x
-    //         const posY = position[`${e.id}`].y
-    //         // dispatch(addPosX({ id: e.id, posX: posX, posY: posY }))
-    //         // dispatch(addPosY({ id: e.id, posY: posY }))
-    //         dispatch(hideNode({ id: e.id, hidden: true, posX, posY }))
-    //       }
-    //       // tempNodes.push(e)
-    //     })
-    //   }
+        // tempNodes = []
+        nodes.forEach((e) => {
+          if (!nnn.includes(e.id)) {
+            const position = network.current.getPositions([e.id])
+            const posX = position[`${e.id}`].x
+            const posY = position[`${e.id}`].y
+            // dispatch(addPosX({ id: e.id, posX: posX, posY: posY }))
+            // dispatch(addPosY({ id: e.id, posY: posY }))
+            dispatch(hideNode({ id: e.id, hidden: true, posX, posY }))
+          }
+          // tempNodes.push(e)
+        })
+      }
 
-    //   if (n.items.length === 0 && n.nodes.length === 0 && n.edges.length === 0) {
-    //     // tempNodes = []
-    //     nodes.forEach((e) => {
-    //       const position = network.current.getPositions([e.id])
-    //       const posX = position[`${e.id}`].x
-    //       const posY = position[`${e.id}`].y
-    //       // dispatch(addPosX({ id: e.id, posX: posX, posY: posY }))
-    //       // dispatch(addPosY({ id: e.id, posY: posY }))
-    //       dispatch(hideNode({ id: e.id, hidden: false, posX, posY }))
+      if (n.items.length === 0 && n.nodes.length === 0 && n.edges.length === 0) {
+        // tempNodes = []
+        nodes.forEach((e) => {
+          const position = network.current.getPositions([e.id])
+          const posX = position[`${e.id}`].x
+          const posY = position[`${e.id}`].y
+          // dispatch(addPosX({ id: e.id, posX: posX, posY: posY }))
+          // dispatch(addPosY({ id: e.id, posY: posY }))
+          dispatch(hideNode({ id: e.id, hidden: false, posX, posY }))
 
-    //       // tempNodes.push(e)
-    //     })
-    //   }
-    //   // setNodes(tempNodes)
-    // })
+          // tempNodes.push(e)
+        })
+      }
+      // setNodes(tempNodes)
+    })
     network.current.on('afterDrawing', function (ctx) {
       var dataURL = ctx.canvas.toDataURL()
       document.getElementById('canvasImg').href = dataURL
