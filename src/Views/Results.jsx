@@ -38,14 +38,14 @@ const Results = () => {
     physics: {
       // Even though it's disabled the options still apply to network.stabilize().
       enabled: true,
-      solver: "repulsion",
+      solver: 'repulsion',
       repulsion: {
         nodeDistance: 600, // Put more distance between the nodes.
         // springLength: 200,
         // springConstant: 1,
         // centralGravity: 0.3
       },
-        stabilization: {
+      stabilization: {
         enabled: true,
         iterations: 10000,
         updateInterval: 500,
@@ -86,7 +86,7 @@ const Results = () => {
     edges: {
       // physics: false,
       // length: 100,
-      
+
       selectionWidth: function (width) {
         return width * 2
       },
@@ -150,66 +150,58 @@ const Results = () => {
     //   });
     // })
     network.current.on('stabilizationIterationsDone', function () {
-      this.setOptions({ physics: false });
-      if (level === 2){
-        this.moveTo({scale: 1});
+      this.setOptions({ physics: false })
+      if (level === 2) {
+        this.moveTo({ scale: 1 })
       }
 
-      if(firstTime){
+      if (firstTime) {
         this.storePositions()
       }
-      if(position){
-        this.moveTo({position: position})
+      if (position) {
+        this.moveTo({ position: position })
       }
     })
-    network.current.on('zoom', function(n) {
-      let count = 0;
+    network.current.on('zoom', function (n) {
+      let count = 0
       // nodes.forEach((node) => {
       //   console.log(node.x);
       // });
-      if(n.scale > 1 && level === 1){
+      if (n.scale > 1 && level === 1) {
         setPosition(this.getViewPosition())
-        if (firstTime){
+        if (firstTime) {
           nodes.forEach((node) => {
             const position = network.current.getPositions([node.id])
             const posX = position[`${node.id}`].x
             const posY = position[`${node.id}`].y
             dispatch(addPosX({ id: node.id, posX: posX, posY: posY }))
-  
           })
           setFirstTime(false)
         }
-        
-        
+
         edges.forEach((edge) => {
           if (edge.level === 1) {
             dispatch(hideEdge({ id: edge.id, hidden: true }))
-          }
-          else if (edge.level === 2){
-            dispatch(updateRelation({ id: edge.id, smooth: roundness[count]}))
+          } else if (edge.level === 2) {
+            dispatch(updateRelation({ id: edge.id, smooth: roundness[count] }))
             dispatch(hideEdge({ id: edge.id, hidden: false }))
             count++
           }
         })
         setLevel(2)
-        
-      }
-      else if(n.scale < 0.7 && level === 2){
+      } else if (n.scale < 0.7 && level === 2) {
         const tempEdges = []
         edges.forEach((edge) => {
           if (edge.level === 1) {
             dispatch(hideEdge({ id: edge.id, hidden: false }))
-          }
-          else if (edge.level === 2){
+          } else if (edge.level === 2) {
             dispatch(hideEdge({ id: edge.id, hidden: true }))
           }
         })
         setLevel(1)
       }
-      
     })
     network.current.on('click', function (n) {
-
       if (network.current && n.nodes.length > 0) {
         var nnn = network.current.getConnectedNodes(n.nodes[0])
 
